@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | Introduction to unittest</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi there folks. I recently thought that I have not written even a single post about testing in python. Testing is one of the most important part of any language. In this post I am going to share some information about unittest with you. So what exactly is unittest ? You ..." />
+    <meta property="article:tag" content="mock" />
+    <meta property="article:tag" content="nose" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="python testing" />
+    <meta property="article:tag" content="testing" />
+    <meta property="article:tag" content="testing in python" />
+    <meta property="article:tag" content="unittest" />
+    <meta property="article:tag" content="unittest tutorial" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    }   
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">Introduction to unittest</h1>
+      <span class="date">November 15, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi there folks. I recently thought that I have not written even a single
+post about testing in python. Testing is one of the most important part
+of any language. In this post I am going to share some information about
+unittest with you. So what exactly is unittest ? You might have heard
+about it on SO or some other forum.<!--more--> It is a testing framework
+for python just like Junit for Java. It comes pre-installed with python
+from 2.1. It is easy to use. However there are a lot of other testing
+frameworks for python out there as well but I will be focusing on
+unittest today as it is the default testing framework for python. So
+without wasting any time lets get started.</p>
+<p>The standard workflow while using unittest is:</p>
+<ol>
+<li>derive your own class from unittest.TestCase</li>
+<li>write your tests in functions which start with "test_"</li>
+<li>finally write unittest.main() at the end of your file to run the
+    tests</li>
+</ol>
+<p>I was also used to be scared by testing. Testing seemed to me as
+something from outer space but now I have learned its importance and it
+is essential for every programmer to learn it.</p>
+<h2><strong>A simple script</strong></h2>
+<p>So lets write a simple script which we can later test. This script is
+going to do some math functions for us. So here is the script:</p>
+<div class="codehilite"><pre><span class="c"># save it as math.py</span>
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n1</span> <span class="o">*</span> <span class="n">n2</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span>
+</pre></div>
+
+
+<p>So thats our little script. Now lets move forward and write our first
+test.</p>
+<h2><strong>Our first test</strong></h2>
+<p>So as I told you before that every unittest file contains a custom class
+derived from unittest.TestCase so lets create that:</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">multiply</span><span class="p">,</span> <span class="n">add</span>
+
+<span class="k">class</span> <span class="nc">TestingMath</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>So that was the first part. Now we need to define our tests. In unittest
+there is a setUp() and tearDown() function. The setUp() function is used
+to set up the test environment and tearDown() is used to clean up after
+a test. We do not need them as they are usually used when a lot of tests
+are written for a larger software. The default implementation of setUp()
+and tearDown() does nothing. So now lets write our first test by editing
+our previous script.</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">multiply</span><span class="p">,</span> <span class="n">add</span>
+
+<span class="k">class</span> <span class="nc">TestingMath</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span> <span class="n">multiply</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="mi">15</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span> <span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="mi">8</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Now save this file as test.py and run it from the command line and you
+will see some output like this:</p>
+<div class="codehilite"><pre><span class="n">yasoob</span><span class="nv">@yasoob:</span><span class="o">~/</span><span class="n">Desktop</span><span class="nv">$</span> <span class="nv">python</span> <span class="n">test</span><span class="o">.</span><span class="n">py</span>
+<span class="o">..</span>
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Ran</span> <span class="mi">2</span> <span class="n">tests</span> <span class="n">in</span> <span class="mf">0.000</span><span class="n">s</span>
+<span class="n">OK</span>
+</pre></div>
+
+
+<p>Congratulations! You have written your very first fully working test
+suite in python. Wait! what are those assertEqual() statements there ?
+Let me explain them. These assert funtions are the backbones of testing
+in unittest. They check whether the result is correct or not. There are
+a lot of assert functions in unittest. In our case we used assertEqual()
+which checks whether two values are equal or not. We gave 2 parameters
+to assertEqual() now the job of assertEqual() is to check whether both
+parameters are equal or not. Just for reference some other assert
+functions are:</p>
+<ul>
+<li>assertTrue(x)</li>
+<li>assertFalse(x)</li>
+<li>assertNotEqual(a, b)</li>
+<li>assertIs(a, b)</li>
+<li>assertIsNot(a, b)</li>
+<li>assertIsNone(x)</li>
+</ul>
+<h2>Test Discovery</h2>
+<p>So just think about it for a minute. You have a lot of test files and
+want to run all of them. The only method which comes to mind is to
+manually run all of those files separately. This is possible if you have
+10 files but what if you have a 100 files ? That is were automatic test
+discovery comes to rescue. So if I have all of my tests in app/tests
+directory I would simply run:</p>
+<div class="codehilite"><pre><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span> <span class="n">app</span><span class="o">/</span><span class="n">tests</span>
+</pre></div>
+
+
+<p>So this command would gather all of the test files in the tests
+directory and will run them. I hope that was helpful.</p>
+<h2>Furthur</h2>
+<p>So now you have got some idea of how testing works in python. Remember
+that this was just an introduction and there is a whole lot to unittest
+than this. If you want to further increase your knowledge then check out
+the original <a href="http://docs.python.org/2/library/unittest.html">python docs about unittest</a>. I will cover other testing
+frameworks as well in the future. I hope you enjoyed this article and do
+remember this one tip that the best time to write tests is while
+developing. If you write tests bit by bit while developing then they
+will not become a burden and your application will be rock solid. Do
+share your views in the comments below or feel free to <a href="yasoob.khld@gmail.com">email me</a> or
+<a href="http://twitter.com/yasoobkhalid">tweet me</a>. Last but not the least follow this blog and stay tuned for
+the next post.</p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/mock.html">mock</a>
+    <a href="http://yasoob.github.io/blog/tag/nose.html">nose</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/python-testing.html">python testing</a>
+    <a href="http://yasoob.github.io/blog/tag/testing.html">testing</a>
+    <a href="http://yasoob.github.io/blog/tag/testing-in-python.html">testing in python</a>
+    <a href="http://yasoob.github.io/blog/tag/unittest.html">unittest</a>
+    <a href="http://yasoob.github.io/blog/tag/unittest-tutorial.html">unittest tutorial</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "introduction-to-unittest";
+        var disqus_url = "http://yasoob.github.io/blog/introduction-to-unittest";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

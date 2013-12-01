@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | Exception handling</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Okay so the chances are you already know about exception handling in python but some new programmers don't. How do you handle exceptions in python ? First let me tell you what exceptions are. Exceptions are when something unexpected happens with your code. Just think that you writing a huge ..." />
+    <meta property="article:tag" content="error handling" />
+    <meta property="article:tag" content="errors" />
+    <meta property="article:tag" content="exceptions" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="try except" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    },  
+    'whatsnext' : {}  
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">Exception handling</h1>
+      <span class="date">July 30, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Okay so the chances are you already know about exception handling in
+python but some new programmers don't. How do you handle exceptions in
+python ? First let me tell you what exceptions are. Exceptions are when
+something unexpected happens<!--more--> with your code. Just think that
+you writing a huge program which browses the internet and accesses web
+pages, the program works fine on your side and you consider packaging
+and distributing it. But something unexpected occurs on the pc of the
+user who downloaded your package from the internet and tried to run it.
+His internet connection dropped. What will happen ?</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">import</span> <span class="n">urllib2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com/&#39;</span><span class="p">)</span><span class="o">.</span><span class="nb">read</span><span class="p">()</span>
+
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="k">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="n">in</span> 
+    <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com/&#39;</span><span class="p">)</span><span class="o">.</span><span class="nb">read</span><span class="p">()</span>
+  <span class="n">File</span> <span class="s">&quot;C:\Python27\lib\urllib2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">127</span><span class="p">,</span> <span class="n">in</span> <span class="n">urlopen</span>
+    <span class="k">return</span> <span class="n">_opener</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;C:\Python27\lib\urllib2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">404</span><span class="p">,</span> <span class="n">in</span> <span class="nb">open</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;C:\Python27\lib\urllib2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">422</span><span class="p">,</span> <span class="n">in</span> <span class="n">_open</span>
+    <span class="s">&#39;_open&#39;</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;C:\Python27\lib\urllib2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">382</span><span class="p">,</span> <span class="n">in</span> <span class="n">_call_chain</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;C:\Python27\lib\urllib2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1214</span><span class="p">,</span> <span class="n">in</span> <span class="n">http_open</span>
+    <span class="k">return</span> <span class="n">self</span><span class="o">.</span><span class="n">do_open</span><span class="p">(</span><span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;C:\Python27\lib\urllib2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1184</span><span class="p">,</span> <span class="n">in</span> <span class="n">do_open</span>
+    <span class="n">raise</span> <span class="n">URLError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+
+
+<p>So in order to save yourself from this you have to use
+<code>Exception Handling</code>. There are three keywords available within python
+which help you to handle exceptions. They are usually referred to as
+<code>try-except</code> clause. Just watch the below code.</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">try:</span>
+    <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com/&#39;</span><span class="p">)</span><span class="o">.</span><span class="nb">read</span><span class="p">()</span>
+<span class="n">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span> <span class="n">as</span> <span class="n">e:</span>
+    <span class="k">print</span> <span class="s">&quot;An error &quot;</span>
+
+<span class="n">An</span> <span class="n">error</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>Here we are doing the same thing but using the try except clause. Lets
+get somewhat deeper into it. We wrap our main code in the try clause.
+After that we wrap some code in except clause which gets executed if an
+exception occurs in the code wrapped in try clause. But wait where is
+the third keyword ? The third keyword is <code>finally</code>. It comes after the
+except clause and gets executed even if no exception occurs. Let me show
+you the same example but this time with the finally clause as well.</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">try:</span>
+    <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com/&#39;</span><span class="p">)</span><span class="o">.</span><span class="nb">read</span><span class="p">()</span>
+<span class="n">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span> <span class="n">as</span> <span class="n">e:</span>
+    <span class="k">print</span> <span class="s">&quot;An error %s &quot;</span> <span class="nv">%e</span>
+<span class="n">finally:</span>
+    <span class="k">print</span> <span class="s">&quot;This is going to be printed even if no exception occurs&quot;</span>
+
+<span class="err">&#39;</span><span class="n">Google</span><span class="p">(</span><span class="n">function</span><span class="p">(){</span><span class="o">\</span><span class="n">nwindow</span><span class="o">.</span><span class="n">google</span><span class="o">=</span><span class="p">{</span><span class="n">kEI:</span><span class="s">&quot;sdD2UbmEOMzBtAbyqYCgDQ&quot;</span><span class="p">,</span><span class="ow">ge</span>
+
+<span class="o">------------------------</span><span class="n">trancuated</span><span class="o">-------------------</span> 
+<span class="n">This</span> <span class="n">is</span> <span class="n">going</span> <span class="n">to</span> <span class="n">be</span> <span class="n">printed</span> <span class="n">even</span> <span class="k">if</span> <span class="nb">no</span> <span class="n">exception</span> <span class="n">occurs</span>
+</pre></div>
+
+
+<p>So as you can see the finally clause got executed even when there was no
+exception. Okay now i am going to tell you a little secret which most of
+us don't know and even i got to know it just few days ago. While using
+the except clause if we want to handle any exception that we are not
+aware of then what should we do ? Here in this situation we can put more
+except clauses for each exception which is likely to occur and in the
+end we can put another except clause which caches all exceptions which
+were not likely to occur. Here is an example :</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">try:</span>
+    <span class="k">print</span> <span class="n">ali</span>
+<span class="n">except</span> <span class="n">KeyboardInterrupt:</span>
+    <span class="k">print</span> <span class="s">&quot;&#39;E&#39;s pining!&quot;</span>
+<span class="n">except</span> <span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;This is going to handle every type of exception&quot;</span>
+<span class="n">finally:</span>
+    <span class="k">print</span> <span class="s">&quot;okay the end&quot;</span>
+
+<span class="n">This</span> <span class="n">is</span> <span class="n">going</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">every</span> <span class="n">type</span> <span class="n">of</span> <span class="n">exception</span>
+<span class="n">okay</span> <span class="n">the</span> <span class="n">end</span>
+</pre></div>
+
+
+<p>Okay i guess thats it for now. However i just gave you an intro of
+exception handling in python and if you want to study further then go to
+<a href="http://docs.python.org/2/tutorial/errors.html">this</a> link. I hope you liked today's post. Do share your views about
+todays post in the comments below.</p>
+<p>Source : http://docs.python.org/2/tutorial/errors.html</p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/error-handling.html">error handling</a>
+    <a href="http://yasoob.github.io/blog/tag/errors.html">errors</a>
+    <a href="http://yasoob.github.io/blog/tag/exceptions.html">exceptions</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/try-except.html">try except</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "exception-handling";
+        var disqus_url = "http://yasoob.github.io/blog/exception-handling";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

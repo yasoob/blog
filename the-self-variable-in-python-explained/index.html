@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | The self variable in python explained</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi there fellas. In this post I am going to teach you about the self variable in python. I have seen many beginners struggling to grasp the concept of self variable. If you are one of them then this post is for you. So lets start by making a class ..." />
+    <meta property="article:tag" content="beginner" />
+    <meta property="article:tag" content="learn" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="self" />
+    <meta property="article:tag" content="self in python" />
+    <meta property="article:tag" content="self keyword" />
+    <meta property="article:tag" content="self variable" />
+    <meta property="article:tag" content="self variable in python explained" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    },  
+    'whatsnext' : {}  
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">The self variable in python explained</h1>
+      <span class="date">August 07, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi there fellas. In this post I am going to teach you about the <code>self</code>
+variable in python. I have seen many beginners struggling to grasp the
+concept of <code>self</code> variable. If you are one of them then this post is for
+you. So lets start by making a class<!--more--> involving the <code>self</code>
+variable.</p>
+<p><strong>A simple class :</strong></p>
+<p>So here is our class:</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">Restaurant</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+    <span class="n">bankrupt</span> <span class="o">=</span> <span class="n">False</span>
+    <span class="n">def</span> <span class="n">open_branch</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">self</span><span class="o">.</span><span class="n">bankrupt:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;branch opened&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>First let me explain the above code without the technicalities. First of
+all we make a class Restaurant. Then we assign it a property "bankrupt"
+which is currently false. After that we assign it a function
+open_branch which can only occur if "bankrupt" is False which means
+that the Restaurant has some money.</p>
+<p><strong>Making a resturant:</strong></p>
+<p>Now that we have made a class for a Restaurant, lets actually make a
+resturant:</p>
+<div class="codehilite"><pre><span class="n">x</span> <span class="o">=</span> <span class="n">Restaurant</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Now x is a Restaurant which has a property bankrupt and a function
+open_branch. Now we can access the property bankrupt by typing:</p>
+<div class="codehilite"><pre><span class="n">x</span><span class="o">.</span><span class="n">bankrupt</span>
+</pre></div>
+
+
+<p>The above command is same as:</p>
+<div class="codehilite"><pre><span class="n">Restaurant</span><span class="p">()</span><span class="o">.</span><span class="n">bankrupt</span>
+</pre></div>
+
+
+<p>Now you can see that self refers to the bound variable or object. In the
+first case it was x because we had assigned the Restaurant class to x
+whereas in the second case it referred to Restaurant(). Now if we have
+another Restaurant y, self will know to access the bankrupt value of y
+and not x. For example check this example:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Restaurant</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">bankrupt</span>
+<span class="n">False</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">Restaurant</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">bankrupt</span> <span class="o">=</span> <span class="n">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">bankrupt</span>
+<span class="n">True</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">bankrupt</span>
+<span class="n">False</span>
+</pre></div>
+
+
+<p>The first argument of every class method, including __init__, is
+always a reference to the current instance of the class. By convention,
+this argument is always named self. In the __init__ method, self
+refers to the newly created object; in other class methods, it refers to
+the instance whose method was called. For example the below code is the
+same as the above code.</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">Restaurant</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+    <span class="n">bankrupt</span> <span class="o">=</span> <span class="n">False</span>
+    <span class="n">def</span> <span class="n">open_branch</span><span class="p">(</span><span class="n">this</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">this</span><span class="o">.</span><span class="n">bankrupt:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;branch opened&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><strong>Free Tip:</strong></p>
+<p>However self is not a reserved keyword in python it's just a strong
+convention. Many people say that why do we have to write self ? Why
+can't we have it set automatically like in Java ? Someone also filed a
+PEP (improvement suggestion) in which he suggested to remove the
+explicit assignment of self keyword. However Guido Van Rossum (the maker
+of python) wrote <a href="http://neopythonic.blogspot.com/2008/10/why-explicit-self-has-to-stay.html">a blogpost in which he told why explicit self has to
+stay</a>.</p>
+<p>I hope you have understood to concept of self. If you have any other
+questions then feel free to comment. If you liked this post then make
+sure that you share it on facebook, tweet it on twitter and follow our
+blog.</p>
+<p><strong>You might also like:</strong><br />
+*) <a href="http://freepythontips.wordpress.com/2013/08/06/python-socket-network-programming/">Python socket network programming</a><br />
+*) [*args and **kwargs in python explained][]<br />
+*) <a href="http://freepythontips.wordpress.com/2013/08/03/a-url-shortener-in-python/">Making a url shortener in python</a></p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/beginner.html">beginner</a>
+    <a href="http://yasoob.github.io/blog/tag/learn.html">learn</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/self.html">self</a>
+    <a href="http://yasoob.github.io/blog/tag/self-in-python.html">self in python</a>
+    <a href="http://yasoob.github.io/blog/tag/self-keyword.html">self keyword</a>
+    <a href="http://yasoob.github.io/blog/tag/self-variable.html">self variable</a>
+    <a href="http://yasoob.github.io/blog/tag/self-variable-in-python-explained.html">self variable in python explained</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "the-self-variable-in-python-explained";
+        var disqus_url = "http://yasoob.github.io/blog/the-self-variable-in-python-explained";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

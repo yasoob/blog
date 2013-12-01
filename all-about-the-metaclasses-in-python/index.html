@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | All about the metaclasses in Python!</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi there pythonistas. Recently I was searching about metaclasses in Python and came across a very good explanation about metaclasses on stackoverflow. I found the answer really helpful so I think you should read it as well. Who knows when you might find something useful in there. Disclaimer: very long ..." />
+    <meta property="article:tag" content="about metaclass" />
+    <meta property="article:tag" content="metaclass" />
+    <meta property="article:tag" content="metaclasses" />
+    <meta property="article:tag" content="metaclasses in python" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="usefulness of metaclasses" />
+    <meta property="article:tag" content="when to use meta class" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    },  
+    'whatsnext' : {}  
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">All about the metaclasses in Python!</h1>
+      <span class="date">September 20, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi there pythonistas. Recently I was searching about metaclasses in
+Python and came across a very good explanation about metaclasses on
+stackoverflow. I found the answer really helpful so I think you should
+read it as well. Who knows when you might find something useful in
+there.<!--more--></p>
+<p><strong>Disclaimer: very long post.</strong></p>
+<h1>Classes as objects</h1>
+<p>Before understanding metaclasses, you need to master classes in Python.
+And Python has a very peculiar idea of what classes are, borrowed from
+the Smalltalk language.</p>
+<p>In most languages, classes are just pieces of code that describe how to
+produce an object. That's kinda true in Python too:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">ObjectCreator</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+  <span class="o">...</span>       <span class="n">pass</span>
+  <span class="o">...</span>
+
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">my_object</span> <span class="o">=</span> <span class="n">ObjectCreator</span><span class="p">()</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">my_object</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">ObjectCreator</span> <span class="n">object</span> <span class="n">at</span> <span class="mh">0x8974f2c</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>But classes are more than that in Python. Classes are objects too.</p>
+<p>Yes, objects.</p>
+<p>As soon as you use the keyword <code>class</code>, Python executes it and creates
+an OBJECT. The instruction</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">ObjectCreator</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+  <span class="o">...</span>       <span class="n">pass</span>
+  <span class="o">...</span>
+</pre></div>
+
+
+<p>creates in memory an object with the name ObjectCreator.</p>
+<p><strong>This object (the class) is itself capable of creating objects (the
+instances), and this is why it's a class</strong>.</p>
+<p>But still, it's an object, and therefore:</p>
+<ul>
+<li>you can assign it to a variable</li>
+<li>you can copy it</li>
+<li>you can add attributes to it</li>
+<li>you can pass it as a function parameter</li>
+</ul>
+<p>e.g.:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">)</span> <span class="c1"># you can print a class because it&#39;s an object</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.ObjectCreator&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">def</span> <span class="n">echo</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+  <span class="o">...</span>       <span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+  <span class="o">...</span> 
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">echo</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">)</span> <span class="c1"># you can pass a class as a parameter</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.ObjectCreator&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">hasattr</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">,</span> <span class="s">&#39;new_attribute&#39;</span><span class="p">))</span>
+  <span class="n">False</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">ObjectCreator</span><span class="o">.</span><span class="n">new_attribute</span> <span class="o">=</span> <span class="s">&#39;foo&#39;</span> <span class="c1"># you can add attributes to a class</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">hasattr</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">,</span> <span class="s">&#39;new_attribute&#39;</span><span class="p">))</span>
+  <span class="n">True</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="o">.</span><span class="n">new_attribute</span><span class="p">)</span>
+  <span class="n">foo</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">ObjectCreatorMirror</span> <span class="o">=</span> <span class="n">ObjectCreator</span> <span class="c1"># you can assign a class to a variable</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ObjectCreatorMirror</span><span class="o">.</span><span class="n">new_attribute</span><span class="p">)</span>
+  <span class="n">foo</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ObjectCreatorMirror</span><span class="p">())</span>
+  <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">ObjectCreator</span> <span class="n">object</span> <span class="n">at</span> <span class="mh">0x8997b4c</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<h1>Creating classes dynamically</h1>
+<p>Since classes are objects, you can create them on the fly, like any
+object.</p>
+<p>First, you can create a class in a function using <code>class</code>:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">def</span> <span class="n">choose_class</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="o">...</span>     <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;foo&#39;</span><span class="p">:</span>
+  <span class="o">...</span>         <span class="n">class</span> <span class="n">Foo</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+  <span class="o">...</span>             <span class="n">pass</span>
+  <span class="o">...</span>         <span class="k">return</span> <span class="n">Foo</span> <span class="c1"># return the class, not an instance</span>
+  <span class="o">...</span>     <span class="k">else</span><span class="p">:</span>
+  <span class="o">...</span>         <span class="n">class</span> <span class="n">Bar</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+  <span class="o">...</span>             <span class="n">pass</span>
+  <span class="o">...</span>         <span class="k">return</span> <span class="n">Bar</span>
+  <span class="o">...</span>     
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">MyClass</span> <span class="o">=</span> <span class="n">choose_class</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">)</span> 
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span> <span class="c1"># the function returns a class, not an instance</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.Foo&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">MyClass</span><span class="p">())</span> <span class="c1"># you can create an object from this class</span>
+  <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Foo</span> <span class="n">object</span> <span class="n">at</span> <span class="mh">0x89c6d4c</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>But it's not so dynamic, since you still have to write the whole class
+yourself.</p>
+<p>Since classes are objects, they must be generated by something.</p>
+<p>When you use the <code>class</code> keyword, Python creates this object
+automatically. But as with most things in Python, it gives you a way to
+do it manually.</p>
+<p>Remember the function <code>type</code>? The good old function that lets you know
+what type an object is:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;int&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;str&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">()))</span>
+<span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.ObjectCreator&#39;</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Well, <code>type</code> has a completely different ability, it can also create
+classes on the fly. <code>type</code> can take the description of a class as
+parameters, and return a class.</p>
+<p>(I know, it's silly that the same function can have two completely
+different uses<br />
+according to the parameters you pass to it. It's an issue due to
+backwards compatibility in Python)</p>
+<p><code>type</code> works this way:</p>
+<div class="codehilite"><pre>  <span class="n">type</span><span class="p">(</span><span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">class</span><span class="p">,</span> 
+       <span class="n">tuple</span> <span class="n">of</span> <span class="n">the</span> <span class="n">parent</span> <span class="n">class</span> <span class="p">(</span><span class="k">for</span> <span class="n">inheritance</span><span class="p">,</span> <span class="n">can</span> <span class="n">be</span> <span class="n">empty</span><span class="p">),</span> 
+       <span class="n">dictionary</span> <span class="n">containing</span> <span class="n">attributes</span> <span class="n">names</span> <span class="ow">and</span> <span class="nb">values</span><span class="p">)</span>
+</pre></div>
+
+
+<p>e.g.:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">MyShinyClass</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+<span class="o">...</span>       <span class="n">pass</span>
+</pre></div>
+
+
+<p>can be created manually this way:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">MyShinyClass</span> <span class="o">=</span> <span class="n">type</span><span class="p">(</span><span class="s">&#39;MyShinyClass&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{})</span> <span class="c1"># returns a class object</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">MyShinyClass</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.MyShinyClass&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">MyShinyClass</span><span class="p">())</span> <span class="c1"># create an instance with the class</span>
+  <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">MyShinyClass</span> <span class="n">object</span> <span class="n">at</span> <span class="mh">0x8997cec</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>You'll notice that we use "MyShinyClass" as the name of the class and as
+the variable to hold the class reference. They can be different, but
+there is no reason to complicate things.</p>
+<p><code>type</code> accepts a dictionary to define the attributes of the class. So:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">Foo</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+<span class="o">...</span>       <span class="n">bar</span> <span class="o">=</span> <span class="n">True</span>
+</pre></div>
+
+
+<p>Can be translated to:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">Foo</span> <span class="o">=</span> <span class="n">type</span><span class="p">(</span><span class="s">&#39;Foo&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s">&#39;bar&#39;</span><span class="p">:</span><span class="n">True</span><span class="p">})</span>
+</pre></div>
+
+
+<p>And used as a normal class:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Foo</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.Foo&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Foo</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>
+  <span class="n">True</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Foo</span> <span class="n">object</span> <span class="n">at</span> <span class="mh">0x8a9b84c</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>
+  <span class="n">True</span>
+</pre></div>
+
+
+<p>And of course, you can inherit from it, so:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span>   <span class="n">class</span> <span class="n">FooChild</span><span class="p">(</span><span class="n">Foo</span><span class="p">):</span>
+  <span class="o">...</span>         <span class="n">pass</span>
+</pre></div>
+
+
+<p>would be:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">FooChild</span> <span class="o">=</span> <span class="n">type</span><span class="p">(</span><span class="s">&#39;FooChild&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Foo</span><span class="p">,),</span> <span class="p">{})</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">FooChild</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.FooChild&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">FooChild</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span> <span class="c1"># bar is inherited from Foo</span>
+  <span class="n">True</span>
+</pre></div>
+
+
+<p>Eventually you'll want to add methods to your class. Just define a
+function<br />
+with the proper signature and assign it as an attribute.</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">def</span> <span class="n">echo_bar</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+<span class="o">...</span>       <span class="k">print</span><span class="p">(</span><span class="n">self</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">FooChild</span> <span class="o">=</span> <span class="n">type</span><span class="p">(</span><span class="s">&#39;FooChild&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Foo</span><span class="p">,),</span> <span class="p">{</span><span class="s">&#39;echo_bar&#39;</span><span class="p">:</span> <span class="n">echo_bar</span><span class="p">})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">hasattr</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="s">&#39;echo_bar&#39;</span><span class="p">)</span>
+<span class="n">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">hasattr</span><span class="p">(</span><span class="n">FooChild</span><span class="p">,</span> <span class="s">&#39;echo_bar&#39;</span><span class="p">)</span>
+<span class="n">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_foo</span> <span class="o">=</span> <span class="n">FooChild</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">my_foo</span><span class="o">.</span><span class="n">echo_bar</span><span class="p">()</span>
+<span class="n">True</span>
+</pre></div>
+
+
+<p>You see where we are going: in Python, classes are objects, and you can
+create a class on the fly, dynamically.</p>
+<p>This is what Python does when you use the keyword <code>class</code>, and it does
+so by using a metaclass.</p>
+<h1>What are metaclasses (finally)</h1>
+<p>Metaclasses are the 'stuff' that creates classes.</p>
+<p>You define classes in order to create objects, right?</p>
+<p>But we learned that Python classes are objects.</p>
+<p>Well, metaclasses are what create these objects. They are the classes'
+classes,<br />
+you can picture them this way:</p>
+<div class="codehilite"><pre>  <span class="n">MyClass</span> <span class="o">=</span> <span class="n">MetaClass</span><span class="p">()</span>
+  <span class="n">MyObject</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+</pre></div>
+
+
+<p>You've seen that <code>type</code> lets you do something like this:</p>
+<div class="codehilite"><pre>  <span class="n">MyClass</span> <span class="o">=</span> <span class="n">type</span><span class="p">(</span><span class="s">&#39;MyClass&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{})</span>
+</pre></div>
+
+
+<p>It's because the function <code>type</code> is in fact a metaclass. <code>type</code> is the
+metaclass Python uses to create all classes behind the scenes.</p>
+<p>Now you wonder why the heck is it written in lowercase, and not <code>Type</code>?</p>
+<p>Well, I guess it's a matter of consistency with <code>str</code>, the class that
+creates strings objects, and <code>int</code> the class that creates integer
+objects. <code>type</code> is just the class that creates class objects.</p>
+<p>You see that by checking the <code>__class__</code> attribute.</p>
+<p>Everything, and I mean everything, is an object in Python. That includes
+ints, strings, functions and classes. All of them are objects. And all
+of them have been created from a class:</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">35</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">age</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;int&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;bob&#39;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;str&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">def</span> <span class="n">foo</span><span class="p">():</span> <span class="n">pass</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">foo</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;function&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">Bar</span><span class="p">(</span><span class="n">object</span><span class="p">):</span> <span class="n">pass</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">()</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">class</span> <span class="s">&#39;__main__.Bar&#39;</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Now, what is the <code>__class__</code> of any <code>__class__</code> ?</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">age</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">name</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">foo</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__class__</span>
+  <span class="o">&lt;</span><span class="n">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>So, a metaclass is just the stuff that creates class objects.</p>
+<p>You can call it a 'class factory' if you wish.</p>
+<p><code>type</code> is the built-in metaclass Python uses, but of course, you can
+create your own metaclass.</p>
+<h1>The <code>__metaclass__</code> attribute</h1>
+<p>You can add a <code>__metaclass__</code> attribute when you write a class:</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">Foo</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+  <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">something</span><span class="o">...</span>
+  <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+
+
+<p>If you do so, Python will use the metaclass to create the class <code>Foo</code>.</p>
+<p>Careful, it's tricky.</p>
+<p>You write <code>class Foo(object)</code> first, but the class object <code>Foo</code> is not
+created in memory yet.</p>
+<p>Python will look for <code>__metaclass__</code> in the class definition. If it
+finds it, it will use it to create the object class <code>Foo</code>. If it
+doesn't, it will use <code>type</code> to create the class.</p>
+<p>Read that several times.</p>
+<p>When you do:</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">Foo</span><span class="p">(</span><span class="n">Bar</span><span class="p">):</span>
+  <span class="n">pass</span>
+</pre></div>
+
+
+<p>Python does the following:</p>
+<p>Is there a <code>__metaclass__</code> attribute in <code>Foo</code>?</p>
+<p>If yes, create in memory a class object (I said a class object, stay
+with me here), with the name <code>Foo</code> by using what is in <code>__metaclass__</code>.</p>
+<p>If Python can't find <code>__metaclass__</code>, it will look for a <code>__metaclass__</code>
+in Bar (the parent class), and try to do the same.</p>
+<p>If Python can't find <code>__metaclass__</code> in any parent, it will look for<br />
+a <code>__metaclass__</code> at the MODULE level, and try to do the same.</p>
+<p>Then if it can't find any <code>__metaclass__</code> at all, it will use <code>type</code> to
+create the class object.</p>
+<p>Now the big question is, what can you put in <code>__metaclass__</code> ?</p>
+<p>The answer is: something that can create a class.</p>
+<p>And what can create a class? <code>type</code>, or anything that subclasses or uses
+it.</p>
+<h1>Custom metaclasses</h1>
+<p>The main purpose of a metaclass is to change the class automatically,
+when it's created.</p>
+<p>You usually do this for APIs, where you want to create classes matching
+the current context.</p>
+<p>Imagine a stupid example, where you decide that all classes in your
+module should have their attributes written in uppercase. There are
+several ways to do this, but one way is to set <code>__metaclass__</code> at the
+module level.</p>
+<p>This way, all classes of this module will be created using this
+metaclass, and we just have to tell the metaclass to turn all attributes
+to uppercase.</p>
+<p>Luckily, <code>__metaclass__</code> can actually be any callable, it doesn't need
+to be a formal class (I know, something with 'class' in its name doesn't
+need to be a class, go figure... but it's helpful).</p>
+<p>So we will start with a simple example, by using a function.</p>
+<div class="codehilite"><pre><span class="c1"># the metaclass will automatically get passed the same argument</span>
+<span class="c1"># that you usually pass to `type`</span>
+<span class="n">def</span> <span class="n">upper_attr</span><span class="p">(</span><span class="n">future_class_name</span><span class="p">,</span> <span class="n">future_class_parents</span><span class="p">,</span> <span class="n">future_class_attr</span><span class="p">):</span>
+  <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Return a class object, with the list of its attribute turned </span>
+<span class="s">    into uppercase.</span>
+<span class="s">  &quot;&quot;&quot;</span>
+
+  <span class="c1"># pick up any attribute that doesn&#39;t start with &#39;__&#39; and uppercase it</span>
+  <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="n">in</span> <span class="n">future_class_attr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+          <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+      <span class="k">else</span><span class="p">:</span>
+          <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+  <span class="c1"># let `type` do the class creation</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">(</span><span class="n">future_class_name</span><span class="p">,</span> <span class="n">future_class_parents</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+
+<span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">upper_attr</span> <span class="c1"># this will affect all classes in the module</span>
+
+<span class="n">class</span> <span class="n">Foo</span><span class="p">():</span> <span class="c1"># global __metaclass__ won&#39;t work with &quot;object&quot; though</span>
+  <span class="c1"># but we can define __metaclass__ here instead to affect only this class</span>
+  <span class="c1"># and this will work with &quot;object&quot; children</span>
+  <span class="n">bar</span> <span class="o">=</span> <span class="s">&#39;bip&#39;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">hasattr</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">))</span>
+<span class="c1"># Out: False</span>
+<span class="k">print</span><span class="p">(</span><span class="n">hasattr</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="s">&#39;BAR&#39;</span><span class="p">))</span>
+<span class="c1"># Out: True</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">BAR</span><span class="p">)</span>
+<span class="c1"># Out: &#39;bip&#39;</span>
+</pre></div>
+
+
+<p>Now, let's do exactly the same, but using a real class for a metaclass:</p>
+<div class="codehilite"><pre><span class="c1"># remember that `type` is actually a class like `str` and `int`</span>
+<span class="c1"># so you can inherit from it</span>
+<span class="n">class</span> <span class="n">UpperAttrMetaclass</span><span class="p">(</span><span class="n">type</span><span class="p">):</span> 
+    <span class="c1"># __new__ is the method called before __init__</span>
+    <span class="c1"># it&#39;s the method that creates the object and returns it</span>
+    <span class="c1"># while __init__ just initializes the object passed as parameter</span>
+    <span class="c1"># you rarely use __new__, except when you want to control how the object</span>
+    <span class="c1"># is created.</span>
+    <span class="c1"># here the created object is the class, and we want to customize it</span>
+    <span class="c1"># so we override __new__</span>
+    <span class="c1"># you can do some stuff in __init__ too if you wish</span>
+    <span class="c1"># some advanced use involves overriding __call__ as well, but we won&#39;t</span>
+    <span class="c1"># see this</span>
+    <span class="n">def</span> <span class="n">__new__</span><span class="p">(</span><span class="n">upperattr_metaclass</span><span class="p">,</span> <span class="n">future_class_name</span><span class="p">,</span> 
+                <span class="n">future_class_parents</span><span class="p">,</span> <span class="n">future_class_attr</span><span class="p">):</span>
+
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="n">in</span> <span class="n">future_class_attr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="n">type</span><span class="p">(</span><span class="n">future_class_name</span><span class="p">,</span> <span class="n">future_class_parents</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+</pre></div>
+
+
+<p>But this is not really OOP. We call <code>type</code> directly and we don't
+override call the parent <code>__new__</code>. Let's do it:</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">UpperAttrMetaclass</span><span class="p">(</span><span class="n">type</span><span class="p">):</span>
+
+    <span class="n">def</span> <span class="n">__new__</span><span class="p">(</span><span class="n">upperattr_metaclass</span><span class="p">,</span> <span class="n">future_class_name</span><span class="p">,</span> 
+                <span class="n">future_class_parents</span><span class="p">,</span> <span class="n">future_class_attr</span><span class="p">):</span>
+
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="n">in</span> <span class="n">future_class_attr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="c1"># reuse the type.__new__ method</span>
+        <span class="c1"># this is basic OOP, nothing magic in there</span>
+        <span class="k">return</span> <span class="n">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">upperattr_metaclass</span><span class="p">,</span> <span class="n">future_class_name</span><span class="p">,</span> 
+                            <span class="n">future_class_parents</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+</pre></div>
+
+
+<p>You may have noticed the extra argument <code>upperattr_metaclass</code>. There is
+nothing special about it: a method always receives the current instance
+as first parameter. Just like you have <code>self</code> for ordinary methods.</p>
+<p>Of course, the names I used here are long for the sake of clarity, but
+like for <code>self</code>, all the arguments have conventional names. So a real
+production metaclass would look like this:</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">UpperAttrMetaclass</span><span class="p">(</span><span class="n">type</span><span class="p">):</span>
+
+    <span class="n">def</span> <span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="n">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="n">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+</pre></div>
+
+
+<p>We can make it even cleaner by using <code>super</code>, which will ease
+inheritance (because yes, you can have metaclasses, inheriting from
+metaclasses, inheriting from type):</p>
+<div class="codehilite"><pre><span class="n">class</span> <span class="n">UpperAttrMetaclass</span><span class="p">(</span><span class="n">type</span><span class="p">):</span>
+
+    <span class="n">def</span> <span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="n">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="n">super</span><span class="p">(</span><span class="n">UpperAttrMetaclass</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span>
+</pre></div>
+
+
+<p>That's it. There is really nothing more about metaclasses.</p>
+<p>The reason behind the complexity of the code using metaclasses is not
+because of metaclasses, it's because you usually use metaclasses to do
+twisted stuff relying on introspection, manipulating inheritance, vars
+such as <code>__dict__</code>, etc.</p>
+<p>Indeed, metaclasses are especially useful to do black magic, and
+therefore complicated stuff. But by themselves, they are simple:</p>
+<ul>
+<li>intercept a class creation</li>
+<li>modify the class</li>
+<li>return the modified class</li>
+</ul>
+<h1>Why would you use metaclasses classes instead of functions?</h1>
+<p>Since <code>__metaclass__</code> can accept any callable, why would you use a class
+since it's obviously more complicated?</p>
+<p>There are several reasons to do so:</p>
+<ul>
+<li>The intention is clear. When you read <code>UpperAttrMetaclass(type)</code>,
+    you know<br />
+    what's going to follow</li>
+<li>You can use OOP. Metaclass can inherit from metaclass, override
+    parent methods.<br />
+    Metaclasses can even use metaclasses.</li>
+<li>You can structure your code better. You never use metaclasses for
+    something as<br />
+    trivial as the above example. It's usually for something
+    complicated. Having the ability to make several methods and group
+    them in one class is very useful to make the code easier to read.</li>
+<li>You can hook on <code>__new__</code>, <code>__init__</code> and <code>__call__</code>. Which will
+    allow you to do different stuff. Even if usually you can do it all
+    in <code>__new__</code>,<br />
+    some people are just more comfortable using <code>__init__</code>.</li>
+<li>These are called metaclasses, damn it! It must mean something!</li>
+</ul>
+<h1>Why the hell would you use metaclasses?</h1>
+<p>Now the big question. Why would you use some obscure error prone
+feature?</p>
+<p>Well, usually you don't:</p>
+<blockquote>
+<p>Metaclasses are deeper magic than<br />
+ 99% of users should ever worry about.<br />
+ If you wonder whether you need them,<br />
+ you don't (the people who actually<br />
+ need them know with certainty that<br />
+ they need them, and don't need an<br />
+ explanation about why).</p>
+</blockquote>
+<p><em>Python Guru Tim Peters</em></p>
+<p>The main use case for a metaclass is creating an API. A typical example
+of this is the Django ORM.</p>
+<p>It allows you to define something like this:</p>
+<div class="codehilite"><pre>  <span class="n">class</span> <span class="n">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+</pre></div>
+
+
+<p>But if you do this:</p>
+<div class="codehilite"><pre>  <span class="n">guy</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;bob&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="s">&#39;35&#39;</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">guy</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>
+</pre></div>
+
+
+<p>It won't return an <code>IntegerField</code> object. It will return an <code>int</code>, and
+can even take it directly from the database.</p>
+<p>This is possible because <code>models.Model</code> defines <code>__metaclass__</code> and it
+uses some magic that will turn the <code>Person</code> you just defined with simple
+statements into a complex hook to a database field.</p>
+<p>Django makes something complex look simple by exposing a simple API and
+using metaclasses, recreating code from this API to do the real job
+behind the scenes.</p>
+<h1>The last word</h1>
+<p>First, you know that classes are objects that can create instances.</p>
+<p>Well in fact, classes are themselves instances. Of metaclasses.</p>
+<div class="codehilite"><pre>  <span class="o">&gt;&gt;&gt;</span> <span class="n">class</span> <span class="n">Foo</span><span class="p">(</span><span class="n">object</span><span class="p">):</span> <span class="n">pass</span>
+  <span class="o">&gt;&gt;&gt;</span> <span class="n">id</span><span class="p">(</span><span class="n">Foo</span><span class="p">)</span>
+  <span class="mi">142630324</span>
+</pre></div>
+
+
+<p>Everything is an object in Python, and they are all either instances of
+classes or instances of metaclasses.</p>
+<p>Except for <code>type</code>.</p>
+<p><code>type</code> is actually its own metaclass. This is not something you could<br />
+reproduce in pure Python, and is done by cheating a little bit at the
+implementation<br />
+level.</p>
+<p>Secondly, metaclasses are complicated. You may not want to use them for
+very simple class alterations. You can change classes by using two
+different techniques:</p>
+<ul>
+<li>monkey patching</li>
+<li>class decorators</li>
+</ul>
+<p>99% of the time you need class alteration, you are better off using
+these.</p>
+<p>But 99% of the time, you don't need class alteration at all :-)</p>
+<p>source : <a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python?rq=1">What is a metaclass in python (stackoverflow)</a></p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/about-metaclass.html">about metaclass</a>
+    <a href="http://yasoob.github.io/blog/tag/metaclass.html">metaclass</a>
+    <a href="http://yasoob.github.io/blog/tag/metaclasses.html">metaclasses</a>
+    <a href="http://yasoob.github.io/blog/tag/metaclasses-in-python.html">metaclasses in python</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/usefulness-of-metaclasses.html">usefulness of metaclasses</a>
+    <a href="http://yasoob.github.io/blog/tag/when-to-use-meta-class.html">when to use meta class</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "all-about-the-metaclasses-in-python";
+        var disqus_url = "http://yasoob.github.io/blog/all-about-the-metaclasses-in-python";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

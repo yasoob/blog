@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | All About Decorators in Python</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi there fellas. This is an answer posted on stackoverflow by e-satis. The original link to the answer is given at the end. No credit goes to me. All of the credit goes to the original author. This answer is posted just because most of us are unaware of how ..." />
+    <meta property="article:tag" content="decorators" />
+    <meta property="article:tag" content="decorators demystified" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="python decorators" />
+    <meta property="article:tag" content="using python decorators" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    }   
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">All About Decorators in Python</h1>
+      <span class="date">October 10, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi there fellas. This is an answer posted on stackoverflow by e-satis.
+The original link to the answer is given at the end. No credit goes to
+me. All of the credit goes to the original author. This answer is posted
+just because most of us are unaware of how decorators work in python and
+this answer solves that problem beautifully.<!--more--></p>
+<h1>Python's functions are objects</h1>
+<p>To understand decorators, you must first understand that functions are
+objects in Python.<br />
+This has important consequences. Let's see why with a simple example :</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">shout</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;!&quot;</span>
+
+<span class="k">print</span> <span class="n">shout</span><span class="p">()</span>
+<span class="c1"># outputs : &#39;Yes!&#39;</span>
+
+<span class="c1"># As an object, you can assign the function to a variable like any</span>
+<span class="c1"># other object</span>
+
+<span class="n">scream</span> <span class="o">=</span> <span class="n">shout</span>
+
+<span class="c1"># Notice we don&#39;t use parentheses: we are not calling the function, we are</span>
+<span class="c1"># putting the function &quot;shout&quot; into the variable &quot;scream&quot;. </span>
+<span class="c1"># It means you can then call &quot;shout&quot; from &quot;scream&quot;:</span>
+
+<span class="k">print</span> <span class="n">scream</span><span class="p">()</span>
+<span class="c1"># outputs : &#39;Yes!&#39;</span>
+
+<span class="c1"># More than that, it means you can remove the old name &#39;shout&#39;, and</span>
+<span class="c1"># the function will still be accessible from &#39;scream&#39;</span>
+
+<span class="n">del</span> <span class="n">shout</span>
+<span class="n">try:</span>
+    <span class="k">print</span> <span class="n">shout</span><span class="p">()</span>
+<span class="n">except</span> <span class="n">NameError</span><span class="p">,</span> <span class="n">e:</span>
+    <span class="k">print</span> <span class="n">e</span>
+    <span class="c1">#outputs: &quot;name &#39;shout&#39; is not defined&quot;</span>
+
+<span class="k">print</span> <span class="n">scream</span><span class="p">()</span>
+<span class="c1"># outputs: &#39;Yes!&#39;</span>
+</pre></div>
+
+
+<p>OK, keep that in mind, we are going back to it soon. Another interesting
+property of Python functions is they can be defined... inside another
+function!</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">talk</span><span class="p">():</span>
+
+    <span class="c1"># You can define a function on the fly in &quot;talk&quot; ...</span>
+    <span class="n">def</span> <span class="n">whisper</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;...&quot;</span>
+
+    <span class="c1"># ... and use it right away!</span>
+
+    <span class="k">print</span> <span class="n">whisper</span><span class="p">()</span>
+
+<span class="c1"># You call &quot;talk&quot;, that defines &quot;whisper&quot; EVERY TIME you call it, then</span>
+<span class="c1"># &quot;whisper&quot; is called in &quot;talk&quot;. </span>
+<span class="n">talk</span><span class="p">()</span>
+<span class="c1"># outputs: </span>
+<span class="c1"># &quot;yes...&quot;</span>
+
+<span class="c1"># But &quot;whisper&quot; DOES NOT EXIST outside &quot;talk&quot;:</span>
+
+<span class="n">try:</span>
+    <span class="k">print</span> <span class="n">whisper</span><span class="p">()</span>
+<span class="n">except</span> <span class="n">NameError</span><span class="p">,</span> <span class="n">e:</span>
+    <span class="k">print</span> <span class="n">e</span>
+    <span class="c1">#outputs : &quot;name &#39;whisper&#39; is not defined&quot;*</span>
+</pre></div>
+
+
+<h1>Functions references</h1>
+<p>OK, still here? Now the fun part, you've seen that functions are objects
+and therefore:</p>
+<ul>
+<li>can be assigned to a variable;</li>
+<li>can be defined in another function.</li>
+</ul>
+<p>Well, that means that a function can return another function :-) Have a
+look:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">getTalk</span><span class="p">(</span><span class="n">type</span><span class="o">=</span><span class="s">&quot;shout&quot;</span><span class="p">):</span>
+
+    <span class="c1"># We define functions on the fly</span>
+    <span class="n">def</span> <span class="n">shout</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;!&quot;</span>
+
+    <span class="n">def</span> <span class="n">whisper</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s">&quot;yes&quot;</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;...&quot;</span><span class="p">;</span>
+
+    <span class="c1"># Then we return one of them</span>
+    <span class="k">if</span> <span class="n">type</span> <span class="o">==</span> <span class="s">&quot;shout&quot;</span><span class="p">:</span>
+        <span class="c1"># We don&#39;t use &quot;()&quot;, we are not calling the function,</span>
+        <span class="c1"># we are returning the function object</span>
+        <span class="k">return</span> <span class="n">shout</span>  
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">whisper</span>
+
+<span class="c1"># How do you use this strange beast?</span>
+
+<span class="c1"># Get the function and assign it to a variable</span>
+<span class="n">talk</span> <span class="o">=</span> <span class="n">getTalk</span><span class="p">()</span>
+
+<span class="c1"># You can see that &quot;talk&quot; is here a function object:</span>
+<span class="k">print</span> <span class="n">talk</span>
+<span class="c1">#outputs : &lt;function shout at 0xb7ea817c&gt;</span>
+
+<span class="c1"># The object is the one returned by the function:</span>
+<span class="k">print</span> <span class="n">talk</span><span class="p">()</span>
+<span class="c1">#outputs : Yes!</span>
+
+<span class="c1"># And you can even use it directly if you feel wild:</span>
+<span class="k">print</span> <span class="n">getTalk</span><span class="p">(</span><span class="s">&quot;whisper&quot;</span><span class="p">)()</span>
+<span class="c1">#outputs : yes...</span>
+</pre></div>
+
+
+<p>But wait, there is more. If you can return a function, then you can pass
+one as a parameter:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">doSomethingBefore</span><span class="p">(</span><span class="n">func</span><span class="p">):</span> 
+    <span class="k">print</span> <span class="s">&quot;I do something before then I call the function you gave me&quot;</span>
+    <span class="k">print</span> <span class="n">func</span><span class="p">()</span>
+
+<span class="n">doSomethingBefore</span><span class="p">(</span><span class="n">scream</span><span class="p">)</span>
+<span class="c1">#outputs: </span>
+<span class="c1">#I do something before then I call the function you gave me</span>
+<span class="c1">#Yes!</span>
+</pre></div>
+
+
+<p>Well, you just have everything needed to understand decorators. You see,
+decorators are wrappers which means that <strong>they let you execute code
+before and after the function they decorate</strong> without the need to modify
+the function itself.</p>
+<h1>Handcrafted decorators</h1>
+<p>How you would do it manually:</p>
+<div class="codehilite"><pre><span class="c1"># A decorator is a function that expects ANOTHER function as parameter</span>
+<span class="n">def</span> <span class="n">my_shiny_new_decorator</span><span class="p">(</span><span class="n">a_function_to_decorate</span><span class="p">):</span>
+
+    <span class="c1"># Inside, the decorator defines a function on the fly: the wrapper.</span>
+    <span class="c1"># This function is going to be wrapped around the original function</span>
+    <span class="c1"># so it can execute code before and after it.</span>
+    <span class="n">def</span> <span class="n">the_wrapper_around_the_original_function</span><span class="p">():</span>
+
+        <span class="c1"># Put here the code you want to be executed BEFORE the original </span>
+        <span class="c1"># function is called</span>
+        <span class="k">print</span> <span class="s">&quot;Before the function runs&quot;</span>
+
+        <span class="c1"># Call the function here (using parentheses)</span>
+        <span class="n">a_function_to_decorate</span><span class="p">()</span>
+
+        <span class="c1"># Put here the code you want to be executed AFTER the original </span>
+        <span class="c1"># function is called</span>
+        <span class="k">print</span> <span class="s">&quot;After the function runs&quot;</span>
+
+    <span class="c1"># At this point, &quot;a_function_to_decorate&quot; HAS NEVER BEEN EXECUTED.</span>
+    <span class="c1"># We return the wrapper function we have just created.</span>
+    <span class="c1"># The wrapper contains the function and the code to execute before</span>
+    <span class="c1"># and after. It&#39;s ready to use!</span>
+    <span class="k">return</span> <span class="n">the_wrapper_around_the_original_function</span>
+
+<span class="c1"># Now imagine you create a function you don&#39;t want to ever touch again.</span>
+<span class="n">def</span> <span class="n">a_stand_alone_function</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;I am a stand alone function, don&#39;t you dare modify me&quot;</span>
+
+<span class="n">a_stand_alone_function</span><span class="p">()</span> 
+<span class="c1">#outputs: I am a stand alone function, don&#39;t you dare modify me</span>
+
+<span class="c1"># Well, you can decorate it to extend its behavior.</span>
+<span class="c1"># Just pass it to the decorator, it will wrap it dynamically in </span>
+<span class="c1"># any code you want and return you a new function ready to be used:</span>
+
+<span class="n">a_stand_alone_function_decorated</span> <span class="o">=</span> <span class="n">my_shiny_new_decorator</span><span class="p">(</span><span class="n">a_stand_alone_function</span><span class="p">)</span>
+<span class="n">a_stand_alone_function_decorated</span><span class="p">()</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#Before the function runs</span>
+<span class="c1">#I am a stand alone function, don&#39;t you dare modify me</span>
+<span class="c1">#After the function runs</span>
+</pre></div>
+
+
+<p>Now, you probably want that every time you call
+<code>a_stand_alone_function</code>, <code>a_stand_alone_function_decorated</code> is called
+instead. That's easy, just overwrite <code>a_stand_alone_function</code> with the
+function returned by <code>my_shiny_new_decorator</code>:</p>
+<div class="codehilite"><pre><span class="n">a_stand_alone_function</span> <span class="o">=</span> <span class="n">my_shiny_new_decorator</span><span class="p">(</span><span class="n">a_stand_alone_function</span><span class="p">)</span>
+<span class="n">a_stand_alone_function</span><span class="p">()</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#Before the function runs</span>
+<span class="c1">#I am a stand alone function, don&#39;t you dare modify me</span>
+<span class="c1">#After the function runs</span>
+
+<span class="c1"># And guess what? That&#39;s EXACTLY what decorators do!</span>
+</pre></div>
+
+
+<h1>Decorators demystified</h1>
+<p>The previous example, using the decorator syntax:</p>
+<div class="codehilite"><pre><span class="nv">@my_shiny_new_decorator</span>
+<span class="n">def</span> <span class="n">another_stand_alone_function</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;Leave me alone&quot;</span>
+
+<span class="n">another_stand_alone_function</span><span class="p">()</span>  
+<span class="c1">#outputs:  </span>
+<span class="c1">#Before the function runs</span>
+<span class="c1">#Leave me alone</span>
+<span class="c1">#After the function runs</span>
+</pre></div>
+
+
+<p>Yes, that's all, it's that simple. <code>@decorator</code> is just a shortcut to:</p>
+<div class="codehilite"><pre><span class="n">another_stand_alone_function</span> <span class="o">=</span> <span class="n">my_shiny_new_decorator</span><span class="p">(</span><span class="n">another_stand_alone_function</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Decorators are just a pythonic variant of the <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator design
+pattern</a>. There are several classic design patterns embedded in Python
+to ease development, like iterators.</p>
+<p>Of course, you can cumulate decorators:</p>
+<div class="codehilite"><pre>def bread(func):
+    def wrapper():
+        print &quot;<span class="err">&lt;</span>/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;&quot;
+        func()
+        print &quot;<span class="err">&lt;</span>\______/&gt;&quot;
+    return wrapper
+
+def ingredients(func):
+    def wrapper():
+        print &quot;#tomatoes#&quot;
+        func()
+        print &quot;~salad~&quot;
+    return wrapper
+
+def sandwich(food=&quot;--ham--&quot;):
+    print food
+
+sandwich()
+#outputs: --ham--
+sandwich = bread(ingredients(sandwich))
+sandwich()
+#outputs:
+#<span class="err">&lt;</span>/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;
+# #tomatoes#
+# --ham--
+# ~salad~
+#<span class="err">&lt;</span>\______/&gt;
+</pre></div>
+
+
+<p>Using the Python decorator syntax:</p>
+<div class="codehilite"><pre><span class="nv">@bread</span>
+<span class="nv">@ingredients</span>
+<span class="n">def</span> <span class="n">sandwich</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">&quot;--ham--&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">food</span>
+
+<span class="n">sandwich</span><span class="p">()</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#&lt;/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;</span>
+<span class="c1"># #tomatoes#</span>
+<span class="c1"># --ham--</span>
+<span class="c1"># ~salad~</span>
+<span class="c1">#&lt;\______/&gt;</span>
+</pre></div>
+
+
+<p>The order you set the decorators MATTERS:</p>
+<div class="codehilite"><pre><span class="nv">@ingredients</span>
+<span class="nv">@bread</span>
+<span class="n">def</span> <span class="n">strange_sandwich</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">&quot;--ham--&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">food</span>
+
+<span class="n">strange_sandwich</span><span class="p">()</span>
+<span class="c1">#outputs:</span>
+<span class="c1">##tomatoes#</span>
+<span class="c1">#&lt;/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;</span>
+<span class="c1"># --ham--</span>
+<span class="c1">#&lt;\______/&gt;</span>
+<span class="c1"># ~salad~</span>
+</pre></div>
+
+
+<h1>Eventually answering the question</h1>
+<p>As a conclusion, you can easily see how to answer the question:</p>
+<div class="codehilite"><pre># The decorator to make it bold
+def makebold(fn):
+    # The new function the decorator returns
+    def wrapper():
+        # Insertion of some code before and after
+        return &quot;<span class="nt">&lt;b&gt;</span>&quot; + fn() + &quot;<span class="nt">&lt;/b&gt;</span>&quot;
+    return wrapper
+
+# The decorator to make it italic
+def makeitalic(fn):
+    # The new function the decorator returns
+    def wrapper():
+        # Insertion of some code before and after
+        return &quot;<span class="nt">&lt;i&gt;</span>&quot; + fn() + &quot;<span class="nt">&lt;/i&gt;</span>&quot;
+    return wrapper
+
+@makebold
+@makeitalic
+def say():
+    return &quot;hello&quot;
+
+print say() 
+#outputs: <span class="nt">&lt;b&gt;&lt;i&gt;</span>hello<span class="nt">&lt;/i&gt;&lt;/b&gt;</span>
+
+# This is the exact equivalent to 
+def say():
+    return &quot;hello&quot;
+say = makebold(makeitalic(say))
+
+print say() 
+#outputs: <span class="nt">&lt;b&gt;&lt;i&gt;</span>hello<span class="nt">&lt;/i&gt;&lt;/b&gt;</span>
+</pre></div>
+
+
+<p>You can now just leave happy, or burn your brain a little bit more and
+see advanced uses of decorators.</p>
+<h1>Passing arguments to the decorated function</h1>
+<div class="codehilite"><pre><span class="c1"># It&#39;s not black magic, you just have to let the wrapper </span>
+<span class="c1"># pass the argument:</span>
+
+<span class="n">def</span> <span class="n">a_decorator_passing_arguments</span><span class="p">(</span><span class="n">function_to_decorate</span><span class="p">):</span>
+    <span class="n">def</span> <span class="n">a_wrapper_accepting_arguments</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;I got args! Look:&quot;</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span>
+        <span class="n">function_to_decorate</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a_wrapper_accepting_arguments</span>
+
+<span class="c1"># Since when you are calling the function returned by the decorator, you are</span>
+<span class="c1"># calling the wrapper, passing arguments to the wrapper will let it pass them to </span>
+<span class="c1"># the decorated function</span>
+
+<span class="nv">@a_decorator_passing_arguments</span>
+<span class="n">def</span> <span class="n">print_full_name</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;My name is&quot;</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span>
+
+<span class="n">print_full_name</span><span class="p">(</span><span class="s">&quot;Peter&quot;</span><span class="p">,</span> <span class="s">&quot;Venkman&quot;</span><span class="p">)</span>
+<span class="c1"># outputs:</span>
+<span class="c1">#I got args! Look: Peter Venkman</span>
+<span class="c1">#My name is Peter Venkman</span>
+</pre></div>
+
+
+<h1>Decorating methods</h1>
+<p>What's great with Python is that methods and functions are really the
+same, except methods expect their first parameter to be a reference to
+the current object (<code>self</code>). It means you can build a decorator for
+methods the same way, just remember to take self in consideration:</p>
+<div class="codehilite"><pre><span class="s-Atom">def</span> <span class="nf">method_friendly_decorator</span><span class="p">(</span><span class="s-Atom">method_to_decorate</span><span class="p">)</span><span class="s-Atom">:</span>
+    <span class="s-Atom">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="s-Atom">self</span><span class="p">,</span> <span class="s-Atom">lie</span><span class="p">)</span><span class="s-Atom">:</span>
+        <span class="s-Atom">lie</span> <span class="o">=</span> <span class="s-Atom">lie</span> <span class="o">-</span> <span class="m">3</span> <span class="s-Atom">#</span> <span class="s-Atom">very</span> <span class="s-Atom">friendly</span><span class="p">,</span> <span class="s-Atom">decrease</span> <span class="s-Atom">age</span> <span class="s-Atom">even</span> <span class="nf">more</span> <span class="o">:-</span><span class="p">)</span>
+        <span class="s-Atom">return</span> <span class="nf">method_to_decorate</span><span class="p">(</span><span class="s-Atom">self</span><span class="p">,</span> <span class="s-Atom">lie</span><span class="p">)</span>
+    <span class="s-Atom">return</span> <span class="s-Atom">wrapper</span>
+
+
+<span class="s-Atom">class</span> <span class="nv">Lucy</span><span class="p">(</span><span class="s-Atom">object</span><span class="p">)</span><span class="s-Atom">:</span>
+
+    <span class="s-Atom">def</span> <span class="k">__</span><span class="nf">init__</span><span class="p">(</span><span class="s-Atom">self</span><span class="p">)</span><span class="s-Atom">:</span>
+        <span class="s-Atom">self</span><span class="p">.</span><span class="s-Atom">age</span> <span class="o">=</span> <span class="m">32</span>
+
+    <span class="s-Atom">@method_friendly_decorator</span>
+    <span class="s-Atom">def</span> <span class="nf">sayYourAge</span><span class="p">(</span><span class="s-Atom">self</span><span class="p">,</span> <span class="s-Atom">lie</span><span class="p">)</span><span class="s-Atom">:</span>
+        <span class="s-Atom">print</span> <span class="s2">&quot;I am %s, what did you think?&quot;</span> <span class="c1">% (self.age + lie)</span>
+
+<span class="s-Atom">l</span> <span class="o">=</span> <span class="nv">Lucy</span><span class="p">()</span>
+<span class="s-Atom">l</span><span class="p">.</span><span class="nf">sayYourAge</span><span class="p">(</span><span class="o">-</span><span class="m">3</span><span class="p">)</span>
+<span class="s-Atom">#</span><span class="nn">outputs</span><span class="p">:</span> <span class="nv">I</span> <span class="s-Atom">am</span> <span class="m">26</span><span class="p">,</span> <span class="s-Atom">what</span> <span class="s-Atom">did</span> <span class="s-Atom">you</span> <span class="s-Atom">think?</span>
+</pre></div>
+
+
+<p>Of course, if you make a very general decorator and want to apply it to
+any function or method, no matter its arguments, then just use
+<code>*args, **kwargs</code>:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">a_decorator_passing_arbitrary_arguments</span><span class="p">(</span><span class="n">function_to_decorate</span><span class="p">):</span>
+    <span class="c1"># The wrapper accepts any arguments</span>
+    <span class="n">def</span> <span class="n">a_wrapper_accepting_arbitrary_arguments</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Do I have args?:&quot;</span>
+        <span class="k">print</span> <span class="n">args</span>
+        <span class="k">print</span> <span class="n">kwargs</span>
+        <span class="c1"># Then you unpack the arguments, here *args, **kwargs</span>
+        <span class="c1"># If you are not familiar with unpacking, check:</span>
+        <span class="c1"># http://www.saltycrane.com/blog/2008/01/how-to-use-args-and-kwargs-in-python/</span>
+        <span class="n">function_to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a_wrapper_accepting_arbitrary_arguments</span>
+
+<span class="nv">@a_decorator_passing_arbitrary_arguments</span>
+<span class="n">def</span> <span class="n">function_with_no_argument</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;Python is cool, no argument here.&quot;</span>
+
+<span class="n">function_with_no_argument</span><span class="p">()</span>
+<span class="c1">#outputs</span>
+<span class="c1">#Do I have args?:</span>
+<span class="c1">#()</span>
+<span class="c1">#{}</span>
+<span class="c1">#Python is cool, no argument here.</span>
+
+<span class="nv">@a_decorator_passing_arbitrary_arguments</span>
+<span class="n">def</span> <span class="n">function_with_arguments</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
+
+<span class="n">function_with_arguments</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1">#outputs</span>
+<span class="c1">#Do I have args?:</span>
+<span class="c1">#(1, 2, 3)</span>
+<span class="c1">#{}</span>
+<span class="c1">#1 2 3</span>
+
+<span class="nv">@a_decorator_passing_arbitrary_arguments</span>
+<span class="n">def</span> <span class="n">function_with_named_arguments</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">platypus</span><span class="o">=</span><span class="s">&quot;Why not ?&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Do %s, %s and %s like platypus? %s&quot;</span> <span class="nv">%</span>  
+   <span class="err">(</span><span class="nv">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">platypus</span><span class="p">)</span>
+
+<span class="n">function_with_named_arguments</span><span class="p">(</span><span class="s">&quot;Bill&quot;</span><span class="p">,</span> <span class="s">&quot;Linus&quot;</span><span class="p">,</span> <span class="s">&quot;Steve&quot;</span><span class="p">,</span> <span class="n">platypus</span><span class="o">=</span><span class="s">&quot;Indeed!&quot;</span><span class="p">)</span>
+<span class="c1">#outputs</span>
+<span class="c1">#Do I have args ? :</span>
+<span class="c1">#(&#39;Bill&#39;, &#39;Linus&#39;, &#39;Steve&#39;)</span>
+<span class="c1">#{&#39;platypus&#39;: &#39;Indeed!&#39;}</span>
+<span class="c1">#Do Bill, Linus and Steve like platypus? Indeed!</span>
+
+<span class="n">class</span> <span class="n">Mary</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+
+    <span class="n">def</span> <span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">31</span>
+
+    <span class="nv">@a_decorator_passing_arbitrary_arguments</span>
+    <span class="n">def</span> <span class="n">sayYourAge</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">lie</span><span class="o">=-</span><span class="mi">3</span><span class="p">):</span> <span class="c1"># You can now add a default value</span>
+        <span class="k">print</span> <span class="s">&quot;I am %s, what did you think ?&quot;</span> <span class="nv">%</span> <span class="err">(</span><span class="nv">self</span><span class="o">.</span><span class="n">age</span> <span class="o">+</span> <span class="n">lie</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Mary</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">sayYourAge</span><span class="p">()</span>
+<span class="c1">#outputs</span>
+<span class="c1"># Do I have args?:</span>
+<span class="c1">#(&lt;__main__.Mary object at 0xb7d303ac&gt;,)</span>
+<span class="c1">#{}</span>
+<span class="c1">#I am 28, what did you think?</span>
+</pre></div>
+
+
+<h1>Passing arguments to the decorator</h1>
+<p>Great, now what would you say about passing arguments to the decorator
+itself? Well this is a bit twisted because a decorator must accept a
+function as an argument and therefore, you cannot pass the decorated
+function arguments directly to the decorator.</p>
+<p>Before rushing to the solution, let's write a little reminder:</p>
+<div class="codehilite"><pre><span class="cp"># Decorators are ORDINARY functions</span>
+<span class="n">def</span> <span class="n">my_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">print</span> <span class="s">&quot;I am a ordinary function&quot;</span>
+    <span class="n">def</span> <span class="n">wrapper</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">print</span> <span class="s">&quot;I am function returned by the decorator&quot;</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="cp"># Therefore, you can call it without any &quot;@&quot;</span>
+
+<span class="n">def</span> <span class="n">lazy_function</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">print</span> <span class="s">&quot;zzzzzzzz&quot;</span>
+
+<span class="n">decorated_function</span> <span class="o">=</span> <span class="n">my_decorator</span><span class="p">(</span><span class="n">lazy_function</span><span class="p">)</span>
+<span class="cp">#outputs: I am a ordinary function</span>
+
+<span class="cp"># It outputs &quot;I am a ordinary function&quot;, because that&#39;s just what you do:</span>
+<span class="cp"># calling a function. Nothing magic.</span>
+
+<span class="err">@</span><span class="n">my_decorator</span>
+<span class="n">def</span> <span class="n">lazy_function</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">print</span> <span class="s">&quot;zzzzzzzz&quot;</span>
+
+<span class="cp">#outputs: I am a ordinary function</span>
+</pre></div>
+
+
+<p>It's exactly the same. "<code>my_decorator</code>" is called. So when you
+<code>@my_decorator</code>, you are telling Python to call the function 'labeled by
+the variable "<code>my_decorator</code>"'. It's important, because the label you
+give can point directly to the decorator... or not! Let's start to be
+evil!</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">decorator_maker</span><span class="p">():</span>
+
+    <span class="k">print</span> <span class="s">&quot;I make decorators! I am executed only once: &quot;</span><span class="o">+</span>  
+         <span class="s">&quot;when you make me create a decorator.&quot;</span>
+
+    <span class="n">def</span> <span class="n">my_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+
+        <span class="k">print</span> <span class="s">&quot;I am a decorator! I am executed only when you decorate a function.&quot;</span>
+
+        <span class="n">def</span> <span class="n">wrapped</span><span class="p">():</span>
+            <span class="k">print</span> <span class="p">(</span><span class="s">&quot;I am the wrapper around the decorated function. &quot;</span>
+                  <span class="s">&quot;I am called when you call the decorated function. &quot;</span>
+                  <span class="s">&quot;As the wrapper, I return the RESULT of the decorated function.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">()</span>
+
+        <span class="k">print</span> <span class="s">&quot;As the decorator, I return the wrapped function.&quot;</span>
+
+        <span class="k">return</span> <span class="n">wrapped</span>
+
+    <span class="k">print</span> <span class="s">&quot;As a decorator maker, I return a decorator&quot;</span>
+    <span class="k">return</span> <span class="n">my_decorator</span>
+
+<span class="c1"># Let&#39;s create a decorator. It&#39;s just a new function after all.</span>
+<span class="n">new_decorator</span> <span class="o">=</span> <span class="n">decorator_maker</span><span class="p">()</span>       
+<span class="c1">#outputs:</span>
+<span class="c1">#I make decorators! I am executed only once: when you make me create a decorator.</span>
+<span class="c1">#As a decorator maker, I return a decorator</span>
+
+<span class="c1"># Then we decorate the function</span>
+
+<span class="n">def</span> <span class="n">decorated_function</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;I am the decorated function.&quot;</span>
+
+<span class="n">decorated_function</span> <span class="o">=</span> <span class="n">new_decorator</span><span class="p">(</span><span class="n">decorated_function</span><span class="p">)</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#I am a decorator! I am executed only when you decorate a function.</span>
+<span class="c1">#As the decorator, I return the wrapped function</span>
+
+<span class="c1"># Let&#39;s call the function:</span>
+<span class="n">decorated_function</span><span class="p">()</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#I am the wrapper around the decorated function. I am called when you call the decorated function.</span>
+<span class="c1">#As the wrapper, I return the RESULT of the decorated function.</span>
+<span class="c1">#I am the decorated function.</span>
+</pre></div>
+
+
+<p>No surprise here. Let's do EXACTLY the same thing, but skipping
+intermediate variables:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">decorated_function</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;I am the decorated function.&quot;</span>
+<span class="n">decorated_function</span> <span class="o">=</span> <span class="n">decorator_maker</span><span class="p">()(</span><span class="n">decorated_function</span><span class="p">)</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#I make decorators! I am executed only once: when you make me create a decorator.</span>
+<span class="c1">#As a decorator maker, I return a decorator</span>
+<span class="c1">#I am a decorator! I am executed only when you decorate a function.</span>
+<span class="c1">#As the decorator, I return the wrapped function.</span>
+
+<span class="c1"># Finally:</span>
+<span class="n">decorated_function</span><span class="p">()</span>    
+<span class="c1">#outputs:</span>
+<span class="c1">#I am the wrapper around the decorated function. I am called when you call the decorated function.</span>
+<span class="c1">#As the wrapper, I return the RESULT of the decorated function.</span>
+<span class="c1">#I am the decorated function.</span>
+</pre></div>
+
+
+<p>Let's make it AGAIN, even shorter:</p>
+<div class="codehilite"><pre><span class="nv">@decorator_maker</span><span class="p">()</span>
+<span class="n">def</span> <span class="n">decorated_function</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;I am the decorated function.&quot;</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#I make decorators! I am executed only once: when you make me create a decorator.</span>
+<span class="c1">#As a decorator maker, I return a decorator</span>
+<span class="c1">#I am a decorator! I am executed only when you decorate a function.</span>
+<span class="c1">#As the decorator, I return the wrapped function.</span>
+
+<span class="c1">#Eventually: </span>
+<span class="n">decorated_function</span><span class="p">()</span>    
+<span class="c1">#outputs:</span>
+<span class="c1">#I am the wrapper around the decorated function. I am called when you call the decorated function.</span>
+<span class="c1">#As the wrapper, I return the RESULT of the decorated function.</span>
+<span class="c1">#I am the decorated function.</span>
+</pre></div>
+
+
+<p>Hey, did you see that? We used a function call with the "<code>@</code>" syntax :-)</p>
+<p>So back to decorators with arguments. If we can use functions to
+generate the decorator on the fly, we can pass arguments to that
+function, right?</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">decorator_maker_with_arguments</span><span class="p">(</span><span class="n">decorator_arg1</span><span class="p">,</span> <span class="n">decorator_arg2</span><span class="p">):</span>
+
+    <span class="k">print</span> <span class="s">&quot;I make decorators! And I accept arguments:&quot;</span><span class="p">,</span> <span class="n">decorator_arg1</span><span class="p">,</span> <span class="n">decorator_arg2</span>
+
+    <span class="n">def</span> <span class="n">my_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="c1"># The ability to pass arguments here is a gift from closures.</span>
+        <span class="c1"># If you are not comfortable with closures, you can assume it&#39;s ok,</span>
+        <span class="c1"># or read: http://stackoverflow.com/questions/13857/can-you-explain-closures-as-they-relate-to-python</span>
+        <span class="k">print</span> <span class="s">&quot;I am the decorator. Somehow you passed me arguments:&quot;</span><span class="p">,</span> <span class="n">decorator_arg1</span><span class="p">,</span> <span class="n">decorator_arg2</span>
+
+        <span class="c1"># Don&#39;t confuse decorator arguments and function arguments!</span>
+        <span class="n">def</span> <span class="n">wrapped</span><span class="p">(</span><span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">print</span> <span class="p">(</span><span class="s">&quot;I am the wrapper around the decorated function.\n&quot;</span>
+                  <span class="s">&quot;I can access all the variables\n&quot;</span>
+                  <span class="s">&quot;\t- from the decorator: {0} {1}\n&quot;</span>
+                  <span class="s">&quot;\t- from the function call: {2} {3}\n&quot;</span>
+                  <span class="s">&quot;Then I can pass them to the decorated function&quot;</span>
+                  <span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">decorator_arg1</span><span class="p">,</span> <span class="n">decorator_arg2</span><span class="p">,</span>
+                          <span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapped</span>
+
+    <span class="k">return</span> <span class="n">my_decorator</span>
+
+<span class="nv">@decorator_maker_with_arguments</span><span class="p">(</span><span class="s">&quot;Leonard&quot;</span><span class="p">,</span> <span class="s">&quot;Sheldon&quot;</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">decorated_function_with_arguments</span><span class="p">(</span><span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">&quot;I am the decorated function and only knows about my arguments: {0}&quot;</span>
+           <span class="s">&quot; {1}&quot;</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">))</span>
+
+<span class="n">decorated_function_with_arguments</span><span class="p">(</span><span class="s">&quot;Rajesh&quot;</span><span class="p">,</span> <span class="s">&quot;Howard&quot;</span><span class="p">)</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#I make decorators! And I accept arguments: Leonard Sheldon</span>
+<span class="c1">#I am the decorator. Somehow you passed me arguments: Leonard Sheldon</span>
+<span class="c1">#I am the wrapper around the decorated function. </span>
+<span class="c1">#I can access all the variables </span>
+<span class="c1">#    - from the decorator: Leonard Sheldon </span>
+<span class="c1">#    - from the function call: Rajesh Howard </span>
+<span class="c1">#Then I can pass them to the decorated function</span>
+<span class="c1">#I am the decorated function and only knows about my arguments: Rajesh Howard</span>
+</pre></div>
+
+
+<p>Here it is, a decorator with arguments. Arguments can be set as
+variable:</p>
+<div class="codehilite"><pre><span class="n">c1</span> <span class="o">=</span> <span class="s">&quot;Penny&quot;</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="s">&quot;Leslie&quot;</span>
+
+<span class="nv">@decorator_maker_with_arguments</span><span class="p">(</span><span class="s">&quot;Leonard&quot;</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">decorated_function_with_arguments</span><span class="p">(</span><span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">&quot;I am the decorated function and only knows about my arguments:&quot;</span>
+           <span class="s">&quot; {0} {1}&quot;</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">function_arg1</span><span class="p">,</span> <span class="n">function_arg2</span><span class="p">))</span>
+
+<span class="n">decorated_function_with_arguments</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span> <span class="s">&quot;Howard&quot;</span><span class="p">)</span>
+<span class="c1">#outputs:</span>
+<span class="c1">#I make decorators! And I accept arguments: Leonard Penny</span>
+<span class="c1">#I am the decorator. Somehow you passed me arguments: Leonard Penny</span>
+<span class="c1">#I am the wrapper around the decorated function. </span>
+<span class="c1">#I can access all the variables </span>
+<span class="c1">#    - from the decorator: Leonard Penny </span>
+<span class="c1">#    - from the function call: Leslie Howard </span>
+<span class="c1">#Then I can pass them to the decorated function</span>
+<span class="c1">#I am the decorated function and only knows about my arguments: Leslie Howard</span>
+</pre></div>
+
+
+<p>As you can see, you can pass arguments to the decorator like any
+function using this trick. You can even use <code>*args, **kwargs</code> if you
+wish. But remember decorators are called <strong>only once</strong>. Just when Python
+imports the script. You can't dynamically set the arguments afterwards.
+When you do "import x", <strong>the function is already decorated</strong>, so you
+can't<br />
+change anything.</p>
+<h1>Let's practice: a decorator to decorate a decorator</h1>
+<p>OK, as a bonus, I'll give you a snippet to make any decorator accept
+generically any argument. After all, in order to accept arguments, we
+created our decorator using another function.<br />
+We wrapped the decorator.<br />
+Anything else we saw recently that wrapped function?<br />
+Oh yes, decorators!<br />
+Let's have some fun and write a decorator for the decorators:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">decorator_with_args</span><span class="p">(</span><span class="n">decorator_to_enhance</span><span class="p">):</span>
+    <span class="s">&quot;&quot;&quot; </span>
+<span class="s">    This function is supposed to be used as a decorator.</span>
+<span class="s">    It must decorate an other function, that is intended to be used as a decorator.</span>
+<span class="s">    Take a cup of coffee.</span>
+<span class="s">    It will allow any decorator to accept an arbitrary number of arguments,</span>
+<span class="s">    saving you the headache to remember how to do that every time.</span>
+<span class="s">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># We use the same trick we did to pass arguments</span>
+    <span class="n">def</span> <span class="n">decorator_maker</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># We create on the fly a decorator that accepts only a function</span>
+        <span class="c1"># but keeps the passed arguments from the maker.</span>
+        <span class="n">def</span> <span class="n">decorator_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+
+            <span class="c1"># We return the result of the original decorator, which, after all, </span>
+            <span class="c1"># IS JUST AN ORDINARY FUNCTION (which returns a function).</span>
+            <span class="c1"># Only pitfall: the decorator must have this specific signature or it won&#39;t work:</span>
+            <span class="k">return</span> <span class="n">decorator_to_enhance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">decorator_wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator_maker</span>
+</pre></div>
+
+
+<p>It can be used as follows:</p>
+<div class="codehilite"><pre><span class="c1"># You create the function you will use as a decorator. And stick a decorator on it :-)</span>
+<span class="s-Atom">#</span> <span class="nv">Don</span><span class="err">&#39;</span><span class="s-Atom">t</span> <span class="s-Atom">forget</span><span class="p">,</span> <span class="s-Atom">the</span> <span class="s-Atom">signature</span> <span class="o">is</span> <span class="s2">&quot;decorator(func, *args, **kwargs)&quot;</span>
+<span class="s-Atom">@decorator_with_args</span> 
+<span class="s-Atom">def</span> <span class="nf">decorated_decorator</span><span class="p">(</span><span class="s-Atom">func</span><span class="p">,</span> <span class="o">*</span><span class="s-Atom">args</span><span class="p">,</span> <span class="s-Atom">**kwargs</span><span class="p">)</span><span class="s-Atom">:</span> 
+    <span class="s-Atom">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="s-Atom">function_arg1</span><span class="p">,</span> <span class="s-Atom">function_arg2</span><span class="p">)</span><span class="s-Atom">:</span>
+        <span class="s-Atom">print</span> <span class="s2">&quot;Decorated with&quot;</span><span class="p">,</span> <span class="s-Atom">args</span><span class="p">,</span> <span class="s-Atom">kwargs</span>
+        <span class="s-Atom">return</span> <span class="nf">func</span><span class="p">(</span><span class="s-Atom">function_arg1</span><span class="p">,</span> <span class="s-Atom">function_arg2</span><span class="p">)</span>
+    <span class="s-Atom">return</span> <span class="s-Atom">wrapper</span>
+
+<span class="s-Atom">#</span> <span class="nv">Then</span> <span class="s-Atom">you</span> <span class="s-Atom">decorate</span> <span class="s-Atom">the</span> <span class="s-Atom">functions</span> <span class="s-Atom">you</span> <span class="s-Atom">wish</span> <span class="s-Atom">with</span> <span class="s-Atom">your</span> <span class="s-Atom">brand</span> <span class="s-Atom">new</span> <span class="s-Atom">decorated</span> <span class="s-Atom">decorator</span><span class="p">.</span>
+
+<span class="s-Atom">@</span><span class="nf">decorated_decorator</span><span class="p">(</span><span class="m">42</span><span class="p">,</span> <span class="m">404</span><span class="p">,</span> <span class="m">1024</span><span class="p">)</span>
+<span class="s-Atom">def</span> <span class="nf">decorated_function</span><span class="p">(</span><span class="s-Atom">function_arg1</span><span class="p">,</span> <span class="s-Atom">function_arg2</span><span class="p">)</span><span class="s-Atom">:</span>
+    <span class="s-Atom">print</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s-Atom">function_arg1</span><span class="p">,</span> <span class="s-Atom">function_arg2</span>
+
+<span class="nf">decorated_function</span><span class="p">(</span><span class="s2">&quot;Universe and&quot;</span><span class="p">,</span> <span class="s2">&quot;everything&quot;</span><span class="p">)</span>
+<span class="s-Atom">#</span><span class="nn">outputs</span><span class="p">:</span>
+<span class="s-Atom">#</span><span class="nv">Decorated</span> <span class="nf">with</span> <span class="p">(</span><span class="m">42</span><span class="p">,</span> <span class="m">404</span><span class="p">,</span> <span class="m">1024</span><span class="p">)</span> <span class="p">{}</span>
+<span class="s-Atom">#</span><span class="nv">Hello</span> <span class="nv">Universe</span> <span class="s-Atom">and</span> <span class="s-Atom">everything</span>
+
+<span class="s-Atom">#</span> <span class="nv">Whoooot</span><span class="p">!</span>
+</pre></div>
+
+
+<p>I know, the last time you had this feeling, it was after listening a guy
+saying: "before understanding recursion, you must first understand
+recursion". But now, don't you feel good about mastering this?</p>
+<h1>Best practices while using decorators</h1>
+<ul>
+<li>They are new as of Python 2.4, so be sure that's what your code is
+    running on.</li>
+<li>Decorators slow down the function call. Keep that in mind.</li>
+<li>You can not un-decorate a function. There are hacks to create
+    decorators that can be removed but nobody uses them. So once a
+    function is decorated, it's done. <strong>For all the code</strong>.</li>
+<li>Decorators wrap functions, which can make them hard to debug.</li>
+</ul>
+<p>Python 2.5 solves this last issue by providing the <code>functools</code> module
+including <code>functools.wraps</code> that copies the name, module and docstring
+of any wrapped function to it's wrapper. Fun fact, <code>functools.wraps</code> is
+a decorator :-)</p>
+<div class="codehilite"><pre><span class="c1"># For debugging, the stacktrace prints you the function __name__</span>
+<span class="n">def</span> <span class="n">foo</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;foo&quot;</span>
+
+<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">__name__</span>
+<span class="c1">#outputs: foo</span>
+
+<span class="c1"># With a decorator, it gets messy    </span>
+<span class="n">def</span> <span class="n">bar</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="n">def</span> <span class="n">wrapper</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&quot;bar&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nv">@bar</span>
+<span class="n">def</span> <span class="n">foo</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;foo&quot;</span>
+
+<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">__name__</span>
+<span class="c1">#outputs: wrapper</span>
+
+<span class="c1"># &quot;functools&quot; can help for that</span>
+
+<span class="nb">import</span> <span class="n">functools</span>
+
+<span class="n">def</span> <span class="n">bar</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="c1"># We say that &quot;wrapper&quot;, is wrapping &quot;func&quot;</span>
+    <span class="c1"># and the magic begins</span>
+    <span class="nv">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="n">def</span> <span class="n">wrapper</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&quot;bar&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nv">@bar</span>
+<span class="n">def</span> <span class="n">foo</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;foo&quot;</span>
+
+<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">__name__</span>
+<span class="c1">#outputs: foo</span>
+</pre></div>
+
+
+<h1>How can the decorators be useful?</h1>
+<p>Now the big question: what can I use decorators for? Seem cool and
+powerful, but a practical example would be great. Well, there are 1000
+possibilities. Classic uses are extending a function behavior from an
+external lib (you can't modify it) or for a debug purpose (you don't
+want to modify it because it's temporary). You can use them to extends
+several functions with the same code without rewriting it every time,
+for DRY's sake. E.g.:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">benchmark</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    A decorator that prints the time a function takes</span>
+<span class="s">    to execute.</span>
+<span class="s">    &quot;&quot;&quot;</span>
+    <span class="nb">import</span> <span class="nb">time</span>
+    <span class="n">def</span> <span class="n">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="nb">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span><span class="o">-</span><span class="n">t</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="n">def</span> <span class="n">logging</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    A decorator that logs the activity of the script.</span>
+<span class="s">    (it actually just prints it, but it could be logging!)</span>
+<span class="s">    &quot;&quot;&quot;</span>
+    <span class="n">def</span> <span class="n">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="n">def</span> <span class="n">counter</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    A decorator that counts and prints the number of times a function has been executed</span>
+<span class="s">    &quot;&quot;&quot;</span>
+    <span class="n">def</span> <span class="n">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">wrapper</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;{0} has been used: {1}x&quot;</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="n">wrapper</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nv">@counter</span>
+<span class="nv">@benchmark</span>
+<span class="nv">@logging</span>
+<span class="n">def</span> <span class="n">reverse_string</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">str</span><span class="p">(</span><span class="n">reversed</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="n">reverse_string</span><span class="p">(</span><span class="s">&quot;Able was I ere I saw Elba&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">reverse_string</span><span class="p">(</span><span class="s">&quot;A man, a plan, a canoe, pasta, heros, rajahs, a coloratura, maps, snipe, percale, macaroni, a gag, a banana bag, a tan, a tag, a banana bag again (or a camel), a crepe, pins, Spam, a rut, a Rolo, cash, a jar, sore hats, a peon, a canal: Panama!&quot;</span><span class="p">)</span>
+
+<span class="c1">#outputs:</span>
+<span class="c1">#reverse_string (&#39;Able was I ere I saw Elba&#39;,) {}</span>
+<span class="c1">#wrapper 0.0</span>
+<span class="c1">#wrapper has been used: 1x </span>
+<span class="c1">#ablE was I ere I saw elbA</span>
+<span class="c1">#reverse_string (&#39;A man, a plan, a canoe, pasta, heros, rajahs, a coloratura, maps, snipe, percale, macaroni, a gag, a banana bag, a tan, a tag, a banana bag again (or a camel), a crepe, pins, Spam, a rut, a Rolo, cash, a jar, sore hats, a peon, a canal: Panama!&#39;,) {}</span>
+<span class="c1">#wrapper 0.0</span>
+<span class="c1">#wrapper has been used: 2x</span>
+<span class="c1">#!amanaP :lanac a ,noep a ,stah eros ,raj a ,hsac ,oloR a ,tur a ,mapS ,snip ,eperc a ,)lemac a ro( niaga gab ananab a ,gat a ,nat a ,gab ananab a ,gag a ,inoracam ,elacrep ,epins ,spam ,arutaroloc a ,shajar ,soreh ,atsap ,eonac a ,nalp a ,nam A</span>
+</pre></div>
+
+
+<p>Of course the good thing with decorators is that you can use them right
+away on almost anything without rewriting. DRY, I said:</p>
+<div class="codehilite"><pre><span class="nv">@counter</span>
+<span class="nv">@benchmark</span>
+<span class="nv">@logging</span>
+<span class="n">def</span> <span class="n">get_random_futurama_quote</span><span class="p">():</span>
+    <span class="nb">import</span> <span class="n">httplib</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="p">(</span><span class="s">&quot;slashdot.org:80&quot;</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&quot;HEAD&quot;</span><span class="p">,</span> <span class="s">&quot;/index.html&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="n">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span><span class="o">.</span><span class="n">getheaders</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;x-b&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;x-f&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="s">&quot;No, I&#39;m ... doesn&#39;t!&quot;</span>
+
+<span class="k">print</span> <span class="n">get_random_futurama_quote</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">get_random_futurama_quote</span><span class="p">()</span>
+
+<span class="c1">#outputs:</span>
+<span class="c1">#get_random_futurama_quote () {}</span>
+<span class="c1">#wrapper 0.02</span>
+<span class="c1">#wrapper has been used: 1x</span>
+<span class="c1">#The laws of science be a harsh mistress.</span>
+<span class="c1">#get_random_futurama_quote () {}</span>
+<span class="c1">#wrapper 0.01</span>
+<span class="c1">#wrapper has been used: 2x</span>
+<span class="c1">#Curse you, merciful Poseidon!</span>
+</pre></div>
+
+
+<p>Python itself provides several decorators: <code>property</code>, <code>staticmethod</code>,
+etc. Django use decorators to manage caching and view permissions.
+Twisted to fake inlining asynchronous functions calls. This really is a
+large playground.</p>
+<p><strong>Source:</strong> <a href="http://stackoverflow.com/questions/739654/how-can-i-make-a-chain-of-function-decorators-in-python#1594484">Stackoverflow</a></p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/decorators.html">decorators</a>
+    <a href="http://yasoob.github.io/blog/tag/decorators-demystified.html">decorators demystified</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/python-decorators.html">python decorators</a>
+    <a href="http://yasoob.github.io/blog/tag/using-python-decorators.html">using python decorators</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "all-about-decorators-in-python";
+        var disqus_url = "http://yasoob.github.io/blog/all-about-decorators-in-python";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

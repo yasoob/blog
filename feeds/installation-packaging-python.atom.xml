@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/installation-packaging-python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-08-01T14:51:00-04:00</updated><entry><title>Packaging and distributing your python libraries</title><link href="http://yasoob.github.io/blog/packaging-and-distributing-your-python-libraries" rel="alternate"></link><updated>2013-08-01T14:51:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-01:packaging-and-distributing-your-python-libraries</id><summary type="html">&lt;p&gt;Hi there fellow coders. This post will go over the basics of packaging
+and deploying your python libraries. So without wasting a minute lets
+get started&lt;!--more--&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Folder structure&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;So first thing first. What should be your folder structure ? At minimum
+you can have only two files. The first one should be the &lt;a href="http://freepythontips.wordpress.com/2013/07/29/packaging-your-python-scripts/"&gt;setup.py
+file&lt;/a&gt; and the second one should be your module file. But today I am
+not going to talk about the very basics. Today we are going to follow
+this folder structure :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;My_module&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+    &lt;span class="n"&gt;LICENSE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;txt&lt;/span&gt;
+    &lt;span class="n"&gt;README&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;txt&lt;/span&gt;
+    &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+    &lt;span class="n"&gt;My_module&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+        &lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here I have 4 files. The License file contains the license under which
+you want to distribute your module. So lets move on. What should be our
+second step ? Obviously it should be to describe our module and write
+some meta data into the setup.py file.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Describing your module&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The setup.py file is the heart of any python module or library. It
+describes the module and lists some other useful info about the module
+like it lists any dependencies on which a module depends and it also
+tells distutils where to find the necessary scripts of this module. So
+lets describe our module with the help of our setup.py file.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;distutils&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;
+
+&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My super module&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;0.1dev&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My_module&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,],&lt;/span&gt;
+    &lt;span class="n"&gt;license&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Creative Commons Attribution-Noncommercial-Share Alike license&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;long_description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;README.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here we could have rewritten the long_description ourselves but we
+reused our README file. We wrote 'dev' in the version because we still
+do not have anything in our module but we are moving toward the 0.1
+release. When you have enough code in your module then feel free to drop
+'dev' from the version field. Now the next step is to make our first
+release.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Making your first release&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;So how do we make our first release ? Just follow me. Your release
+should have a single archive file. It can be easily made with this
+command.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;sdist&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Just go to the root of your module folder and execute this command. It
+will create a subdirectory with the name of dist and will package all of
+your module scripts and other files into a single archive file ready to
+be uploaded on PyPI (Python Package Index). This archive file will have
+the default extension of &lt;code&gt;zip&lt;/code&gt; on windows and &lt;code&gt;tar.gz&lt;/code&gt; on POSIX systems.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Publishing your module&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now that archive file can be uploaded anywhere for distribution but we
+will focus on PyPI. In order to upload on PyPI you will first have to
+make an account on http://pypi.python.org/pypi . After that you will
+have to register your package on PyPI like this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="sr"&gt;/to/&lt;/span&gt;&lt;span class="n"&gt;My_module&lt;/span&gt;
+&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;register&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Just use your existing login. Afte that run the following command to
+upload it to PyPI.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;sdist&lt;/span&gt; &lt;span class="n"&gt;upload&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will make the distribution one time more and will upload it to
+PyPI. Now you should be proud of yourself because you have just
+contributed to the opensource world. I hope you liked my post. If you
+want to read about setup.py then go &lt;a href="http://freepythontips.wordpress.com/2013/07/29/packaging-your-python-scripts/"&gt;here&lt;/a&gt;. For further
+study i recommend the &lt;a href="http://guide.python-distribute.org/index.html"&gt;Hichhikers guide to packaging&lt;/a&gt;. I hope you
+liked today's post. Do share your views in the comments below and stay
+tuned for the next post.&lt;/p&gt;</summary><category term="distribute"></category><category term="packages"></category><category term="python"></category><category term="python libraries"></category><category term="uploading"></category></entry></feed>

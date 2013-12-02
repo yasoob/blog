@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/help-inspiration-news-python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-11-13T23:30:00-05:00</updated><entry><title>Some Python projects worth looking at</title><link href="http://yasoob.github.io/blog/some-python-projects-worth-looking-at" rel="alternate"></link><updated>2013-11-13T23:30:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-11-13:some-python-projects-worth-looking-at</id><summary type="html">&lt;p&gt;Hi there guys. So a lot has happened while I was away. It has been only
+a few weeks and a whole ton of great python project have emerged. In
+this post I will share a list of some of the excellent projects I saw in
+the past few days. So lets take a look at them without wasting any more
+time.&lt;!--more--&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/DanMcInerney/LANs.py"&gt;Lans.py&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This project is interesting mostly for those who are into network
+security. This is a single script providing a set of useful commands. It
+is a packet parsing/injecting arp spoofer. Check out the github page for
+more information&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://fomori.org/cherrymusic"&gt;CherryMusic&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CherryMusic is not a new project but it recently got a new release. It
+is basically a music streaming server written in python. It allows you
+to stream your own music collection to all your devices! I have
+personally tested it and really recommend it.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://pythonwheels.com/"&gt;Python Wheels&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/wheel"&gt;Wheels&lt;/a&gt; are &lt;a href="http://www.python.org/dev/peps/pep-0427"&gt;the new standard&lt;/a&gt; of python distribution and are
+intended to replace eggs. Among other advantages, they offer faster
+installation and allow secure digital signing. This project does not
+support a lot of python packages at the moment but they are trying to
+support as many projects as possible.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://dataset.readthedocs.org/en/latest/"&gt;Dataset&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;dataset provides two key functions that make using SQL databases in
+Python a breeze. A simple abstraction layer removes most direct SQL
+statements without the necessity for a full ORM model and Database
+contents can be exported (&lt;em&gt;frozen&lt;/em&gt;) using a &lt;a href="https://dataset.readthedocs.org/en/latest/freezefile.html"&gt;&lt;em&gt;sophisticated plain file
+generator&lt;/em&gt;&lt;/a&gt;with JSON and CSV support.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://openpyxl.readthedocs.org/en/latest/"&gt;Openpyxl&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OpenPyxl is a Python library to read/write Excel 2007 xlsx/xlsm files.
+It was born from lack of existing library to read/write natively from
+Python the new Open Office XML format. Do check this project if you deal
+a lot with Excel files. You never know when you find something useful&lt;/p&gt;
+&lt;p&gt;If you are still reading then I guess you are hungry for more projects.
+Never mind I will do more posts about such things. For the time being do
+follow me on &lt;a href="https://twitter.com/yasoobkhalid"&gt;twitter&lt;/a&gt;, follow this blog and comment below to share
+your views and to give me an idea about a future post.&lt;/p&gt;</summary><category term="cherrypy"></category><category term="dataset"></category><category term="learn python"></category><category term="new projects"></category><category term="openpyxl"></category><category term="python"></category><category term="python inspiration"></category><category term="python projects"></category><category term="python wheels"></category></entry></feed>

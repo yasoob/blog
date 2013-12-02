@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/uncategorized.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-09-09T19:10:00-04:00</updated><entry><title>A surprize for you</title><link href="http://yasoob.github.io/blog/a-surprize-for-you" rel="alternate"></link><updated>2013-09-09T19:10:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-09-09:a-surprize-for-you</id><summary type="html">&lt;p&gt;Hi there pythonistas. You might have noticed that I haven't been active
+much on this blog. There's a reason for that. I was preparing a PyCon
+talk. Yes I was really preparing a PyCon talk. The title of the talk is
+web scraping in python. I have submitted the proposal and now I am
+waiting for it's acceptance. Do pray for it's acceptance and after that
+you will be able to see me in Montreal next year ;) . I will keep you
+updated with the status of my talk that whether it is accepted or not.&lt;/p&gt;</summary></entry><entry><title>Extracting pixel values of an image in python</title><link href="http://yasoob.github.io/blog/extracting-pixel-values-of-an-image-in-python" rel="alternate"></link><updated>2013-08-28T08:38:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-28:extracting-pixel-values-of-an-image-in-python</id><summary type="html">&lt;p&gt;This is a very nice post which teaches you some of the basics of PIL
+(python imaging library) . Make sure that you read it if you are
+interested in images.&lt;/p&gt;</summary></entry><entry><title>Software Spotlight: Bitmessage</title><link href="http://yasoob.github.io/blog/software-spotlight-bitmessage" rel="alternate"></link><updated>2013-08-13T22:15:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-13:software-spotlight-bitmessage</id><summary type="html">&lt;p&gt;One of the latest application made with python. Definitely worth
+checking out. Do share your views in the comments below.&lt;/p&gt;</summary></entry></feed>

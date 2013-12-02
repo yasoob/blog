@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/welcome.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-07-28T01:29:00-04:00</updated><entry><title>The beginning of a new blog.</title><link href="http://yasoob.github.io/blog/welcome" rel="alternate"></link><updated>2013-07-28T01:29:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-28:welcome</id><summary type="html">&lt;p&gt;Hi there, Today i am beginning my very own personal blog related to
+python. Let me first tell you who i am. I am a computer programmer from
+Pakistan. I have made a lot open source contributions. I have
+contributed mainly to youtube-dl.&lt;!--more--&gt;It's a python script which
+allows you to download videos from various websites like youtube,
+facebook, dailymotion, metacafe, etc . I also run a website with the
+name of http://www.soundcloud-dl.appspot.com/ It allows you to search
+and download music from soundcloud.com . I know that sounds cool :D . I
+have done all of it's backend programming in python. I also have some
+useful scripts on my github page and if you would like to check them out
+then you are most welcome. This blog will serve you new python tips
+every other day. This blog is not for seasoned programmers but those who
+are starting out with python or want to enhance their knowledge about
+this language. lastly if you have any comments, suggestions or want my
+help with something then feel free to email me on yasoob.khld@gmail.com
+. I guess now it's time to say goodbye.&lt;/p&gt;</summary></entry></feed>

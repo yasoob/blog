@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/inspiration-python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-08-02T18:27:00-04:00</updated><entry><title>5 quality screencasts worth watching</title><link href="http://yasoob.github.io/blog/5-quality-screencasts-worth-watching" rel="alternate"></link><updated>2013-08-02T18:27:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-02:5-quality-screencasts-worth-watching</id><summary type="html">&lt;p&gt;Hello there fellas. I am back with another list of useful resources.
+This time i am going to share with you 5 quality python screen casts
+worth watching. Unlike ruby there are not really much quality screen
+casts related to python out there. So without&lt;!--more--&gt; wasting a dime
+lets continue with the list of those screen casts. So here it is:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt;The first one if &lt;a href="http://pycandy.com/2013-07-04/encoding-specifiers-1"&gt;Encoding Specifiers and Magical Mode Lines&lt;/a&gt; in
+python. There's a lot in it for learning. Go check it out and you won't
+regret it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt;The second one is by Neck Beard Republic. This one is about
+&lt;a href="https://www.neckbeardrepublic.com/screencasts/lambdas-functions"&gt;lambda functions in python&lt;/a&gt;. Neck Beard Republic have great python
+screen casts but most of them are paid however they have some free
+screen casts as well.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt;The third one is a series of screen casts by Kenneth Love. They
+are related to django. The title is &lt;a href="http://gettingstartedwithdjango.com/en/lessons/"&gt;Getting Started With Django.&lt;/a&gt;
+They are great. I have personally watched them. There's something for
+everyone in it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt;The fourth one is again by Neckbeard Republic. This one is a must
+watch for every python programmer out there. The title of this screen
+cast is [__dunder__ functions in python][]. There can be alot of
+mystery involved in Python when it comes to the dunder (double
+underscore) methods. This screen cast will reveal the secret behind
+these function. However i have not personally watched it but it's on my
+todo list.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5.&lt;/strong&gt;Ah so now comes the last one. This one is again a Neckbeard
+Republic production. This one is about the &lt;a&gt;super() literal in
+python&lt;/a&gt;. I can see how much effort &lt;a href="http://twitter.com/myusuf3"&gt;Mahdi Yusuf&lt;/a&gt; has put into
+making these screen casts.&lt;/p&gt;
+&lt;p&gt;So now we come to the end of another great post about 5 quality python
+screen casts worth watching. However there are some other video
+resources as well like &lt;a href="http://showmedo.com/videotutorials/python"&gt;Showmedo&lt;/a&gt; which i will cover in a future post.
+If you are feeling adventurous then check out &lt;a href="http://freepythontips.wordpress.com/2013/08/01/10-inspirations-for-your-next-python-project/"&gt;10 inspirations for your
+next python project&lt;/a&gt; or &lt;a href="http://freepythontips.wordpress.com/2013/08/01/packaging-and-distributing-your-python-libraries/"&gt;Packaging and distributing your python
+libraries&lt;/a&gt;. I hope you liked today's post. Do share your views in the
+comments below and stay tuned for the next post.&lt;/p&gt;</summary><category term="inspiration"></category><category term="must watch"></category><category term="python"></category><category term="quality"></category><category term="screencasts"></category><category term="worth watching"></category></entry><entry><title>10 inspirations for your next python project</title><link href="http://yasoob.github.io/blog/10-inspirations-for-your-next-python-project" rel="alternate"></link><updated>2013-08-01T23:27:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-01:10-inspirations-for-your-next-python-project</id><summary type="html">&lt;p&gt;Hi there fellow coders. I know those times when we don't know what to
+code. I am sure you must have experienced that time as well. Today i am
+going to share with you 10 python projects that will serve as an
+inspiration for your next python project. So without wasting a time
+here's&lt;!--more--&gt; the list.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; &lt;a href="https://github.com/python-imaging/Pillow"&gt;Pillow&lt;/a&gt; . Pillow is the "friendly" PIL fork by Alex Clark and
+Contributors. PIL is the Python Imaging Library by Fredrik Lundh and
+Contributors. Alex teaches us that if you don't like something then make
+a fork.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;a href="https://github.com/kennethreitz/inbox.py"&gt;Inbox.py&lt;/a&gt;. This is the simplest SMTP server you'll ever see.
+It's asynchronous. One instance should handle over one thousand emails
+per second. Pretty impressive.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;a href="https://github.com/Hawstein/PyMinecraft"&gt;PyMinecraft&lt;/a&gt;. Have you ever thought of implementing the famous
+minecraft game into python ? Hawstein has.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; &lt;a href="https://github.com/zedshaw/fuqit"&gt;fuqit&lt;/a&gt;. The latest and greatest from Zed Shaw (the writer of
+learn python the hard way) , fuqit is a web framework that attempts to
+make you forget everything you have learned from MVC frameworks and
+focuses on simplicity. Zed Shaw teaches us one thing through this
+project "Don't panic while doing something against the trend".&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5.&lt;/strong&gt; &lt;a href="https://github.com/cenkalti/pypi-notifier"&gt;PyPI Notifier&lt;/a&gt;. Watches your requirements.txt files and
+notifies you via email when a project is updated. Although i have not
+used it myself but i think this project is great.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6.&lt;/strong&gt; &lt;a href="https://github.com/bmaeser/vol"&gt;Vol&lt;/a&gt;. A simple project but great inspiration. vol lets you
+control your mac's audio volume from the commandline. It also has
+support for profiles.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7.&lt;/strong&gt; &lt;a href="https://github.com/rg3/youtube-dl/"&gt;Youtube-dl&lt;/a&gt;. A great python project. It allows you to download
+videos from various websites. It's a great project make sure that you
+check it out.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;8.&lt;/strong&gt; &lt;a href="https://github.com/lociii/jukebox"&gt;Jukebox&lt;/a&gt;. Ever wanted to listen to music with a larger group
+of people e.g. in your office? Who decides what to play? Make your music
+player democratic and give everyone the chance to promote their
+favourite song. This script will relieve you from numerous fights.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;9.&lt;/strong&gt; &lt;a href="https://github.com/cortesi/mitmproxy"&gt;Mitmproxy&lt;/a&gt;. mitmproxy is a an SSL capable
+man-in-the-middle-proxy. It allows HTTP(and other) traffic to be
+inspected and edited on the fly. Don’t be caught unaware by apps like
+Path any more, now you can know what data you are sending and receiving
+from remote servers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;10.&lt;/strong&gt; &lt;a href="https://github.com/globocom/thumbor"&gt;Thumbor&lt;/a&gt;. It is a smart imaging service. It enables on-demand
+crop, resizing and flipping of images. I haven't checked it out though
+but it seems promising. Do check it out if you want a server side image
+cropper.&lt;/p&gt;
+&lt;p&gt;So finally we come to the end of this post. I hope you found some useful
+python projects in there to serve as an inspiration. Share your views in
+the comments below and tell me which project you liked the most or if
+you want to read further then check out my another blog post about &lt;a href="http://freepythontips.wordpress.com/2013/07/30/20-python-libraries-you-cant-live-without/"&gt;20
+python libraries you can't live without&lt;/a&gt;.&lt;/p&gt;</summary><category term="inspiration"></category><category term="must watch"></category><category term="python"></category><category term="python projects"></category><category term="technology"></category><category term="top 10"></category></entry></feed>

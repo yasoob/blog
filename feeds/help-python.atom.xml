@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/help-python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-08-31T00:35:00-04:00</updated><entry><title>Fixing error - maximum recursion depth reached</title><link href="http://yasoob.github.io/blog/fixing-error-maximum-recursion-depth-reached" rel="alternate"></link><updated>2013-08-31T00:35:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-31:fixing-error-maximum-recursion-depth-reached</id><summary type="html">&lt;p&gt;Hi there folks. In this post I am going to teach you how to increase the
+recursion depth in python. Most of us at some time get this error :&lt;!--more--&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;maximum&lt;/span&gt; &lt;span class="n"&gt;recursion&lt;/span&gt; &lt;span class="n"&gt;depth&lt;/span&gt; &lt;span class="n"&gt;exceeded&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you want to fix this error just increase the default recursion depth
+limit but how to do it ? Just import the sys module in your script and
+in the beginning of the script type this :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setrecursionlimit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1500&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will increase the default limit to 1500. For the record the default
+limit is 1000. I hope that you found this post useful. Do share this on
+facebook and twitter and stay tuned for our next post.&lt;/p&gt;</summary><category term="debug"></category><category term="default limit"></category><category term="error"></category><category term="help"></category><category term="increase"></category><category term="python"></category><category term="recursion"></category></entry><entry><title>Give me an idea for an Ebook</title><link href="http://yasoob.github.io/blog/give-me-an-idea-for-an-ebook" rel="alternate"></link><updated>2013-07-31T20:41:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-31:give-me-an-idea-for-an-ebook</id><summary type="html">&lt;p&gt;Hi there fellas. Today i am going to ask you for a favour. I am going to
+write an ebook about python. I want you to give me some ideas about what
+i should write. This Ebook is going to be short. It will be between 10
+to 20 pages because it's my first ebook. Currently i have&lt;!--more--&gt; two
+topics in mind. The first one is to write an introductory ebook about
+how to get started with python. This will be for beginners and will
+include the installation and setting up of python as well as some
+introductory tutorials. The other topic is to write about how i made the
+&lt;a href="http://www.soundcloud-dl.appspot.com/"&gt;soundcloud searcher and downloader&lt;/a&gt; . All the backend programming of
+soundcloud searcher and downloader is done in python. This ebook will
+contain all the methods and resources I used to make this soundcloud
+searcher and downloader as well as how I got it working on google app
+engine. In my opinion the second topic will be more useful for you guys
+as most of us are looking for these type of ebooks.&lt;/p&gt;
+&lt;p&gt;What do you say ? If you want me to write about any other topic then do
+tell me in the comments below and I will see.&lt;/p&gt;</summary><category term="ebook"></category><category term="example"></category><category term="help"></category><category term="help me"></category><category term="tutorial"></category></entry></feed>

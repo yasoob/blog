@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/installation-python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-07-30T23:44:00-04:00</updated><entry><title>20 Python libraries you can't live without</title><link href="http://yasoob.github.io/blog/20-python-libraries-you-cant-live-without" rel="alternate"></link><updated>2013-07-30T23:44:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-30:20-python-libraries-you-cant-live-without</id><summary type="html">&lt;p&gt;Hi there fellas. Today i am going to list 20 python libraries which have
+been a part of my toolbelt and should be a part of yours as well. So
+here they are&lt;!--more--&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; &lt;a href="http://www.python-requests.org"&gt;Requests&lt;/a&gt;. The most famous http library written by kenneth
+reitz. It's a must have for every python developer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;a href="http://www.scrapy.org"&gt;Scrapy&lt;/a&gt;. If you are involved in webscraping then this is a
+must have library for you. After using this library you won't use any
+other.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;a href="http://wxpython.org/"&gt;wxPython&lt;/a&gt;. A gui toolkit for python. I have primarily used it
+in place of tkinter. You will really love it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; &lt;a href="https://github.com/python-imaging/Pillow"&gt;Pillow&lt;/a&gt;. A friendly fork of PIL (Python Imaging Library). It
+is more user friendly than PIL and is a must have for anyone who works
+with images.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5.&lt;/strong&gt; &lt;a href="http://www.sqlalchemy.org/"&gt;SQLAlchemy&lt;/a&gt;. A database library. Many love it and many hate
+it. The choice is yours.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6.&lt;/strong&gt; &lt;a href="http://www.crummy.com/software/BeautifulSoup/"&gt;BeautifulSoup&lt;/a&gt;. I know it's slow but this xml and html parsing
+library is very useful for beginners.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7.&lt;/strong&gt; &lt;a href="http://twistedmatrix.com/"&gt;Twisted&lt;/a&gt;. The most important tool for any network application
+developer. It has a very beautiful api and is used by a lot of famous
+python developers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;8.&lt;/strong&gt; &lt;a href="http://numpy.scipy.org//"&gt;NumPy&lt;/a&gt;. How can we leave this very important library ? It
+provides some advance math functionalities to python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;9.&lt;/strong&gt; &lt;a href="http://www.scipy.org/"&gt;SciPy&lt;/a&gt;. When we talk about NumPy then we have to talk about
+scipy. It is a library of algorithms and mathematical tools for python
+and has caused many scientists to switch from ruby to python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;10.&lt;/strong&gt; &lt;a href="http://matplotlib.sourceforge.net/"&gt;matplotlib&lt;/a&gt;. A numerical plotting library. It is very useful
+for any data scientist or any data analyzer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;11.&lt;/strong&gt; &lt;a href="http://www.pygame.org/news.html"&gt;Pygame&lt;/a&gt;. Which developer does not like to play games and
+develop them ? This library will help you achieve your goal of 2d game
+development.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;12.&lt;/strong&gt; &lt;a href="http://www.pyglet.org/"&gt;Pyglet&lt;/a&gt;. A 3d animation and game creation engine. This is the
+engine in which the famous &lt;a href="https://github.com/fogleman/Minecraft"&gt;python port&lt;/a&gt; of minecraft was made&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;13.&lt;/strong&gt; &lt;a href="http://www.riverbankcomputing.co.uk/pyqt/"&gt;pyQT&lt;/a&gt;. A GUI toolkit for python. It is my second choice after
+wxpython for developing GUI's for my python scripts.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;14.&lt;/strong&gt; &lt;a href="http://www.pygtk.org/"&gt;pyGtk&lt;/a&gt;. Another python GUI library. It is the same library in
+which the famous Bittorrent client is created.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;15.&lt;/strong&gt; &lt;a href="http://www.secdev.org/projects/scapy/"&gt;Scapy&lt;/a&gt;. A packet sniffer and analyzer for python made in
+python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;16.&lt;/strong&gt; &lt;a href="http://sourceforge.net/projects/pywin32/"&gt;pywin32&lt;/a&gt;. A python library which provides some useful methods
+and classes for interacting with windows.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;17.&lt;/strong&gt; &lt;a href="http://www.nltk.org/"&gt;nltk&lt;/a&gt;. Natural Language Toolkit – I realize most people won’t
+be using this one, but it’s generic enough. It is a very useful library
+if you want to manipulate strings. But it's capacity is beyond that. Do
+check it out.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;18.&lt;/strong&gt; &lt;a href="http://code.google.com/p/python-nose/"&gt;nose&lt;/a&gt;. A testing framework for python. It is used by millions
+of python developers. It is a must have if you do test driven
+development.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;19.&lt;/strong&gt; &lt;a href="http://code.google.com/p/sympy/"&gt;SymPy&lt;/a&gt;. SymPy can do algebraic evaluation, differentiation,
+expansion, complex numbers, etc. It is contained in a pure Python
+distribution.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;20.&lt;/strong&gt; &lt;a href="http://ipython.scipy.org/moin/"&gt;IPython&lt;/a&gt;. I just can’t stress enough how useful this tool is.
+It is a python prompt on steroids. It has completion, history, shell
+capabilities, and a lot more. Make sure that you take a look at it.&lt;/p&gt;
+&lt;p&gt;I hope you liked today's post. Do share your views in the comments below
+and if you think that i have missed an important library which should be
+listed up there post it in the comments and i will add it. Stay tuned
+for the next post.&lt;/p&gt;</summary><category term="advance math"></category><category term="important"></category><category term="language"></category><category term="libraries"></category><category term="modules"></category><category term="most popular"></category><category term="must have"></category><category term="must have libraries"></category><category term="python"></category><category term="python libraries"></category></entry><entry><title>Python install location and version</title><link href="http://yasoob.github.io/blog/python-install-location-and-version" rel="alternate"></link><updated>2013-07-30T00:17:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-30:python-install-location-and-version</id><summary type="html">&lt;p&gt;Have you ever wondered how to check the install path of python and it's
+version ? If you have then this post is for you. It is very easy to
+check the version and install location of python on linux as well as on
+windows.&lt;!--more--&gt; First I will show the method of checking this on
+linux and then on windows.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; On linux just type these two commands in the terminal:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# for python install path&lt;/span&gt;
+&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="nv"&gt;@bt:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;which&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;
+
+&lt;span class="c1"&gt;# for python version;&lt;/span&gt;
+&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="nv"&gt;@bt:&lt;/span&gt;&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;
+&lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="mf"&gt;2.7.5&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; On windows type this commands in the command prompt for python
+version:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;V&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And type these commands in the python shell for python install path&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;executable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;C:\\Python27&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This comes in handy when you need to know the version and path of python
+real quick. I hope you liked today's post. Stay tuned for the next one.
+Do share your views in the comments below.&lt;/p&gt;</summary><category term="installation"></category><category term="location"></category><category term="path"></category><category term="programing"></category><category term="python"></category><category term="version"></category></entry><entry><title>Setting up python on windows</title><link href="http://yasoob.github.io/blog/setting-up-python-on-windows" rel="alternate"></link><updated>2013-07-29T16:44:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:setting-up-python-on-windows</id><summary type="html">&lt;p&gt;Hi there pythonistas. Most of the new python programmers don't know how
+to correctly install python on windows. Today I am going to share clean
+and clear instructions on how to install &lt;!--more--&gt;python on a Windows
+7 machine. There are only 4 steps involved so without wasting a minute
+lets get started.  &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1. Visit the official Python download page and grab the Windows installer. Choose the 32-bit version. (A 64-bit version is available, but there are compatibility issues with some modules you may want to install later.)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Python currently exists in two versions. One is 2.xx version
+and the other is 3.xx version. In this post i am going to focus only on
+2.xx version as it is more widely used right now and some modules don't
+support 3.xx version as yet.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Run the installer and accept all the default settings. Don't
+change the default directory it creates.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; Now comes the trickiest part. We have to add python to our
+environment variable. You do not have to understand what environment
+variable is. Just follow along with me. We set the system’s PATH
+variable to include directories that include Python components and
+packages so that they are available in the command prompt. Without doing
+this we won't be able to use python from command line. To do this:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Right-click Computer and select Properties.&lt;/li&gt;
+&lt;li&gt;In the dialog box, select Advanced Â System Settings.&lt;/li&gt;
+&lt;li&gt;In the next dialog, select Environment Variables.&lt;/li&gt;
+&lt;li&gt;In the User Variables section, edit the PATH statement to include
+    this:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;C:&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;Python27&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;C:&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;Python27&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;Lib&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;C:&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;Python27&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;Scripts&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;4. Now, you can open a command prompt (Start Menu|Accessories or Start Menu|Run|cmd) and type:&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;C:&lt;/span&gt;&lt;span class="o"&gt;\&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;That will load the Python interpreter:&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="mf"&gt;2.7.3&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="mi"&gt;2012&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;24&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;MSC&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="mf"&gt;.1500&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;bit&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intel&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;win32&lt;/span&gt;
+&lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;help&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;copyright&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;credits&amp;quot;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;license&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;information&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;/code&gt;&lt;br /&gt;
+Just because of the changes that you did to the path variable you are
+now able to use python from command prompt. Now press Control-Z to exit
+the interpreter and get back to a C: prompt.&lt;/p&gt;
+&lt;p&gt;Till now the the installation of python is complete but you may want to
+install &lt;a href="http://pypi.python.org/pypi/setuptools"&gt;setuptools&lt;/a&gt; which offers the helpful &lt;a&gt;easy_install&lt;/a&gt;
+utility for installing Python packages. Grab the appropriate version for
+your system and install and that's it for now. Stay tuned for the next
+post.&lt;/p&gt;</summary><category term="download"></category><category term="path variable"></category><category term="python"></category><category term="setting up python"></category><category term="setuptools"></category><category term="windows"></category></entry></feed>

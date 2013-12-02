@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/python-whitepaper.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-08-30T14:53:00-04:00</updated><entry><title>Looking Inside Dropbox - whitepaper</title><link href="http://yasoob.github.io/blog/looking-inside-dropbox-whitepaper" rel="alternate"></link><updated>2013-08-30T14:53:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-30:looking-inside-dropbox-whitepaper</id><summary type="html">&lt;p&gt;Hi there folks. We all know that dropbox is made in python. It's website
+is made with pyramid and it's desktop applications are made with python.
+The existing Python bytecode reversing techniques are not enough for
+reversing hardened applications like Dropbox. Recently I came
+accross&lt;!--more--&gt; a whitepaper written by Dhiru Kholia and Przemysław
+Wegrzyn. This paper presents new and generic techniques, to reverse
+engineer frozen Python applications, which are not limited to just the
+Dropbox world. It describes a method to bypass Dropbox's two factor
+authentication and hijack Dropbox accounts. Additionally, generic
+techniques to intercept SSL data using code injection techniques and
+monkey patching are presented. The methods presented in this whitepaper
+are not limited to dropbox.&lt;/p&gt;
+&lt;p&gt;You can download this whitepaper from &lt;a href="https://www.usenix.org/system/files/conference/woot13/woot13-kholia.pdf"&gt;usenix website.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Do share your views after reading this whitepaper and don't hesitate
+following us in order to get regular updates.&lt;/p&gt;</summary><category term="application"></category><category term="dropbox"></category><category term="hack"></category><category term="python"></category><category term="reverse engineer"></category></entry></feed>

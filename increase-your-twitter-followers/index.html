@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | Making a twitter bot in python</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi there guys. I hope you are fine. In this post I am going to tell you how you can make a twitter auto favouriter or a.k.a Twitter Bot. I am not going to make a twitter follower as it will get you banned quickly if you use ..." />
+    <meta property="article:tag" content="auto follower" />
+    <meta property="article:tag" content="bot" />
+    <meta property="article:tag" content="increase" />
+    <meta property="article:tag" content="increase twitter followers" />
+    <meta property="article:tag" content="increase your twitter followers" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="tutorial" />
+    <meta property="article:tag" content="twitter" />
+    <meta property="article:tag" content="twitter bot" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    }   
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">Making a twitter bot in python</h1>
+      <span class="date">September 04, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi there guys. I hope you are fine. In this post I am going to tell you
+how you can make a twitter auto favouriter or a.k.a Twitter Bot. I am
+not going to make a twitter follower as it will get you banned quickly
+if you use it a lot. This post is going to help you to increase your
+twitter followers organically. By organically I mean that your
+followers<!--more--> will be those who really want to listen to your
+content. You can either use services on the web to increase your
+followers inorganically or else you can use this script ;) . So what
+affect does favouriting has on the user who's post you favourite ? When
+you favourite someone's post he will get curious as who favourited his
+post. Then he will visit your profile and will follow you if he likes
+your tweets. So without wasting any time lets begin.</p>
+<p>The basic mechanism or the way of working of our bot will be that you
+will give it a keyword like "python" and it will search twitter for that
+keyword. After searching it will start favouriting the tweets from top
+to bottom.</p>
+<p>First of all I am going to use "twitter" module for this project. There
+are a lot of twitter related modules on PyPI but this module did the
+trick so I thought to use it
+(https://pypi.python.org/pypi/twitter/1.10.0) . Secondly in order to
+follow along you will have to make a dev account on twitter and register
+an application with any name (https://dev.twitter.com/apps). Lets begin
+by importing the twitter module and initiating connection with twitter
+using the OAUTH tokens. :</p>
+<div class="codehilite"><pre><span class="n">from</span> <span class="n">twitter</span> <span class="nb">import</span> <span class="n">Twitter</span><span class="p">,</span> <span class="n">OAuth</span><span class="p">,</span> <span class="n">TwitterHTTPError</span>
+
+<span class="n">OAUTH_TOKEN</span> <span class="o">=</span> <span class="s">&#39;your oauth token&#39;</span>
+<span class="n">OAUTH_SECRET</span> <span class="o">=</span> <span class="s">&#39;your oauth secret&#39;</span>
+<span class="n">CONSUMER_KEY</span> <span class="o">=</span> <span class="s">&#39;your consumer key&#39;</span>
+<span class="n">CONSUMER_SECRET</span> <span class="o">=</span> <span class="s">&#39;your consumer secret&#39;</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">Twitter</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">OAuth</span><span class="p">(</span><span class="n">OAUTH_TOKEN</span><span class="p">,</span> <span class="n">OAUTH_SECRET</span><span class="p">,</span>
+            <span class="n">CONSUMER_KEY</span><span class="p">,</span> <span class="n">CONSUMER_SECRET</span><span class="p">))</span>
+</pre></div>
+
+
+<p>So now we have initiated connection with twitter. This is the basic
+structure of our twitter auto favouriter or a.k.a twitter bot. Now lets
+move on and define a method which will search for tweets on twitter.</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">search_tweets</span><span class="p">(</span><span class="sx">q, count=100):</span>
+<span class="sx">    return t.search.tweets(q=q,</span> <span class="n">result_type</span><span class="o">=</span><span class="s">&#39;recent&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+</pre></div>
+
+
+<p>So now we have to define a method which will favourite a tweet:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">fav_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+    <span class="n">try:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">favorites</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">_id</span><span class="o">=</span><span class="n">tweet</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
+        <span class="k">print</span> <span class="s">&quot;Favorited: %s&quot;</span> <span class="nv">%</span> <span class="err">(</span><span class="nv">result</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="c1"># when you have already favourited a tweet</span>
+    <span class="c1"># this error is thrown</span>
+    <span class="n">except</span> <span class="n">TwitterHTTPError</span> <span class="n">as</span> <span class="n">e:</span>
+        <span class="k">print</span> <span class="s">&quot;Error: &quot;</span><span class="p">,</span> <span class="n">e</span>
+        <span class="k">return</span> <span class="n">None</span>
+</pre></div>
+
+
+<p>So now we have a searching method and a favouriting method. Now tell me
+what is left ? Obviously the main code that will drive our whole program
+is left. So here you go:</p>
+<div class="codehilite"><pre><span class="n">def</span> <span class="n">auto_fav</span><span class="p">(</span><span class="sx">q, count=100):</span>
+<span class="sx">    result = search_tweets(q,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;statuses&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;user&#39;</span><span class="p">][</span><span class="s">&#39;screen_name&#39;</span><span class="p">]</span>
+    <span class="k">print</span> <span class="n">a</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">tweet</span> <span class="n">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;statuses&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">fav_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">None:</span>
+            <span class="n">success</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">print</span> <span class="s">&quot;We Favorited a total of %i out of %i tweets&quot;</span> <span class="nv">%</span> <span class="err">(</span><span class="nv">success</span><span class="p">,</span>
+          <span class="n">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;statuses&#39;</span><span class="p">]))</span>
+</pre></div>
+
+
+<p>So thats it! We have a complete bot for twitter. This bot currently only
+favourites tweets based on a keyword. Save this code in a file called
+twitter_bot.py . Now you can use this bot by typing this in the
+terminal:</p>
+<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">python</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">import</span> <span class="n">twitter_bot</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">twitter_bot</span><span class="o">.</span><span class="n">auto_fav</span><span class="p">(</span><span class="s">&#39;#python&#39;</span><span class="p">,</span><span class="s">&#39;20&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The above command will search for 20 latest tweets containing the
+hashtag "python". After that it will favourite all of those tweets. This
+bot itself works but I can not gurantee that you will get followers
+quickly and I can not even gurantee that you will not get banned by
+twitter for using this a lot. You can use this once in a day. Hopefully
+I will write a twitter follower bot in the future as well but till then
+this script is your best bet.</p>
+<p>This is the complete script:</p>
+<div class="codehilite"><pre><span class="n">from</span> <span class="n">twitter</span> <span class="nb">import</span> <span class="n">Twitter</span><span class="p">,</span> <span class="n">OAuth</span><span class="p">,</span> <span class="n">TwitterHTTPError</span>
+
+<span class="n">OAUTH_TOKEN</span> <span class="o">=</span> <span class="s">&#39;your oauth token&#39;</span>
+<span class="n">OAUTH_SECRET</span> <span class="o">=</span> <span class="s">&#39;your oauth secret&#39;</span>
+<span class="n">CONSUMER_KEY</span> <span class="o">=</span> <span class="s">&#39;your consumer key&#39;</span>
+<span class="n">CONSUMER_SECRET</span> <span class="o">=</span> <span class="s">&#39;your consumer secret&#39;</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">Twitter</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">OAuth</span><span class="p">(</span><span class="n">OAUTH_TOKEN</span><span class="p">,</span> <span class="n">OAUTH_SECRET</span><span class="p">,</span>
+            <span class="n">CONSUMER_KEY</span><span class="p">,</span> <span class="n">CONSUMER_SECRET</span><span class="p">))</span>
+
+<span class="n">def</span> <span class="n">search_tweets</span><span class="p">(</span><span class="sx">q, count=100):</span>
+<span class="sx">    return t.search.tweets(q=q,</span> <span class="n">result_type</span><span class="o">=</span><span class="s">&#39;recent&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+
+<span class="n">def</span> <span class="n">fav_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+    <span class="n">try:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">favorites</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">_id</span><span class="o">=</span><span class="n">tweet</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
+        <span class="k">print</span> <span class="s">&quot;Favorited: %s&quot;</span> <span class="nv">%</span> <span class="err">(</span><span class="nv">result</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="c1"># when you have already favourited a tweet</span>
+    <span class="c1"># this error is thrown</span>
+    <span class="n">except</span> <span class="n">TwitterHTTPError</span> <span class="n">as</span> <span class="n">e:</span>
+        <span class="k">print</span> <span class="s">&quot;Error: &quot;</span><span class="p">,</span> <span class="n">e</span>
+        <span class="k">return</span> <span class="n">None</span>
+
+<span class="n">def</span> <span class="n">auto_fav</span><span class="p">(</span><span class="sx">q, count=100):</span>
+<span class="sx">    result = search_tweets(q,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;statuses&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;user&#39;</span><span class="p">][</span><span class="s">&#39;screen_name&#39;</span><span class="p">]</span>
+    <span class="k">print</span> <span class="n">a</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">tweet</span> <span class="n">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;statuses&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">fav_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">None:</span>
+            <span class="n">success</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">print</span> <span class="s">&quot;We Favorited a total of %i out of %i tweets&quot;</span> <span class="nv">%</span> <span class="err">(</span><span class="nv">success</span><span class="p">,</span>
+          <span class="n">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;statuses&#39;</span><span class="p">]))</span>
+</pre></div>
+
+
+<p>This is the final result of running this sript:</p>
+<div class="codehilite"><pre><span class="n">yasoob</span><span class="nv">@yasoob:</span><span class="o">~/</span><span class="n">Desktop</span><span class="nv">$</span> <span class="nv">python</span>
+<span class="n">Python</span> <span class="mf">2.7.3</span> <span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Apr</span> <span class="mi">10</span> <span class="mi">2013</span><span class="p">,</span> <span class="mo">06</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">15</span><span class="p">)</span> 
+<span class="p">[</span><span class="n">GCC</span> <span class="mf">4.6.3</span><span class="p">]</span> <span class="n">on</span> <span class="n">linux2</span>
+<span class="n">Type</span> <span class="s">&quot;help&quot;</span><span class="p">,</span> <span class="s">&quot;copyright&quot;</span><span class="p">,</span> <span class="s">&quot;credits&quot;</span> <span class="ow">or</span> <span class="s">&quot;license&quot;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">import</span> <span class="n">twitter_bot</span> <span class="n">as</span> <span class="n">bot</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bot</span><span class="o">.</span><span class="n">auto_fav</span><span class="p">(</span><span class="s">&#39;django&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Favorited:</span> <span class="n">Enjoying</span> <span class="nv">@freakboy3742</span><span class="err">’</span><span class="n">s</span> <span class="n">discussion</span> <span class="n">of</span> <span class="n">cultural</span> <span class="n">naming</span> <span class="n">patterns</span> <span class="n">vis</span> <span class="n">a</span> <span class="n">vis</span> <span class="n">Django</span> <span class="n">users</span> <span class="n">at</span> <span class="c1">#DjangoCon</span>
+<span class="n">We</span> <span class="n">Favorited</span> <span class="n">a</span> <span class="n">total</span> <span class="n">of</span> <span class="mi">1</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">1</span> <span class="n">tweets</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>I hope you liked todays post. If you have any questions then feel free
+to comment below and do follow us if you want to get regular updates
+from our blog. If you want me to write on one specific topic then do
+tell it to me in the comments below. Stay tuned for my next post.</p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/auto-follower.html">auto follower</a>
+    <a href="http://yasoob.github.io/blog/tag/bot.html">bot</a>
+    <a href="http://yasoob.github.io/blog/tag/increase.html">increase</a>
+    <a href="http://yasoob.github.io/blog/tag/increase-twitter-followers.html">increase twitter followers</a>
+    <a href="http://yasoob.github.io/blog/tag/increase-your-twitter-followers.html">increase your twitter followers</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/tutorial.html">tutorial</a>
+    <a href="http://yasoob.github.io/blog/tag/twitter.html">twitter</a>
+    <a href="http://yasoob.github.io/blog/tag/twitter-bot.html">twitter bot</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "increase-your-twitter-followers";
+        var disqus_url = "http://yasoob.github.io/blog/increase-your-twitter-followers";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

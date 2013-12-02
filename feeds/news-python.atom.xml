@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/news-python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-11-13T22:18:00-05:00</updated><entry><title>PyDev 3.0 Released</title><link href="http://yasoob.github.io/blog/pydev-3-0-released" rel="alternate"></link><updated>2013-11-13T22:18:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-11-13:pydev-3-0-released</id><summary type="html">&lt;p&gt;Hi there folks. Its been a long time since I posted here. That was
+because my studies were giving me some problems. So no worrys because
+the problems are all resolved and I am back with yet another news. So
+what is PyDev ? If you have been coding python scripts with eclipse
+(it's an IDE) then the chances are that you know what PyDev
+is&lt;!--more--&gt;. So for those who are not familiar with pydev read on.
+PyDev is a third-party plug-in for Eclipse. It is an Integrated
+Development Environment used for programming in Python supporting code
+refactoring, graphical debugging, code analysis and many other features.
+Recently it's 3.0 version was released after a long break. Some believed
+that the development for PyDev had stopped but this release has given
+hope to eclipse lovers. According to the official pydev website PyDev
+comes with many goodies such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Django integration&lt;/li&gt;
+&lt;li&gt;Code completion&lt;/li&gt;
+&lt;li&gt;Code completion with auto import&lt;/li&gt;
+&lt;li&gt;Type hinting&lt;/li&gt;
+&lt;li&gt;Code analysis&lt;/li&gt;
+&lt;li&gt;Go to definition&lt;/li&gt;
+&lt;li&gt;Refactoring&lt;/li&gt;
+&lt;li&gt;Debugger&lt;/li&gt;
+&lt;li&gt;Remote debugger&lt;/li&gt;
+&lt;li&gt;Tokens browser&lt;/li&gt;
+&lt;li&gt;Interactive console&lt;/li&gt;
+&lt;li&gt;Unittest integration&lt;/li&gt;
+&lt;li&gt;Code coverage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;and many others&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I believe it is worth to check out this project. The link to the
+official website is &lt;a href="http://pydev.org/"&gt;http://pydev.org/&lt;/a&gt; and &lt;a href="http://www.pydev.blogspot.com.br/2013/11/pydev-30.html"&gt;here is the link&lt;/a&gt; to
+this release announcement . Do share your views in the comments below
+and stay tuned for the next post. If you know someone who can benefit
+from my post then do make sure that you tell them about this blog.&lt;/p&gt;</summary><category term="eclipse python"></category><category term="eclipse python plugin"></category><category term="news"></category><category term="pydev"></category><category term="pydev 3.0"></category><category term="pydev eclipse"></category><category term="python"></category></entry><entry><title>Python 3.4 to be equipped with pip by default</title><link href="http://yasoob.github.io/blog/python-3-4-to-be-equipped-with-pip-by-default" rel="alternate"></link><updated>2013-10-22T21:59:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-10-22:python-3-4-to-be-equipped-with-pip-by-default</id><summary type="html">&lt;p&gt;Hi there Pythonistas. A news has arrived that&lt;strong&gt;pip&lt;/strong&gt; will be available
+by default with python 3.4. &lt;a href="http://www.python.org/dev/peps/pep-0453/"&gt;PEP 453&lt;/a&gt; which was "Explicit
+bootstrapping of pip in Python installations" has been accepted. Python
+3.4 which has entered into the beta phase after the release of final
+alpha will have pip by default. If you are new to python then you might
+be &lt;!--more--&gt;wondering what pip is ? Pip is a tool for installing and
+managing Python packages. Previously easy_install has been the most
+used package manager. &lt;em&gt;Easy_Install&lt;/em&gt; is a python module
+(&lt;code&gt;easy_install&lt;/code&gt;) bundled with &lt;code&gt;setuptools&lt;/code&gt; that lets you automatically
+download, build, install, and manage Python packages but has a lot of
+weak points in front of pip. In order to use pip you first have to
+install it by using &lt;em&gt;easy_install&lt;/em&gt;. Why pip is better:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The command is simpler, shorter&lt;/li&gt;
+&lt;li&gt;First-class support of virtualenv&lt;/li&gt;
+&lt;li&gt;More commands than just &lt;code&gt;install&lt;/code&gt;, including &lt;code&gt;uninstall&lt;/code&gt;.
+    &lt;code&gt;pip bundle&lt;/code&gt;, &lt;code&gt;pip freeze&lt;/code&gt; and &lt;code&gt;pip search&lt;/code&gt; are pretty nice as well.&lt;/li&gt;
+&lt;li&gt;Can install from a VCS (via &lt;code&gt;-e&lt;/code&gt;), or from source&lt;/li&gt;
+&lt;li&gt;Requirements files are easy to use, clearly describes what happens
+    in its process&lt;/li&gt;
+&lt;li&gt;If it can not download all the dependencies, it will not install
+    anything (though I don't think it rolls stuff back if an
+    installation fails&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I hope you are as much happy as I am with the acceptance of this PEP. Do
+share your views in the comments below and don't forget to share this
+post and follow this blog in order to get the latest news relating with
+the python world.&lt;/p&gt;</summary><category term="acceptance"></category><category term="news"></category><category term="PEP"></category><category term="pep 453"></category><category term="pip"></category><category term="python"></category></entry><entry><title>PyCharm 3.0 Community Edition</title><link href="http://yasoob.github.io/blog/pycharm-3-0-community-edition" rel="alternate"></link><updated>2013-10-22T21:43:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-10-22:pycharm-3-0-community-edition</id><summary type="html">&lt;p&gt;The makers of the hugely popular Python IDE &lt;strong&gt;PyCharm&lt;/strong&gt; recently
+announced a community edition of their Python IDE. &lt;strong&gt;JetBrains&lt;/strong&gt;
+announced that they will be offering a community Edition of PyCharm
+however it will have some stripped down features for example it will not
+have builtin support for pyramid etc. However the&lt;!--more--&gt; news for a
+Community version of PyCharm became hot in the python community recently
+because PyCharm is currently the best IDE available for Python. This
+community edition has been out for quite some time now and has already
+been downloaded by a lot of developers. Today the Source code of this
+IDE was also open sourced by JetBrains. The source code is available on
+&lt;a href="https://github.com/JetBrains/intellij-community/"&gt;github&lt;/a&gt; . This IDE has a lot of cool features. Here are a few of the
+features of the community version:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intelligent Editor, with code completion, on-the-fly error
+    highlighting, auto-fixes, etc.&lt;/li&gt;
+&lt;li&gt;Automated code refactorings and rich navigation capabilities&lt;/li&gt;
+&lt;li&gt;Integrated debugger and unit testing support&lt;/li&gt;
+&lt;li&gt;Native VCS integrations&lt;/li&gt;
+&lt;li&gt;Customizable UI and key-bindings, with VIM&lt;/li&gt;
+&lt;li&gt;emulation available&lt;/li&gt;
+&lt;li&gt;And much more, all available under the Apache 2 license&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I hope you are as much excited as I am. I have already taken this IDE
+for a test drive and have been fascinated by it's power. It is a one
+stop solution for every python developer whether he is a system engineer
+or a web developer. I hope you will take this IDE for a test drive. Do
+share your experience in the comments below so that others can know
+about your experience and don't forget to follow this blog if you want
+to get latest news, tips, tricks and tutorials relating to python.&lt;/p&gt;</summary><category term="best python ide"></category><category term="code writer"></category><category term="hot"></category><category term="IDE"></category><category term="new"></category><category term="pycharm"></category><category term="python"></category><category term="python ide"></category><category term="python news"></category></entry><entry><title>Python News 13 Oct 2013</title><link href="http://yasoob.github.io/blog/python-news-13-oct-2013" rel="alternate"></link><updated>2013-10-14T01:59:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-10-14:python-news-13-oct-2013</id><summary type="html">&lt;p&gt;Hi folks in this post i am going to share with you news from the python
+world. This is like a roundup of monthly news.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Latest News&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;1.&lt;/strong&gt; &lt;a href="http://www.theregister.co.uk/2013/10/10/nhs_drops_oracle_for_riak/"&gt;NHS drops Oracle for Python, Riak, Redis, RabbitMQ, Tornado, Flask and more&lt;/a&gt;&lt;br /&gt;
+The UK government's quest to get public services&lt;!--more--&gt; to use more
+open source technologies seems to be taking hold, judging by the revamp
+of the NHS's very large Spine service.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;a href="http://ipython.org/microsoft-donation-2013.html"&gt;Microsoft donates $100,000 to the IPython team&lt;/a&gt;&lt;br /&gt;
+Microsoft donates $100,000 to the IPython team for the continued
+development of IPython.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;a href="http://www.jetbrains.com/pycharm/whatsnew/index.html"&gt;PyCharm 3.0 Community Edition&lt;/a&gt;&lt;br /&gt;
+Jet Brains recently surprised the Python community by launching a
+community version of it's extremely popular Python IDE. It's a must have
+for a Python programmer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; &lt;a href="https://pypi.python.org/pypi/pymongo/2.6.3"&gt;PyMongo 2.6.3 Released&lt;/a&gt;&lt;br /&gt;
+MongoDB is one of the leading NoSQL Database. The PyMongo distribution
+contains tools for interacting with MongoDB database from Python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Python Conferences:&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;1.&lt;/strong&gt; &lt;a href="http://pycon.blogspot.ca/2013/10/announcing-keynotes-van-lindberg.html"&gt;PyCon 2014 Keynotes announced&lt;/a&gt;&lt;br /&gt;
+The keynote speakers for the largest Python Conference have been
+announced. This year the keynote speakers include Van Lindberg, Jessica
+McKellar, Fernando Perez, Guido Van Rossum and John Perry Barlow.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;a href="http://www.pytennessee.org/speaking/cfp/"&gt;PyTennessee Call for Papers!&lt;/a&gt;&lt;br /&gt;
+If you are in the Tennessee area and know python then make sure that
+you do not miss this great chance to attend the PyTennnesse. Submit your
+papers now. The deadline is 1st November.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Articles:&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;1.&lt;/strong&gt; &lt;a href="http://tomforb.es/breaking-out-of-secured-python-environments"&gt;Breaking Out of Secured Python Shells&lt;/a&gt;&lt;br /&gt;
+Ever thought of hacking secure python shells ? I hope not but this guy
+definitely thought about that and even accomplished. Hop over to his
+website to read about his discovery. It is definitely worth a read.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;a href="http://cbarker.net/blog/projects/applications/cubr"&gt;Cubr!&lt;/a&gt;&lt;br /&gt;
+A really cool project. This one involves the use of a mixed up Rubik's
+Cube. Just bring the mixed layout of a Rubik's Cube in front of your
+webcam and let this nifty application do it's trick.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;a href="http://wrobstory.github.io/2013/10/mapping-data-python.html"&gt;Mapping data in Python using Pandas and Vincent&lt;/a&gt;&lt;br /&gt;
+This Blogpost clearly shows the power of Vincent. Do check it out if
+you are into data mining and data representation. This Blogpost will
+surely help you.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; &lt;a href="http://blog.explainmydata.com/2013/10/training-random-forests-in-python-using.html"&gt;Training Random Forests in Python using the GPU&lt;/a&gt;&lt;br /&gt;
+Random Forests have emerged as a very popular learning algorithm for
+tackling complex prediction problems. These guys have released GPU
+Random Forest library for Python called CudaTree. Check this out if you
+want to learn more.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5.&lt;/strong&gt; &lt;a href="http://juliahgrace.com/intro-hardware-hacking-arduino.html"&gt;Introduction to Hardware Hacking with Arduino&lt;/a&gt;&lt;br /&gt;
+There are not a lot of post out there which explain clearly how to hack
+an Arduino using Python and turning it into a useful creature. This post
+is for Hardware Hackers who are a bit familiar with Python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6.&lt;/strong&gt; &lt;a href="http://www.toptal.com/python/why-are-there-so-many-pythons"&gt;Why are there so many Pythons ?&lt;/a&gt;&lt;br /&gt;
+This post starts from scratch and takes you step by step into the world
+of different Python implementations. Read it if you have time.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7.&lt;/strong&gt; &lt;a href="http://blog.dbrgn.ch/2013/3/26/perceptrons-in-python/"&gt;Programming a Perceptron in Python&lt;/a&gt;&lt;br /&gt;
+A perceptron classifier is a simple model of a neuron. In this post the
+author programs a Perceptron in Python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;8.&lt;/strong&gt; &lt;a href="http://zulko.github.io/blog/2013/09/27/read-and-write-video-frames-in-python-using-ffmpeg/"&gt;Read and Write Video Frames in Python Using FFMPEG&lt;/a&gt;&lt;br /&gt;
+This article shows how easy it is to read or write video frames with
+Python, by calling the external software FFMPEG through pipes. Worth the
+read if you are interested in video manipulation.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Interesting Projects:&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;1.&lt;/strong&gt; &lt;a href="https://pypi.python.org/pypi/csscompressor"&gt;csscompressor -- A python port of YUI CSS Compressor&lt;/a&gt;&lt;br /&gt;
+Port of YUI CSS Compressor to Python&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;a href="http://cintruder.sourceforge.net/"&gt;CIntruder&lt;/a&gt;&lt;br /&gt;
+Captcha Intruder is an automatic pentesting tool to bypass captchas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;a href="https://github.com/crsmithdev/arrow"&gt;Arrow 0.4&lt;/a&gt;&lt;br /&gt;
+Better dates &amp;amp; times for Python, now with ISO-8601 parsing and week
+support!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; &lt;a href="https://github.com/CamDavidsonPilon/lifelines"&gt;Lifelines&lt;/a&gt;&lt;br /&gt;
+Survival analysis in Python.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5.&lt;/strong&gt; &lt;a href="https://github.com/realgam3/pymultitor"&gt;Pymultitor&lt;/a&gt;&lt;br /&gt;
+With this algorithm you can use multiple tor threads to make multiple
+requests with multiple IP addresses.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6.&lt;/strong&gt; &lt;a href="https://github.com/kennethreitz/flask-sockets"&gt;Flask-Sockets: Easy WebSockets in Flask, by Kenneth Reitz&lt;/a&gt;&lt;br /&gt;
+This guy is super nice and always contribute useful libraries. This one
+is no less. Check this out if you are working with websockets.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7.&lt;/strong&gt; &lt;a href="http://pythonhosted.org/Whoosh/intro.html"&gt;Whoosh - a fast, pure Python search engine library.&lt;/a&gt;&lt;br /&gt;
+Really a wonderful project. Whoosh is a fast, pure Python search engine
+library. Whoosh is not really a search engine, it’s a programmer library
+for creating a search engine&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;8.&lt;/strong&gt; &lt;a href="https://github.com/FZambia/centrifuge"&gt;Centrifuge - real-time messaging in web applications&lt;/a&gt;&lt;br /&gt;
+Simple real-time messaging in web applications.The main goal of
+Centrifuge is the same as of &lt;a href="http://pusher.com/"&gt;Pusher&lt;/a&gt; or &lt;a href="http://www.pubnub.com/"&gt;Pubnub&lt;/a&gt; services. The main
+difference is that Centrifuge is open-source and requires installation.&lt;/p&gt;
+&lt;p&gt;I hope you liked this roundup. Make sure that you share this post on
+Facebook and Twitter. Stay tuned for the next post! Also do follow my
+blog so that you do not miss a single post and finally comment below if
+I missed something and if you think that I should do similar posts in
+the future as well.&lt;/p&gt;</summary><category term="news"></category><category term="python"></category><category term="python development"></category><category term="python news"></category><category term="python projects"></category><category term="weekly news"></category><category term="weekly newsletter"></category></entry></feed>

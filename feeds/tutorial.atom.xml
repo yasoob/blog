@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/tutorial.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-11-15T23:04:00-05:00</updated><entry><title>Introduction to unittest</title><link href="http://yasoob.github.io/blog/introduction-to-unittest" rel="alternate"></link><updated>2013-11-15T23:04:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-11-15:introduction-to-unittest</id><summary type="html">&lt;p&gt;Hi there folks. I recently thought that I have not written even a single
+post about testing in python. Testing is one of the most important part
+of any language. In this post I am going to share some information about
+unittest with you. So what exactly is unittest ? You might have heard
+about it on SO or some other forum.&lt;!--more--&gt; It is a testing framework
+for python just like Junit for Java. It comes pre-installed with python
+from 2.1. It is easy to use. However there are a lot of other testing
+frameworks for python out there as well but I will be focusing on
+unittest today as it is the default testing framework for python. So
+without wasting any time lets get started.&lt;/p&gt;
+&lt;p&gt;The standard workflow while using unittest is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;derive your own class from unittest.TestCase&lt;/li&gt;
+&lt;li&gt;write your tests in functions which start with "test_"&lt;/li&gt;
+&lt;li&gt;finally write unittest.main() at the end of your file to run the
+    tests&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I was also used to be scared by testing. Testing seemed to me as
+something from outer space but now I have learned its importance and it
+is essential for every programmer to learn it.&lt;/p&gt;
+&lt;h2&gt;&lt;strong&gt;A simple script&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;So lets write a simple script which we can later test. This script is
+going to do some math functions for us. So here is the script:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# save it as math.py&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;multiply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So thats our little script. Now lets move forward and write our first
+test.&lt;/p&gt;
+&lt;h2&gt;&lt;strong&gt;Our first test&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;So as I told you before that every unittest file contains a custom class
+derived from unittest.TestCase so lets create that:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;multiply&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestingMath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So that was the first part. Now we need to define our tests. In unittest
+there is a setUp() and tearDown() function. The setUp() function is used
+to set up the test environment and tearDown() is used to clean up after
+a test. We do not need them as they are usually used when a lot of tests
+are written for a larger software. The default implementation of setUp()
+and tearDown() does nothing. So now lets write our first test by editing
+our previous script.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;multiply&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestingMath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setUp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;pass&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_multiply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;multiply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now save this file as test.py and run it from the command line and you
+will see some output like this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yasoob&lt;/span&gt;&lt;span class="nv"&gt;@yasoob:&lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;Desktop&lt;/span&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="o"&gt;..&lt;/span&gt;
+&lt;span class="o"&gt;----------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="n"&gt;Ran&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="n"&gt;tests&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="mf"&gt;0.000&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+&lt;span class="n"&gt;OK&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Congratulations! You have written your very first fully working test
+suite in python. Wait! what are those assertEqual() statements there ?
+Let me explain them. These assert funtions are the backbones of testing
+in unittest. They check whether the result is correct or not. There are
+a lot of assert functions in unittest. In our case we used assertEqual()
+which checks whether two values are equal or not. We gave 2 parameters
+to assertEqual() now the job of assertEqual() is to check whether both
+parameters are equal or not. Just for reference some other assert
+functions are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;assertTrue(x)&lt;/li&gt;
+&lt;li&gt;assertFalse(x)&lt;/li&gt;
+&lt;li&gt;assertNotEqual(a, b)&lt;/li&gt;
+&lt;li&gt;assertIs(a, b)&lt;/li&gt;
+&lt;li&gt;assertIsNot(a, b)&lt;/li&gt;
+&lt;li&gt;assertIsNone(x)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Test Discovery&lt;/h2&gt;
+&lt;p&gt;So just think about it for a minute. You have a lot of test files and
+want to run all of them. The only method which comes to mind is to
+manually run all of those files separately. This is possible if you have
+10 files but what if you have a 100 files ? That is were automatic test
+discovery comes to rescue. So if I have all of my tests in app/tests
+directory I would simply run:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;unittest&lt;/span&gt; &lt;span class="n"&gt;discover&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tests&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So this command would gather all of the test files in the tests
+directory and will run them. I hope that was helpful.&lt;/p&gt;
+&lt;h2&gt;Furthur&lt;/h2&gt;
+&lt;p&gt;So now you have got some idea of how testing works in python. Remember
+that this was just an introduction and there is a whole lot to unittest
+than this. If you want to further increase your knowledge then check out
+the original &lt;a href="http://docs.python.org/2/library/unittest.html"&gt;python docs about unittest&lt;/a&gt;. I will cover other testing
+frameworks as well in the future. I hope you enjoyed this article and do
+remember this one tip that the best time to write tests is while
+developing. If you write tests bit by bit while developing then they
+will not become a burden and your application will be rock solid. Do
+share your views in the comments below or feel free to &lt;a href="yasoob.khld@gmail.com"&gt;email me&lt;/a&gt; or
+&lt;a href="http://twitter.com/yasoobkhalid"&gt;tweet me&lt;/a&gt;. Last but not the least follow this blog and stay tuned for
+the next post.&lt;/p&gt;</summary><category term="mock"></category><category term="nose"></category><category term="python"></category><category term="python testing"></category><category term="testing"></category><category term="testing in python"></category><category term="unittest"></category><category term="unittest tutorial"></category></entry></feed>

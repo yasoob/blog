@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-08-02T08:59:00-04:00</updated><entry><title>What is Pickle in python ?</title><link href="http://yasoob.github.io/blog/what-is-pickle-in-python" rel="alternate"></link><updated>2013-08-02T08:59:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-08-02:what-is-pickle-in-python</id><summary type="html">&lt;p&gt;Hi there fellas. In this post i am going to tell you about pickle. It is
+used for serializing and de-serializing a Python object structure. Any
+object in python can be pickled so that it can be saved on disk. What
+pickle does is that&lt;!--more--&gt; it “serialises” the object first before
+writing it to file. Pickling is a way to convert a python object (list,
+dict, etc.) into a character stream. The idea is that this character
+stream contains all the information necessary to reconstruct the object
+in another python script.&lt;/p&gt;
+&lt;p&gt;So lets continue:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; First of all you have to import it through this command:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pickle&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;pickle has two main methods. The first one is dump, which dumps an
+object to a file object and the second one is load, which loads an
+object from a file object.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Prepare something to pickle:&lt;br /&gt;
+Now you just have to get some data which you can pickle. For the sake
+of simplicity i will be pickling a python dictionary. So just read the
+below code and you will be able to figure it out yourself.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pickle&lt;/span&gt;
+
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value 3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value 3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;file_Name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;testfile&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# open the file for writing&lt;/span&gt;
+&lt;span class="n"&gt;fileObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_Name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;wb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# this writes the object a to the&lt;/span&gt;
+&lt;span class="c1"&gt;# file named &amp;#39;testfile&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;pickle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;fileObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# here we close the fileObject&lt;/span&gt;
+&lt;span class="n"&gt;fileObject&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c1"&gt;# we open the file for reading&lt;/span&gt;
+&lt;span class="n"&gt;fileObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file_Name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  
+&lt;span class="c1"&gt;# load the object from the file into var b&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pickle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fileObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  
+&lt;span class="n"&gt;b&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;test value 3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;
+&lt;span class="n"&gt;True&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The above code is self explanatory. It shows you how to import the
+pickled object and assign it to a variable. So now we need to know where
+we should use pickling. It is very useful when you want to dump some
+object while coding in the python shell. So after dumping whenever you
+restart the python shell you can import the pickled object and
+deserialize it. But there are other use cases as well which i found on
+&lt;a href="http://stackoverflow.com/questions/3438675/common-use-of-pickle-in-python"&gt;stackoverflow&lt;/a&gt;. Let me list them below.  &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;1) saving a program's state data to disk so that it can carry on where it left off when restarted (persistence)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;\2) sending python data over a TCP connection in a multi-core or
+distributed system (marshalling)&lt;/p&gt;
+&lt;p&gt;\3) storing python objects in a database&lt;/p&gt;
+&lt;p&gt;\4) converting an arbitrary python object to a string so that it can be
+used as a dictionary key (e.g. for caching &amp;amp; memoization).&lt;br /&gt;
+&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;One thing to note is that there is a brother of pickle as well with the
+name of cpickle. As the name suggests it is written in c which makes it
+1000 times more faster than pickle. So why should we ever use pickle
+instead of cpickle ? Here's the reason  &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; Because pickle handles unicode objects. &amp;gt;&amp;gt;&amp;gt; Because pickle is written in pure Python, it's easier to debug.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;For further reading i suggest the &lt;a href="http://docs.python.org/2/library/pickle.html"&gt;official pickle documentation&lt;/a&gt; or
+if you want to read more tutorials then check out the &lt;a href="http://freepythontips.wordpress.com/2013/08/01/connecting-to-sqlite-databases/"&gt;sqlite
+tutorial&lt;/a&gt;. Now we come to the end of today's post. I hope you liked
+it. Do follow my blog to get regular updates. If you have any
+suggestions or comments then post them below.&lt;/p&gt;</summary><category term="data serialization"></category><category term="deserialize"></category><category term="pickle"></category><category term="python"></category><category term="serialize"></category></entry><entry><title>Targeting python 2 and 3 at the same time.</title><link href="http://yasoob.github.io/blog/make-your-programs-compatible-with-python-2-and-3-at-the-same-time" rel="alternate"></link><updated>2013-07-30T19:58:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-30:make-your-programs-compatible-with-python-2-and-3-at-the-same-time</id><summary type="html">&lt;p&gt;Hi there pythonistas. Today i am not going to write a lengthy tutorial
+about how to make your programs compatible with python 2 and 3 at the
+same time, but i am going to share a simple tip &lt;!--more--&gt;with you guys
+which will help you achieve this target. Just imagine that you have a
+very popular python module which is use by hundreds of people but not
+all of them have python 2 or 3. In that case you have two choices. The
+first one is to distribute 2 modules. One for python 2 and the other for
+python 3 and the other choice is to modify your current code so that it
+can be used with both python 2 and 3. I am going to talk about the
+second choice. First tell me how you import packages in your script ?
+Most of us do this :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;
+&lt;span class="c1"&gt;# or&lt;/span&gt;
+&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bar&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Do you know that you can do something like this as well?&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I know it's function is the same as above listed code but it is vital
+for making your script compatible with python 2 and 3. Now examine the
+code below :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
+    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;urllib.request&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;urllib_request&lt;/span&gt; &lt;span class="cp"&gt;#for python 3&lt;/span&gt;
+&lt;span class="err"&gt;except&lt;/span&gt; &lt;span class="err"&gt;ImportError:&lt;/span&gt;
+    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;urllib2&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;urllib_request&lt;/span&gt; &lt;span class="cp"&gt;# for python 2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Did you find something noteworthy in the above code ? So let me explain
+the above code a little. We are wrapping our importing code in a try
+except clause. Why are we doing that ? We are doing it because in
+python2 there is no urllib.request module and will result in an
+ImportError. The functionality of urllib.request is provided by urllib2
+module in python2. So now when python2 try to import urllib.request and
+get an import error we tell it to import urllib2 instead. The final
+thing you need to know about is the &lt;code&gt;as&lt;/code&gt; keyword. It is mapping the
+imported module to urllib_request. So that now all of the Classes and
+methods of urllib2 are available to us by urllib_request.&lt;/p&gt;
+&lt;p&gt;So how did this help us in targeting python 2 and 3 at the same time ?
+Okay here is the trick. Once you have got a library that works in python
+2 but is not available in python 3 then you have to find out it's
+alternative in python 3 (most libraries have their alternatives for
+python 3 but some don't). I know it's trivial and that is why a lot of
+modules have still not been ported to python 3. After that you have to
+wrap your module importing code in a try-except clause with a common
+variable following the &lt;code&gt;as&lt;/code&gt; keyword. After that use the imported module.
+Here is a complete example which should work both in python 2 and 3:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request as compat_urllib_request&lt;/span&gt;
+&lt;span class="nn"&gt;except ImportError: # Python 2&lt;/span&gt;
+&lt;span class="nn"&gt;    import urllib2 as compat_urllib_request&lt;/span&gt;
+&lt;span class="nn"&gt;html = compat_urllib_request.urlopen(&amp;quot;http://www.google.com/&amp;quot;)&lt;/span&gt;
+&lt;span class="nn"&gt;print html.headers[&amp;#39;content-type&amp;#39;]&lt;/span&gt;
+&lt;span class="nn"&gt;&amp;#39;text/html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="err"&gt;charset=ISO-8859-1&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Another example which involves the json library:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
+    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;json&lt;/span&gt;
+&lt;span class="err"&gt;except&lt;/span&gt; &lt;span class="err"&gt;ImportError:&lt;/span&gt;
+    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;simplejson&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;json&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I hope you liked today's post. Stay tuned for the next one. If you have
+any suggestions then do post them in the comments below.&lt;/p&gt;</summary><category term="compatibility"></category><category term="language"></category><category term="programming"></category><category term="python"></category><category term="python 2"></category><category term="python 3"></category><category term="support"></category><category term="targeting"></category></entry><entry><title>Exception handling</title><link href="http://yasoob.github.io/blog/exception-handling" rel="alternate"></link><updated>2013-07-30T02:03:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-30:exception-handling</id><summary type="html">&lt;p&gt;Okay so the chances are you already know about exception handling in
+python but some new programmers don't. How do you handle exceptions in
+python ? First let me tell you what exceptions are. Exceptions are when
+something unexpected happens&lt;!--more--&gt; with your code. Just think that
+you writing a huge program which browses the internet and accesses web
+pages, the program works fine on your side and you consider packaging
+and distributing it. But something unexpected occurs on the pc of the
+user who downloaded your package from the internet and tried to run it.
+His internet connection dropped. What will happen ?&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;http://www.google.com/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="k"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; 
+    &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;http://www.google.com/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Python27\lib\urllib2.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;127&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;urlopen&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;_opener&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Python27\lib\urllib2.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;404&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;
+    &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Python27\lib\urllib2.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;422&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;_open&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;_open&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Python27\lib\urllib2.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;382&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;_call_chain&lt;/span&gt;
+    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Python27\lib\urllib2.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;1214&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;http_open&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;do_open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;httplib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTPConnection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Python27\lib\urllib2.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;1184&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;do_open&lt;/span&gt;
+    &lt;span class="n"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;URLError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So in order to save yourself from this you have to use
+&lt;code&gt;Exception Handling&lt;/code&gt;. There are three keywords available within python
+which help you to handle exceptions. They are usually referred to as
+&lt;code&gt;try-except&lt;/code&gt; clause. Just watch the below code.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;try:&lt;/span&gt;
+    &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;http://www.google.com/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;except&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;URLError&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;e:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;An error &amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;An&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here we are doing the same thing but using the try except clause. Lets
+get somewhat deeper into it. We wrap our main code in the try clause.
+After that we wrap some code in except clause which gets executed if an
+exception occurs in the code wrapped in try clause. But wait where is
+the third keyword ? The third keyword is &lt;code&gt;finally&lt;/code&gt;. It comes after the
+except clause and gets executed even if no exception occurs. Let me show
+you the same example but this time with the finally clause as well.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;try:&lt;/span&gt;
+    &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;http://www.google.com/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;except&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;URLError&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;e:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;An error %s &amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;%e&lt;/span&gt;
+&lt;span class="n"&gt;finally:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;This is going to be printed even if no exception occurs&amp;quot;&lt;/span&gt;
+
+&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Google&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;&lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;nwindow&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;google&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;kEI:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sdD2UbmEOMzBtAbyqYCgDQ&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="ow"&gt;ge&lt;/span&gt;
+
+&lt;span class="o"&gt;------------------------&lt;/span&gt;&lt;span class="n"&gt;trancuated&lt;/span&gt;&lt;span class="o"&gt;-------------------&lt;/span&gt; 
+&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;going&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;printed&lt;/span&gt; &lt;span class="n"&gt;even&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;no&lt;/span&gt; &lt;span class="n"&gt;exception&lt;/span&gt; &lt;span class="n"&gt;occurs&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So as you can see the finally clause got executed even when there was no
+exception. Okay now i am going to tell you a little secret which most of
+us don't know and even i got to know it just few days ago. While using
+the except clause if we want to handle any exception that we are not
+aware of then what should we do ? Here in this situation we can put more
+except clauses for each exception which is likely to occur and in the
+end we can put another except clause which caches all exceptions which
+were not likely to occur. Here is an example :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;try:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;ali&lt;/span&gt;
+&lt;span class="n"&gt;except&lt;/span&gt; &lt;span class="n"&gt;KeyboardInterrupt:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;#39;E&amp;#39;s pining!&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;except&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;This is going to handle every type of exception&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;finally:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;okay the end&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;going&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt; &lt;span class="n"&gt;every&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;exception&lt;/span&gt;
+&lt;span class="n"&gt;okay&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Okay i guess thats it for now. However i just gave you an intro of
+exception handling in python and if you want to study further then go to
+&lt;a href="http://docs.python.org/2/tutorial/errors.html"&gt;this&lt;/a&gt; link. I hope you liked today's post. Do share your views about
+todays post in the comments below.&lt;/p&gt;
+&lt;p&gt;Source : http://docs.python.org/2/tutorial/errors.html&lt;/p&gt;</summary><category term="error handling"></category><category term="errors"></category><category term="exceptions"></category><category term="python"></category><category term="try except"></category></entry><entry><title>Coding styles for python</title><link href="http://yasoob.github.io/blog/coding-styles-for-python" rel="alternate"></link><updated>2013-07-29T20:08:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:coding-styles-for-python</id><summary type="html">&lt;p&gt;Yet another useful post and this one is about coding styles in python.
+Everyone has his own coding style in python. Here i am going to post
+some links that will help you to choose your own coding style in
+python.&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;\1. The first link is undoubtedly from the &lt;strong&gt;official python
+documentation&lt;/strong&gt; as python documentation has everything to get you
+started. This link will teach you how to use python and how &lt;strong&gt;not&lt;/strong&gt; to
+use python.&lt;br /&gt;
+&lt;code&gt;http://docs.python.org/2/howto/doanddont.html&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;\2. The second link is from the famous &lt;strong&gt;PEP-8&lt;/strong&gt; which is python's
+official style guide. It determines the python's official coding
+standards. You should definitely take a look at them and try to
+incorporate them in your code.&lt;br /&gt;
+&lt;code&gt;http://www.python.org/dev/peps/pep-0008/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;\3. The third link is from &lt;strong&gt;google&lt;/strong&gt; because as you know google is a
+huge user of python and most of their infrastructure is based on python
+as is their online support forum. So it's not surprising that google has
+it's own style guide for python.&lt;br /&gt;
+&lt;code&gt;http://google-styleguide.googlecode.com/svn/trunk/pyguide.html&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;\4. So the last link is from &lt;strong&gt;khanacademy&lt;/strong&gt;. As you know it's the
+biggest online academy and whole of their online infrastructure is based
+on python. I really love their python style guide.  &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;https://sites.google.com/a/khanacademy.org/forge/for-developers/styleguide/python&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I hope you liked this post. Do share your views in the comments below.&lt;/p&gt;</summary><category term="code"></category><category term="coding style"></category><category term="important"></category><category term="python"></category><category term="python language"></category><category term="style"></category><category term="style guide"></category></entry><entry><title>Packaging your python scripts.</title><link href="http://yasoob.github.io/blog/packaging-your-python-scripts" rel="alternate"></link><updated>2013-07-29T14:42:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:packaging-your-python-scripts</id><summary type="html">&lt;p&gt;
+Oh hi there! Welcome to another useful post. This post is going to be
+about how to package your python scripts and packages for distribution
+on PyPI or some other place.&lt;!--more--&gt; Here I won't go too deep into
+explaining everything as most of us just need to know the basics of
+packaging. However i will provide you with different links for further
+study. Okay lets talk about
+
+    &gt;&gt;&gt; setuptools
+
+first. What is it ? It's a Python module which allows us to easily
+package our python scripts and modules for distribution. However there
+are other packaging libraries as well but here i will talk about
+setuptools only.
+
+So what should be the basic example to show the usage of setuptools ?
+Here you go. For basic use of setuptools, just import things from
+setuptools and then look below for the minimal setup script using
+setuptools.
+
+    from setuptools import setup, find_packages
+    setup(
+        name = "HelloWorld",
+        version = "0.1",
+        packages = find_packages(),
+    )
+
+As you see we don't have to specify much in order to use setuptools in a
+project. Just by doing the above, this project will be able to produce
+eggs, upload to PyPI, and automatically include all packages in the
+directory where the setup.py lives. But when you are releasing your
+projects on PyPI then you should add a bit more information about
+yourself and this package and if your project relies on some external
+dependencies then list them there as well. Here is another script which
+can do all that :
+
+    from setuptools import setup, find_packages
+    setup(
+        name = "HelloWorld",
+        version = "0.1",
+        packages = find_packages(),
+        scripts = ['say_hello.py'],
+
+        # Project uses reStructuredText, so ensure that the 
+        # docutils get installed or upgraded on the target 
+        # machine
+        install_requires = ['docutils&gt;=0.3'],
+
+        package_data = {
+            # If any package contains *.txt or *.rst files,
+            # include them:
+            '': ['*.txt', '*.rst'],
+            # And include any *.msg files found in the 
+            # 'hello' package, too:
+            'hello': ['*.msg'],
+        },
+
+        # metadata for upload to PyPI
+        author = "Me",
+        author_email = "me@example.com",
+        description = "This is an Example Package",
+        license = "PSF",
+        keywords = "hello world example examples",
+        # project home page, if any :
+        url = "http://example.com/HelloWorld/",   
+
+        # could also include long_description, download_url,
+        # classifiers, etc.
+    )
+
+I hope this is enough for now. However here are some other packaging
+libraries in case you were wondering :  
+
+` 1. Distutils is the standard tool used for packaging. It works rather well for simple needs, but is limited and not trivial to extend.`
+
+\2. Setuptools is a project born from the desire to fill missing
+distutils functionality and explore new directions. In some
+sub-communities, it’s a de facto standard. It uses monkey-patching and
+magic that is frowned upon by Python core developers.
+
+\3. Distribute is a fork of Setuptools that was started by developers
+feeling that its development pace was too slow and that it was not
+possible to evolve it. Its development was considerably slowed when
+distutils2 was started by the same group.
+
+\4. Distutils2 is a new distutils library, started as a fork of the
+distutils codebase, with good ideas taken from setup tools (of which
+some were thoroughly discussed in PEPs), and a basic installer inspired
+by pip. Distutils2 did not make the Python 3.3 release, and it was put
+on hold.
+
+source:
+http://stackoverflow.com/questions/6344076/differences-between-distribute-distutils-setuptools-and-distutils2  
+&lt;/code&gt;
+
+For further study i recommend:
+http://pythonhosted.org/distribute/setuptools.html</summary><category term="distribute"></category><category term="distutils"></category><category term="packaging"></category><category term="pypi"></category><category term="python"></category><category term="scripts"></category><category term="setuptools"></category></entry><entry><title>Dictionaries have a get() method</title><link href="http://yasoob.github.io/blog/dictionaries-have-a-get-method" rel="alternate"></link><updated>2013-07-29T00:59:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:dictionaries-have-a-get-method</id><summary type="html">&lt;p&gt;Okay here we are with yet another post. However this post is going to be
+short as in this post i am going to teach you a small, simple and very
+useful trick. Have you ever tried to access a value from a
+&lt;!--more--&gt;dictionary and got an exception that there is no value mapped
+to that key ? Like this :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="k"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; 
+    &lt;span class="n"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;KeyError:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;key3&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Sometimes you do not want anything like this because this error can
+break your whole program and make it useless until you fix this issue.
+Is there any way through which we can see if a key is present in a
+dictionary or not and if it is not present then get a default value in
+it's place ? the chances are that you don't know of any such method.
+Okay so here's the trick. Just examine the code below and i will explain
+it later.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;key3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;
+So what is happening above ? We are still accessing the same key but
+where has the exception gone ? Let me introduce you to get() method
+which is available with a dictionary. What this method does is that it
+allows you to specify a default value which is returned in case the key
+is not present in the dictionary. In our case there is no
+
+    key3
+
+&lt;p&gt;
+in our dict but when we are using the get() method we are specifying the
+default value which should be returned in case if key3 is not present
+and the default value which i have set is 0. The syntax of the get
+method is :
+
+    dict.get('anykey','the default value to return if the key is not present')
+
+. However if we do not set a default value then this returns `None` if
+the key is not present. I hope it's enough for you guys however if you
+want to further explore this get() method then google is your friend.
+
+Do share your views in the comments below.</summary><category term="default"></category><category term="dict"></category><category term="dictionaries"></category><category term="get()"></category><category term="python"></category><category term="software"></category></entry><entry><title>The use of return and global keywords.</title><link href="http://yasoob.github.io/blog/the-use-of-return-and-global-keywords" rel="alternate"></link><updated>2013-07-28T23:52:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-28:the-use-of-return-and-global-keywords</id><summary type="html">&lt;p&gt;Okay so here we have another post. This post is about the return
+keyword. you might have encountered some functions written in python
+which have a return keyword in the end of the function. Do you know what
+it does ?&lt;!--more--&gt; Lets examine this little function:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;value2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;value1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;value2&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;span class="mi"&gt;8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The function above takes two values as input and then output their
+addition. We could have also done:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;value2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="n"&gt;global&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;value2&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;span class="mi"&gt;8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So first lets talk about the first bit of code which involves the return
+keyword. What that function is doing is that it is assigning the value
+to the variable which is calling that function which in our case is
+&lt;code&gt;result&lt;/code&gt;.&lt;br /&gt;
+It's pretty handy in most cases and you won't need to use the global
+keyword. However lets examine the other bit of code as well which
+includes the global keyword. So what that function is doing is that it
+is making a global variable result. What does global mean here ? Global
+variable means that we can access that variable outside the function as
+well. Let me demonstrate it with an example :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# first without the global variable&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;value2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;value2&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Oh crap we encountered an exception. Why is it so ?&lt;/span&gt;
+&lt;span class="c1"&gt;# the python interpreter is telling us that we do not &lt;/span&gt;
+&lt;span class="c1"&gt;# have any variable with the name of result. It is so &lt;/span&gt;
+&lt;span class="c1"&gt;# because the result variable is only accessible inside &lt;/span&gt;
+&lt;span class="c1"&gt;# the function in which it is created if it is not global.&lt;/span&gt;
+&lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="k"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; 
+    &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;span class="n"&gt;NameError:&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;result&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="nb"&gt;defined&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Now lets run the same code but after making the result &lt;/span&gt;
+&lt;span class="c1"&gt;# variable global&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;value2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;global&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;value2&lt;/span&gt;
+
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;span class="mi"&gt;6&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So hopefully there were no errors in the second run as expected. If you
+want to further explore them you should check out the following links.&lt;br /&gt;
+1. &lt;a
+href="http://stackoverflow.com/questions/3359204/python-assign-global-variable-to-function-return-requires-function-to-be-globa"Stackoverflow&lt;/a&gt;&lt;br /&gt;
+2. &lt;a href="http://stackoverflow.com/questions/3052793/python-output-from-functions?lq=1"&gt;Stackoverflow&lt;/a&gt;&lt;/p&gt;</summary><category term="functions"></category><category term="global"></category><category term="output"></category><category term="python"></category><category term="return"></category></entry><entry><title>Generating a random string.</title><link href="http://yasoob.github.io/blog/generating-a-random-string" rel="alternate"></link><updated>2013-07-28T17:40:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-28:generating-a-random-string</id><summary type="html">&lt;p&gt;Okay so most of us do not know how to generate random strings which
+include letters and digits. This can be really useful for generating a
+password or something else just use your evil mind. Okay so how do
+we&lt;!--more--&gt; generate a random string. Have you ever heard of the
+string module available in python ? The chances are that you have not
+heard about it. So what does this module provide us ? Okay here you go
+lets understand this module by example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# first we have to import random module as this&lt;/span&gt;
+&lt;span class="c1"&gt;# provides the backbone for our random string&lt;/span&gt;
+&lt;span class="c1"&gt;# generator and then we have to import the string&lt;/span&gt;
+&lt;span class="c1"&gt;# module.&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;
+
+&lt;span class="c1"&gt;# now lets see what this string module provide us.&lt;/span&gt;
+&lt;span class="c1"&gt;# I wont be going into depth because the python&lt;/span&gt;
+&lt;span class="c1"&gt;# documentation provides ample information.&lt;/span&gt;
+&lt;span class="c1"&gt;# so lets generate a random string with 32 characters.&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;join&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;choice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ascii_letters&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;digits&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;xrange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;9fAgMmc9hl6VXIsFu3ddb5MJ2U86qEad&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mi"&gt;32&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Another example with a function:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;random&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;random_generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chars&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ascii_uppercase&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;digits&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;choice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;chars&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;random_generator&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;G5G74W&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;random_generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;6793YUIO&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;Y3U&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So thats it for now. If you want to further explore the string module
+then go to the official &lt;a href="http://docs.python.org/2/library/string.html"&gt;documentation&lt;/a&gt;&lt;/p&gt;</summary><category term="python"></category><category term="random"></category><category term="string"></category></entry><entry><title>The with statement</title><link href="http://yasoob.github.io/blog/the-with-statement" rel="alternate"></link><updated>2013-07-28T15:23:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-28:the-with-statement</id><summary type="html">&lt;p&gt;So the chances are that you already know about the with statement but
+some of us do not know about it. Lets face the reality the with
+statement saves us a lot of time and reduces our code base. Just
+imagine&lt;!--more--&gt; you are opening a file width python and then saving
+something to it. You would normally do :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;file.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;freepythontips.wordpress.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;But what if an exception occurs while writing to file ? then the file
+won't be closed properly. I know how much trouble it can cause. It once
+happened with me that i was running a web scrapper and it was running
+for past three hours and then unexpectedly an exception occured and my
+whole csv file got corrupted and i had to run the scrapper again. So
+lets come to the point. What method can you adopt to prevent such
+disaster. Obviously you can not prevent the exception when it is
+unexpected but you can take some precautions. Firstly you can wrap up
+your code in a try-except clause or better yet you can use a with
+statement. Let's first talk about try-except clause. You would normally
+do something like this :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
+    &lt;span class="err"&gt;file&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;open(&amp;#39;file.txt&amp;#39;,&amp;#39;w&amp;#39;)&lt;/span&gt;
+    &lt;span class="err"&gt;file.write(data)&lt;/span&gt;
+&lt;span class="err"&gt;except:&lt;/span&gt;
+    &lt;span class="cp"&gt;# do something in case of an exception&lt;/span&gt;
+&lt;span class="err"&gt;finally:&lt;/span&gt;
+    &lt;span class="cp"&gt;# here comes the trick. The finally clause gets &lt;/span&gt;
+    &lt;span class="cp"&gt;# executed even if an exception occured in try &lt;/span&gt;
+    &lt;span class="cp"&gt;# or except clause. now we can safely close this&lt;/span&gt;
+    &lt;span class="cp"&gt;# file.&lt;/span&gt;
+    &lt;span class="err"&gt;file.close()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now lets talk about the with statement. While using a with statement you
+would normally do:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;file.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;file:&lt;/span&gt;
+    &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Okay so here while using the with statement we do not have to close the
+file explicitly. It is automatically closed after the data is written to
+the file.&lt;/p&gt;
+&lt;p&gt;Do share your views about this post below in the comments.&lt;/p&gt;</summary><category term="python"></category><category term="with"></category><category term="with statement"></category></entry><entry><title>In-place value swapping</title><link href="http://yasoob.github.io/blog/in-place-value-swapping" rel="alternate"></link><updated>2013-07-28T02:08:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-28:in-place-value-swapping</id><summary type="html">&lt;p&gt;Okay so this is kinda new for some of us. If you are a seasoned
+programmer then this might not be surprising for you but if you are a
+new programmer then this is something you really need to know. Okay so
+here we go. &lt;!--more--&gt;In normal situations if you would want to swap
+the values of two variables then this would be something you would go
+after :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;But there's a more simple method which will merely take three lines.
+Here it is :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is surely a simple way to swap values. Do comment below and tell me
+your views about this.&lt;/p&gt;</summary></entry></feed>

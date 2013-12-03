@@ -5,21 +5,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/index.html</loc>
-<lastmod>2013-12-03T23:40:11-00:00</lastmod>
+<lastmod>2013-12-03T23:52:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://yasoob.github.io/blog/archives.html</loc>
-<lastmod>2013-12-03T23:40:11-00:00</lastmod>
+<lastmod>2013-12-03T23:52:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://yasoob.github.io/blog/tags.html</loc>
-<lastmod>2013-12-03T23:40:11-00:00</lastmod>
+<lastmod>2013-12-03T23:52:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -258,20 +258,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://yasoob.github.io/blog/give-me-an-idea-for-an-ebook</loc>
 <lastmod>2013-07-31T20:41:00-00:00</lastmod>
-<changefreq>daily</changefreq>
-<priority>1</priority>
-</url>
-
-<url>
-<loc>http://yasoob.github.io/blog/155</loc>
-<lastmod>2013-07-31T18:33:00-00:00</lastmod>
-<changefreq>daily</changefreq>
-<priority>1</priority>
-</url>
-
-<url>
-<loc>http://yasoob.github.io/blog/home</loc>
-<lastmod>2013-07-31T18:33:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>

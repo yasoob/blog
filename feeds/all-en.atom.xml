@@ -4264,7 +4264,7 @@ searcher and downloader as well as how I got it working on google app
 engine. In my opinion the second topic will be more useful for you guys
 as most of us are looking for these type of ebooks.&lt;/p&gt;
 &lt;p&gt;What do you say ? If you want me to write about any other topic then do
-tell me in the comments below and I will see.&lt;/p&gt;</summary><category term="ebook"></category><category term="example"></category><category term="help"></category><category term="help me"></category><category term="tutorial"></category></entry><entry><title>No title [155]</title><link href="http://yasoob.github.io/blog/155" rel="alternate"></link><updated>2013-07-31T18:33:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-31:155</id><summary type="html"></summary></entry><entry><title>Home</title><link href="http://yasoob.github.io/blog/home" rel="alternate"></link><updated>2013-07-31T18:33:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-31:home</id><summary type="html"></summary></entry><entry><title>10 python blogs worth following</title><link href="http://yasoob.github.io/blog/10-python-blogs-worth-following" rel="alternate"></link><updated>2013-07-31T14:19:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-31:10-python-blogs-worth-following</id><summary type="html">&lt;p&gt;Hi there fellow programmers. I remember those days when i started
+tell me in the comments below and I will see.&lt;/p&gt;</summary><category term="ebook"></category><category term="example"></category><category term="help"></category><category term="help me"></category><category term="tutorial"></category></entry><entry><title>10 python blogs worth following</title><link href="http://yasoob.github.io/blog/10-python-blogs-worth-following" rel="alternate"></link><updated>2013-07-31T14:19:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-31:10-python-blogs-worth-following</id><summary type="html">&lt;p&gt;Hi there fellow programmers. I remember those days when i started
 learning python. I was always eager to find new blogs about python but
 found just a handful of them. This is one of the reason i started this
 blog.&lt;!--more--&gt; To spread my knowledge about python to other fellow
@@ -4555,25 +4555,35 @@ Do share your views in the comments below.&lt;/p&gt;</summary><category term="in
 Everyone has his own coding style in python. Here i am going to post
 some links that will help you to choose your own coding style in
 python.&lt;!--more--&gt;&lt;/p&gt;
-&lt;p&gt;\1. The first link is undoubtedly from the &lt;strong&gt;official python
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The first link is undoubtedly from the &lt;strong&gt;official python
 documentation&lt;/strong&gt; as python documentation has everything to get you
 started. This link will teach you how to use python and how &lt;strong&gt;not&lt;/strong&gt; to
 use python.&lt;br /&gt;
 &lt;code&gt;http://docs.python.org/2/howto/doanddont.html&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;\2. The second link is from the famous &lt;strong&gt;PEP-8&lt;/strong&gt; which is python's
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The second link is from the famous &lt;strong&gt;PEP-8&lt;/strong&gt; which is python's
 official style guide. It determines the python's official coding
 standards. You should definitely take a look at them and try to
 incorporate them in your code.&lt;br /&gt;
 &lt;code&gt;http://www.python.org/dev/peps/pep-0008/&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;\3. The third link is from &lt;strong&gt;google&lt;/strong&gt; because as you know google is a
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The third link is from &lt;strong&gt;google&lt;/strong&gt; because as you know google is a
 huge user of python and most of their infrastructure is based on python
 as is their online support forum. So it's not surprising that google has
 it's own style guide for python.&lt;br /&gt;
 &lt;code&gt;http://google-styleguide.googlecode.com/svn/trunk/pyguide.html&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;\4. So the last link is from &lt;strong&gt;khanacademy&lt;/strong&gt;. As you know it's the
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;So the last link is from &lt;strong&gt;khanacademy&lt;/strong&gt;. As you know it's the
 biggest online academy and whole of their online infrastructure is based
-on python. I really love their python style guide.  &lt;/p&gt;
-&lt;p&gt;&lt;code&gt;https://sites.google.com/a/khanacademy.org/forge/for-developers/styleguide/python&lt;/code&gt;&lt;/p&gt;
+on python. I really love their python style guide.&lt;br /&gt;
+&lt;code&gt;https://sites.google.com/a/khanacademy.org/forge/for-developers/styleguide/python&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;I hope you liked this post. Do share your views in the comments below.&lt;/p&gt;</summary><category term="code"></category><category term="coding style"></category><category term="important"></category><category term="python"></category><category term="python language"></category><category term="style"></category><category term="style guide"></category></entry><entry><title>Setting up python on windows</title><link href="http://yasoob.github.io/blog/setting-up-python-on-windows" rel="alternate"></link><updated>2013-07-29T16:44:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:setting-up-python-on-windows</id><summary type="html">&lt;p&gt;Hi there pythonistas. Most of the new python programmers don't know how
 to correctly install python on windows. Today I am going to share clean
 and clear instructions on how to install &lt;!--more--&gt;python on a Windows
@@ -4624,103 +4634,73 @@ the interpreter and get back to a C: prompt.&lt;/p&gt;
 install &lt;a href="http://pypi.python.org/pypi/setuptools"&gt;setuptools&lt;/a&gt; which offers the helpful &lt;a&gt;easy_install&lt;/a&gt;
 utility for installing Python packages. Grab the appropriate version for
 your system and install and that's it for now. Stay tuned for the next
-post.&lt;/p&gt;</summary><category term="download"></category><category term="path variable"></category><category term="python"></category><category term="setting up python"></category><category term="setuptools"></category><category term="windows"></category></entry><entry><title>Packaging your python scripts.</title><link href="http://yasoob.github.io/blog/packaging-your-python-scripts" rel="alternate"></link><updated>2013-07-29T14:42:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:packaging-your-python-scripts</id><summary type="html">&lt;p&gt;
-Oh hi there! Welcome to another useful post. This post is going to be
-about how to package your python scripts and packages for distribution
-on PyPI or some other place.&lt;!--more--&gt; Here I won't go too deep into
-explaining everything as most of us just need to know the basics of
-packaging. However i will provide you with different links for further
-study. Okay lets talk about
+post.&lt;/p&gt;</summary><category term="download"></category><category term="path variable"></category><category term="python"></category><category term="setting up python"></category><category term="setuptools"></category><category term="windows"></category></entry><entry><title>Packaging your python scripts.</title><link href="http://yasoob.github.io/blog/packaging-your-python-scripts" rel="alternate"></link><updated>2013-07-29T14:42:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:packaging-your-python-scripts</id><summary type="html">&lt;p&gt;Oh hi there! Welcome to another useful post. This post is going to be about how to package your python scripts and packages for distribution on PyPI or some other place.&lt;!--more--&gt;Here I won't go too deep into explaining everything as most of us just need to know the basics of packaging. However i will provide you with different links for further study. Okay lets talk about&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; setuptools&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;first. What is it ? It's a Python module which allows us to easily package our python scripts and modules for distribution. However there are other packaging libraries as well but here i will talk about setuptools only.&lt;/p&gt;
+&lt;p&gt;So what should be the basic example to show the usage of setuptools ? Here you go. For basic use of setuptools, just import things from setuptools and then look below for the minimal setup script using setuptools.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;setuptools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;find_packages&lt;/span&gt;
+&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;HelloWorld&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;packages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;find_packages&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-    &gt;&gt;&gt; setuptools
 
-first. What is it ? It's a Python module which allows us to easily
-package our python scripts and modules for distribution. However there
-are other packaging libraries as well but here i will talk about
-setuptools only.
+&lt;p&gt;As you see we don't have to specify much in order to use setuptools in a project. Just by doing the above, this project will be able to produce eggs, upload to PyPI, and automatically include all packages in the directory where the setup.py lives. But when you are releasing your projects on PyPI then you should add a bit more information about yourself and this package and if your project relies on some external dependencies then list them there as well. Here is another script which can do all that :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;setuptools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;find_packages&lt;/span&gt;
+&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;HelloWorld&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;packages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;find_packages&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="n"&gt;scripts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;say_hello.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
 
-So what should be the basic example to show the usage of setuptools ?
-Here you go. For basic use of setuptools, just import things from
-setuptools and then look below for the minimal setup script using
-setuptools.
+    &lt;span class="c"&gt;# Project uses reStructuredText, so ensure that the &lt;/span&gt;
+    &lt;span class="c"&gt;# docutils get installed or upgraded on the target &lt;/span&gt;
+    &lt;span class="c"&gt;# machine&lt;/span&gt;
+    &lt;span class="n"&gt;install_requires&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;docutils&amp;gt;=0.3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
 
-    from setuptools import setup, find_packages
-    setup(
-        name = "HelloWorld",
-        version = "0.1",
-        packages = find_packages(),
-    )
+    &lt;span class="n"&gt;package_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c"&gt;# If any package contains *.txt or *.rst files,&lt;/span&gt;
+        &lt;span class="c"&gt;# include them:&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;*.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;*.rst&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="c"&gt;# And include any *.msg files found in the &lt;/span&gt;
+        &lt;span class="c"&gt;# &amp;#39;hello&amp;#39; package, too:&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;*.msg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
 
-As you see we don't have to specify much in order to use setuptools in a
-project. Just by doing the above, this project will be able to produce
-eggs, upload to PyPI, and automatically include all packages in the
-directory where the setup.py lives. But when you are releasing your
-projects on PyPI then you should add a bit more information about
-yourself and this package and if your project relies on some external
-dependencies then list them there as well. Here is another script which
-can do all that :
+    &lt;span class="c"&gt;# metadata for upload to PyPI&lt;/span&gt;
+    &lt;span class="n"&gt;author&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Me&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;author_email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;me@example.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;This is an Example Package&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;license&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;PSF&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;keywords&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello world example examples&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c"&gt;# project home page, if any :&lt;/span&gt;
+    &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;http://example.com/HelloWorld/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 
-    from setuptools import setup, find_packages
-    setup(
-        name = "HelloWorld",
-        version = "0.1",
-        packages = find_packages(),
-        scripts = ['say_hello.py'],
+    &lt;span class="c"&gt;# could also include long_description, download_url,&lt;/span&gt;
+    &lt;span class="c"&gt;# classifiers, etc.&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-        # Project uses reStructuredText, so ensure that the 
-        # docutils get installed or upgraded on the target 
-        # machine
-        install_requires = ['docutils&gt;=0.3'],
 
-        package_data = {
-            # If any package contains *.txt or *.rst files,
-            # include them:
-            '': ['*.txt', '*.rst'],
-            # And include any *.msg files found in the 
-            # 'hello' package, too:
-            'hello': ['*.msg'],
-        },
-
-        # metadata for upload to PyPI
-        author = "Me",
-        author_email = "me@example.com",
-        description = "This is an Example Package",
-        license = "PSF",
-        keywords = "hello world example examples",
-        # project home page, if any :
-        url = "http://example.com/HelloWorld/",   
-
-        # could also include long_description, download_url,
-        # classifiers, etc.
-    )
-
-I hope this is enough for now. However here are some other packaging
-libraries in case you were wondering :  
-
-` 1. Distutils is the standard tool used for packaging. It works rather well for simple needs, but is limited and not trivial to extend.`
-
-\2. Setuptools is a project born from the desire to fill missing
-distutils functionality and explore new directions. In some
-sub-communities, it’s a de facto standard. It uses monkey-patching and
-magic that is frowned upon by Python core developers.
-
-\3. Distribute is a fork of Setuptools that was started by developers
-feeling that its development pace was too slow and that it was not
-possible to evolve it. Its development was considerably slowed when
-distutils2 was started by the same group.
-
-\4. Distutils2 is a new distutils library, started as a fork of the
-distutils codebase, with good ideas taken from setup tools (of which
-some were thoroughly discussed in PEPs), and a basic installer inspired
-by pip. Distutils2 did not make the Python 3.3 release, and it was put
-on hold.
-
-source:
-http://stackoverflow.com/questions/6344076/differences-between-distribute-distutils-setuptools-and-distutils2  
-&lt;/code&gt;
-
-For further study i recommend:
-http://pythonhosted.org/distribute/setuptools.html</summary><category term="distribute"></category><category term="distutils"></category><category term="packaging"></category><category term="pypi"></category><category term="python"></category><category term="scripts"></category><category term="setuptools"></category></entry><entry><title>Dictionaries have a get() method</title><link href="http://yasoob.github.io/blog/dictionaries-have-a-get-method" rel="alternate"></link><updated>2013-07-29T00:59:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:dictionaries-have-a-get-method</id><summary type="html">&lt;p&gt;Okay here we are with yet another post. However this post is going to be
+&lt;p&gt;I hope this is enough for now. However here are some other packaging libraries in case you were wondering :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Distutils is the standard tool used for packaging. It works rather well for simple needs, but is limited and not trivial to extend.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Setuptools is a project born from the desire to fill missing distutils functionality and explore new directions. In some sub-communities, it’s a de facto standard. It uses monkey-patching and magic that is frowned upon by Python core developers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Distribute is a fork of Setuptools that was started by developers feeling that its development pace was too slow and that it was not possible to evolve it. Its development was considerably slowed when distutils2 was started by the same group.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Distutils2 is a new distutils library, started as a fork of the distutils codebase, with good ideas taken from setup tools (of which some were thoroughly discussed in PEPs), and a basic installer inspired by pip. Distutils2 did not make the Python 3.3 release, and it was put on hold.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/6344076/differences-between-distribute-distutils-setuptools-and-distutils2"&gt;&amp;gt;&amp;gt;&amp;gt; source&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For further study i recommend: http://pythonhosted.org/distribute/setuptools.html&lt;/p&gt;</summary><category term="distribute"></category><category term="distutils"></category><category term="packaging"></category><category term="pypi"></category><category term="python"></category><category term="scripts"></category><category term="setuptools"></category></entry><entry><title>Dictionaries have a get() method</title><link href="http://yasoob.github.io/blog/dictionaries-have-a-get-method" rel="alternate"></link><updated>2013-07-29T00:59:00-04:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-07-29:dictionaries-have-a-get-method</id><summary type="html">&lt;p&gt;Okay here we are with yet another post. However this post is going to be
 short as in this post i am going to teach you a small, simple and very
 useful trick. Have you ever tried to access a value from a
 &lt;!--more--&gt;dictionary and got an exception that there is no value mapped

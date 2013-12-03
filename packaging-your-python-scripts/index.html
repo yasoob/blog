@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Bite Sized Python Tips | Packaging your python scripts.</title>
   <meta property="og:type" content="article" />
-  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="../feeds/all.atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
   <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
   <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
   <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
   <meta name="twitter:site" content="@yasoobkhalid">
-  <meta name="description" content="Oh hi there! Welcome to another useful post. This post is going to be about how to package your python scripts and packages for distribution on PyPI or some other place. Here I won't go too deep into explaining everything as most of us just need to know the ..." />
+  <meta name="description" content="Oh hi there! Welcome to another useful post. This post is going to be about how to package your python scripts and packages for distribution on PyPI or some other place.Here I won't go too deep into explaining everything as most of us just need to know the ..." />
     <meta property="article:tag" content="distribute" />
     <meta property="article:tag" content="distutils" />
     <meta property="article:tag" content="packaging" />
@@ -18,10 +18,10 @@
     <meta property="article:tag" content="python" />
     <meta property="article:tag" content="scripts" />
     <meta property="article:tag" content="setuptools" />
-    <link rel="stylesheet" href="../theme/css/main.css" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
     <!--[if IE]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -50,13 +50,13 @@
 <!-- AddThis Smart Layers END -->    <div id="wrapper">
         <header id="banner" class="body">
             <div>
-                <img src="../images/logo.png">
+                <img src="http://yasoob.github.io/blog/images/logo.png">
             </div>
-            <h1><a href="../">Bite Sized Python Tips</a></h1>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
             <br/><nav><ul>
-                <li>|<a href="../about">About</a>|</li> 
-                <li>|<a href="../pycrumbs">Beginner's Delight</a>|</li> 
-                <li>|<a href="../python-news">News</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
             </ul></nav>
         </header>
         <hr>
@@ -68,112 +68,82 @@
     </header>
 
     <div class="entry-content">
-      <p>
-Oh hi there! Welcome to another useful post. This post is going to be
-about how to package your python scripts and packages for distribution
-on PyPI or some other place.<!--more--> Here I won't go too deep into
-explaining everything as most of us just need to know the basics of
-packaging. However i will provide you with different links for further
-study. Okay lets talk about
+      <p>Oh hi there! Welcome to another useful post. This post is going to be about how to package your python scripts and packages for distribution on PyPI or some other place.<!--more-->Here I won't go too deep into explaining everything as most of us just need to know the basics of packaging. However i will provide you with different links for further study. Okay lets talk about</p>
+<p><code>&gt;&gt;&gt; setuptools</code></p>
+<p>first. What is it ? It's a Python module which allows us to easily package our python scripts and modules for distribution. However there are other packaging libraries as well but here i will talk about setuptools only.</p>
+<p>So what should be the basic example to show the usage of setuptools ? Here you go. For basic use of setuptools, just import things from setuptools and then look below for the minimal setup script using setuptools.</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;HelloWorld&quot;</span><span class="p">,</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;0.1&quot;</span><span class="p">,</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="n">find_packages</span><span class="p">(),</span>
+<span class="p">)</span>
+</pre></div>
 
-    >>> setuptools
 
-first. What is it ? It's a Python module which allows us to easily
-package our python scripts and modules for distribution. However there
-are other packaging libraries as well but here i will talk about
-setuptools only.
+<p>As you see we don't have to specify much in order to use setuptools in a project. Just by doing the above, this project will be able to produce eggs, upload to PyPI, and automatically include all packages in the directory where the setup.py lives. But when you are releasing your projects on PyPI then you should add a bit more information about yourself and this package and if your project relies on some external dependencies then list them there as well. Here is another script which can do all that :</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;HelloWorld&quot;</span><span class="p">,</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;0.1&quot;</span><span class="p">,</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="n">find_packages</span><span class="p">(),</span>
+    <span class="n">scripts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;say_hello.py&#39;</span><span class="p">],</span>
 
-So what should be the basic example to show the usage of setuptools ?
-Here you go. For basic use of setuptools, just import things from
-setuptools and then look below for the minimal setup script using
-setuptools.
+    <span class="c"># Project uses reStructuredText, so ensure that the </span>
+    <span class="c"># docutils get installed or upgraded on the target </span>
+    <span class="c"># machine</span>
+    <span class="n">install_requires</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;docutils&gt;=0.3&#39;</span><span class="p">],</span>
 
-    from setuptools import setup, find_packages
-    setup(
-        name = "HelloWorld",
-        version = "0.1",
-        packages = find_packages(),
-    )
+    <span class="n">package_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c"># If any package contains *.txt or *.rst files,</span>
+        <span class="c"># include them:</span>
+        <span class="s">&#39;&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*.txt&#39;</span><span class="p">,</span> <span class="s">&#39;*.rst&#39;</span><span class="p">],</span>
+        <span class="c"># And include any *.msg files found in the </span>
+        <span class="c"># &#39;hello&#39; package, too:</span>
+        <span class="s">&#39;hello&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;*.msg&#39;</span><span class="p">],</span>
+    <span class="p">},</span>
 
-As you see we don't have to specify much in order to use setuptools in a
-project. Just by doing the above, this project will be able to produce
-eggs, upload to PyPI, and automatically include all packages in the
-directory where the setup.py lives. But when you are releasing your
-projects on PyPI then you should add a bit more information about
-yourself and this package and if your project relies on some external
-dependencies then list them there as well. Here is another script which
-can do all that :
+    <span class="c"># metadata for upload to PyPI</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s">&quot;Me&quot;</span><span class="p">,</span>
+    <span class="n">author_email</span> <span class="o">=</span> <span class="s">&quot;me@example.com&quot;</span><span class="p">,</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;This is an Example Package&quot;</span><span class="p">,</span>
+    <span class="n">license</span> <span class="o">=</span> <span class="s">&quot;PSF&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="s">&quot;hello world example examples&quot;</span><span class="p">,</span>
+    <span class="c"># project home page, if any :</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://example.com/HelloWorld/&quot;</span><span class="p">,</span>
 
-    from setuptools import setup, find_packages
-    setup(
-        name = "HelloWorld",
-        version = "0.1",
-        packages = find_packages(),
-        scripts = ['say_hello.py'],
+    <span class="c"># could also include long_description, download_url,</span>
+    <span class="c"># classifiers, etc.</span>
+<span class="p">)</span>
+</pre></div>
 
-        # Project uses reStructuredText, so ensure that the 
-        # docutils get installed or upgraded on the target 
-        # machine
-        install_requires = ['docutils>=0.3'],
 
-        package_data = {
-            # If any package contains *.txt or *.rst files,
-            # include them:
-            '': ['*.txt', '*.rst'],
-            # And include any *.msg files found in the 
-            # 'hello' package, too:
-            'hello': ['*.msg'],
-        },
-
-        # metadata for upload to PyPI
-        author = "Me",
-        author_email = "me@example.com",
-        description = "This is an Example Package",
-        license = "PSF",
-        keywords = "hello world example examples",
-        # project home page, if any :
-        url = "http://example.com/HelloWorld/",   
-
-        # could also include long_description, download_url,
-        # classifiers, etc.
-    )
-
-I hope this is enough for now. However here are some other packaging
-libraries in case you were wondering :  
-
-` 1. Distutils is the standard tool used for packaging. It works rather well for simple needs, but is limited and not trivial to extend.`
-
-\2. Setuptools is a project born from the desire to fill missing
-distutils functionality and explore new directions. In some
-sub-communities, it’s a de facto standard. It uses monkey-patching and
-magic that is frowned upon by Python core developers.
-
-\3. Distribute is a fork of Setuptools that was started by developers
-feeling that its development pace was too slow and that it was not
-possible to evolve it. Its development was considerably slowed when
-distutils2 was started by the same group.
-
-\4. Distutils2 is a new distutils library, started as a fork of the
-distutils codebase, with good ideas taken from setup tools (of which
-some were thoroughly discussed in PEPs), and a basic installer inspired
-by pip. Distutils2 did not make the Python 3.3 release, and it was put
-on hold.
-
-source:
-http://stackoverflow.com/questions/6344076/differences-between-distribute-distutils-setuptools-and-distutils2  
-</code>
-
-For further study i recommend:
-http://pythonhosted.org/distribute/setuptools.html
+<p>I hope this is enough for now. However here are some other packaging libraries in case you were wondering :</p>
+<ul>
+<li>
+<p>Distutils is the standard tool used for packaging. It works rather well for simple needs, but is limited and not trivial to extend.</p>
+</li>
+<li>
+<p>Setuptools is a project born from the desire to fill missing distutils functionality and explore new directions. In some sub-communities, it’s a de facto standard. It uses monkey-patching and magic that is frowned upon by Python core developers.</p>
+</li>
+<li>
+<p>Distribute is a fork of Setuptools that was started by developers feeling that its development pace was too slow and that it was not possible to evolve it. Its development was considerably slowed when distutils2 was started by the same group.</p>
+</li>
+<li>
+<p>Distutils2 is a new distutils library, started as a fork of the distutils codebase, with good ideas taken from setup tools (of which some were thoroughly discussed in PEPs), and a basic installer inspired by pip. Distutils2 did not make the Python 3.3 release, and it was put on hold.</p>
+</li>
+</ul>
+<p><a href="http://stackoverflow.com/questions/6344076/differences-between-distribute-distutils-setuptools-and-distutils2">&gt;&gt;&gt; source</a></p>
+<p>For further study i recommend: http://pythonhosted.org/distribute/setuptools.html</p>
 <footer class="post-info">
   <p>Tags: 
-    <a href="../tag/distribute.html">distribute</a>
-    <a href="../tag/distutils.html">distutils</a>
-    <a href="../tag/packaging.html">packaging</a>
-    <a href="../tag/pypi.html">pypi</a>
-    <a href="../tag/python.html">python</a>
-    <a href="../tag/scripts.html">scripts</a>
-    <a href="../tag/setuptools.html">setuptools</a>
+    <a href="http://yasoob.github.io/blog/tag/distribute.html">distribute</a>
+    <a href="http://yasoob.github.io/blog/tag/distutils.html">distutils</a>
+    <a href="http://yasoob.github.io/blog/tag/packaging.html">packaging</a>
+    <a href="http://yasoob.github.io/blog/tag/pypi.html">pypi</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/scripts.html">scripts</a>
+    <a href="http://yasoob.github.io/blog/tag/setuptools.html">setuptools</a>
   </p>
 
 </footer><!-- /.post-info -->
@@ -191,14 +161,14 @@ http://pythonhosted.org/distribute/setuptools.html
 <!-- AddThis Button END -->    </div>
     <hr>
     <div>
-    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "../images/subscribe.png" /></a>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
     </div><hr><!-- /.entry-content -->
     <div class="comments">
       <h2>Comments</h2>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_identifier = "packaging-your-python-scripts";
-        var disqus_url = "../packaging-your-python-scripts";
+        var disqus_url = "http://yasoob.github.io/blog/packaging-your-python-scripts";
         (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = 'http://freepytips.disqus.com/embed.js';

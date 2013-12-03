@@ -5,21 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/index.html</loc>
-<lastmod>2013-12-02T22:22:48-00:00</lastmod>
+<lastmod>2013-12-03T23:40:11-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://yasoob.github.io/blog/archives.html</loc>
-<lastmod>2013-12-02T22:22:48-00:00</lastmod>
+<lastmod>2013-12-03T23:40:11-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://yasoob.github.io/blog/tags.html</loc>
-<lastmod>2013-12-02T22:22:48-00:00</lastmod>
+<lastmod>2013-12-03T23:40:11-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://yasoob.github.io/blog/kivy-101-how-to-use-boxlayouts</loc>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -593,7 +600,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/tag/python.html</loc>
-<lastmod>2013-11-15T23:04:00-00:00</lastmod>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -944,6 +951,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://yasoob.github.io/blog/tag/packages.html</loc>
 <lastmod>2013-08-01T14:51:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://yasoob.github.io/blog/tag/python-mobile-dev-in-kivy.html</loc>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -1411,6 +1425,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://yasoob.github.io/blog/tag/kivy.html</loc>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://yasoob.github.io/blog/tag/python-development.html</loc>
 <lastmod>2013-10-14T01:59:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1544,6 +1565,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://yasoob.github.io/blog/tag/gui-dev.html</loc>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://yasoob.github.io/blog/tag/tutorial.html</loc>
 <lastmod>2013-09-26T19:24:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1560,6 +1588,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://yasoob.github.io/blog/tag/document.html</loc>
 <lastmod>2013-09-26T19:24:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://yasoob.github.io/blog/tag/python-gui.html</loc>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -1602,6 +1637,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://yasoob.github.io/blog/tag/self-in-python.html</loc>
 <lastmod>2013-08-07T02:21:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://yasoob.github.io/blog/tag/mobile-python.html</loc>
+<lastmod>2013-12-02T22:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>

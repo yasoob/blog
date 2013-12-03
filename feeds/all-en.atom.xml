@@ -1,5 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-11-15T23:04:00-05:00</updated><entry><title>Introduction to unittest</title><link href="http://yasoob.github.io/blog/introduction-to-unittest" rel="alternate"></link><updated>2013-11-15T23:04:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-11-15:introduction-to-unittest</id><summary type="html">&lt;p&gt;Hi there folks. I recently thought that I have not written even a single
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-12-02T22:18:00-05:00</updated><entry><title>Kivy 101: How to Use BoxLayouts</title><link href="http://yasoob.github.io/blog/kivy-101-how-to-use-boxlayouts" rel="alternate"></link><updated>2013-12-02T22:18:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-12-02:kivy-101-how-to-use-boxlayouts</id><summary type="html">&lt;p&gt;Recently I've started learning about Kivy, a Python Natural User Interface (NUI) toolkit. As I understand it, Kivy is kind of a spiritual successor to &lt;a href="http://pymt.eu/"&gt;pyMT&lt;/a&gt;, which you can read more about &lt;a href="http://kivy.org/docs/faq.html#how-is-kivy-related-to-pymt"&gt;here&lt;/a&gt;. In this article, we will be learning how Kivy handles layout management. While you can position widgets using x/y coordinates, in every GUI toolkit I've used, it's almost always better to use some kind of layout management that the toolkit provides. This allows the widgets to resize and move appropriately as the user changes the window's size. In Kivy, these things &lt;strong&gt;Layouts&lt;/strong&gt;. If you've used wxPython, they are analogous to wxPython's sizers.&lt;/p&gt;
+&lt;p&gt;I should also note that Kivy can do layouts in two different ways. The first way is to do Layouts with Python code only. The second way is to use a mixture of Python and Kv language. This is to promote the model-view-controller way of doing things. It looks kind of like CSS and reminds me a little of wxPython and XRC. We will look at how to use both methods in this article. While Kivy supports multiple types of Layouts, this article will be focusing only on the &lt;strong&gt;BoxLayout&lt;/strong&gt;. We will show how to nest BoxLayouts.&lt;!--more--&gt;&lt;/p&gt;
+&lt;h2&gt;Kivy, Python and BoxLayout&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://freepythontips.files.wordpress.com/2013/11/kivy_hboxlayout.png"&gt;&lt;img class="alignnone size-medium wp-image-395" alt="kivy_hboxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kivy_hboxlayout.png?w=300" width="300" height="236" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Creating a BoxLayout in Kivy using Python is actually pretty easy and quite intuitive. We'll start out with a code example and then follow the code with an explanation. Let's get started!&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;kivy&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;App&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.button&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.boxlayout&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;
+
+&lt;span class="n"&gt;red&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;green&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;blue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;purple&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HBoxLayoutExample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;App&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    Horizontally oriented BoxLayout example class&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;        Horizontal BoxLayout example&lt;/span&gt;
+&lt;span class="sd"&gt;        &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;colors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;red&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;green&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;blue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;purple&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;btn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Button #&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+                         &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;choice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                         &lt;span class="p"&gt;)&lt;/span&gt;
+
+            &lt;span class="n"&gt;layout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_widget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;btn&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;layout&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;VBoxLayoutExample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;App&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    Vertical oriented BoxLayout example class&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setOrientation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;orient&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;orient&lt;/span&gt;
+
+    &lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orientation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;btn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Button #&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;layout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_widget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;btn&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;layout&lt;/span&gt;
+
+&lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;HBoxLayoutExample&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="c"&gt;#app = VBoxLayoutExample()&lt;/span&gt;
+    &lt;span class="c"&gt;#app.setOrientation(orient=&amp;quot;vertical&amp;quot;)&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here we have created a vertically oriented BoxLayout class and a horizontally oriented BoxLayout class. Each class contains 5 buttons with random background colors. The colors follow RGBA, but can have individual values that are between zero and one. Oddly enough, if you use numbers greater than one, the color becomes brighter. I happened to use 255 instead of 1 when I created the screenshot above, so if you happen to run this code and see a more muted set of colors, that's why.&lt;/p&gt;
+&lt;p&gt;To make the examples extremely simple, we only import Kivy's App, Button and BoxLayout classes. The BoxLayout class accepts several arguments, but we'll focus on the following 3: orientation, padding and spacing. Because BoxLayout is a sub-class of Layout and Widget, it inherits many other methods and keyword arguments that are not covered here. But back to the arguments we currently care about. The &lt;strong&gt;padding&lt;/strong&gt; argument tells Kivy how much space there should be between the Layout and its children, whereas the &lt;strong&gt;spacing&lt;/strong&gt; arguments tells it how much spacing there should be between the children.&lt;/p&gt;
+&lt;p&gt;To create the buttons, we use a simple loop that loops over a small range of numbers. Each iteration creates a button with a random background color and adds that button to the Layout instance. Then we return the layout at the end.&lt;/p&gt;
+&lt;p&gt;The vertical BoxLayout example in the &lt;strong&gt;VBoxLayoutExample&lt;/strong&gt; class is slightly different in that I thought it would be fun to be able to set the orientation programmatically. The code is pretty much the same except that I added a &lt;strong&gt;setOrientation&lt;/strong&gt; method. Note that if you call setOrientation again, it will have no effect. As one of my commenters so kindly pointed out, you would need to bind the orientation to the App orient property or use the Kv language to achieve this.&lt;/p&gt;
+&lt;p&gt;If you comment out the call to &lt;strong&gt;HBoxLayoutExample&lt;/strong&gt; at the end of the script and un-comment out the other two lines, then you should end up seeing something like this:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png"&gt;&lt;img class="alignnone size-medium wp-image-396" alt="kivy_vbox" src="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png?w=300" width="300" height="236" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Notice that when you don't set a background color, Kivy defaults to a dark grey. Kivy does not try to look like a native application. This may or may not be a big deal to you depending on what sort of program you're trying to achieve, but it should be noted. Now we're ready to learn about nesting!&lt;/p&gt;
+&lt;h2&gt;Nesting BoxLayouts&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png"&gt;&lt;img class="alignnone size-medium wp-image-397" alt="kv_nested_boxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png?w=300" width="300" height="236" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Nesting BoxLayouts inside of each other is pretty easy with Kivy too. Whenever you go to create an application with a complicated interface that will need nested sizers, you should take some time to sketch the layout out with pencil and paper. Then you can draw boxes around the widgets in different ways to help you visualize which Layouts you'll need and how to nest them in each other. I have found this quite helpful with wxPython and I think it applies to any other GUI toolkit that doesn't have a WYSIWYG editor. By the way, BoxLayouts are very powerful. If you know what you're doing, you can make just about any interface with them alone just be using clever nesting.&lt;/p&gt;
+&lt;p&gt;Enough talk, let's look at some code!&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;kivy&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;App&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.button&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.boxlayout&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;
+
+&lt;span class="n"&gt;red&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;green&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;blue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;purple&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NestedLayoutExample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;App&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;    An example of nesting three horizontally oriented BoxLayouts inside&lt;/span&gt;
+&lt;span class="sd"&gt;    of one vertically oriented BoxLayout&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;        Horizontal BoxLayout example&lt;/span&gt;
+&lt;span class="sd"&gt;        &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;main_layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orientation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;vertical&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;colors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;red&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;green&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;blue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;purple&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;h_layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;padding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="n"&gt;btn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Button&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Button #&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+                             &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;choice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                             &lt;span class="p"&gt;)&lt;/span&gt;
+
+                &lt;span class="n"&gt;h_layout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_widget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;btn&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;main_layout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_widget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;h_layout&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;main_layout&lt;/span&gt;
+
+&lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NestedLayoutExample&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This example is very similar to the last one. The devil is in the details though. Here we have a nested for loop that creates 3 BoxLayouts that contain 5 buttons a piece. Each Layout is then inserted into the top level Layout at the end of each iteration in the outside loop. In case you missed it, scroll back up to see how it turned out. The trick is to create one top-level or main Layout and add other Layouts to it. Now let's turn our attention to learning how to do these things with the Kv language.&lt;/p&gt;
+&lt;h2&gt;Kv+Python and BoxLayout&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png"&gt;&lt;img class="alignnone size-medium wp-image-396" alt="kivy_vbox" src="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png?w=300" width="300" height="236" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It's almost always a little painful to learn a new language. Fortunately, the Kv language actually follows Python pretty closely, including Python's requirement of using indentation levels to denote when a section of code begins and ends. You may want to spend a few minutes reading about the Kv language on the &lt;a href="http://kivy.org/docs/guide/lang.html"&gt;Kivy website&lt;/a&gt;. Whenever you're ready, we can continue. First we'll start off with the Python code:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# kvboxlayout.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;App&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.boxlayout&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;KVMyHBoxLayout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;KVBoxLayoutApp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;App&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;KVMyHBoxLayout&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;KVBoxLayoutApp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This code is much simpler than our previous examples, but it's also rather mysterious. First of all, we create an empty sub-class of BoxLayout. Then we create our App class which has a &lt;strong&gt;build&lt;/strong&gt; method that just returns an instance of the empty BoxLayout class. What's going on here? Well we have to look at the Kv file to find out!&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="nd"&gt;@Button&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;font_size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="nd"&gt;@Button&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;orientation&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;horizontal&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn1&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn2&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn3&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn4&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn5&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you save the code above, you'll have to name it to be the same as the App class, but with a .kv instead of a .py and in lowercase. That means the name of this Kv file needs to be &lt;strong&gt;kvboxlayout.kv&lt;/strong&gt;. You will note that you also need to strip off the App part of the class name such that KVBoxLayoutApp becomes kvboxlayout. Yes, it's a little confusing. If you don't follow the naming conventions correctly, the file will run but you will have an empty black window.&lt;/p&gt;
+&lt;p&gt;Anyway, first off in the Kv file, we have a section that starts with &lt;strong&gt;:&lt;/strong&gt;. This tells Kivy that we are sub-classing the Button class and calling our sub-class &lt;strong&gt;MyButton&lt;/strong&gt;. Then we indent the required four spaces and set the button's label color and font size. Next we create a BoxLayout section. Notice that we didn't create a sub-class this time. Then we tell it what orientation it should be and add 5 MyButton instances, each one having its own individual label and color.&lt;/p&gt;
+&lt;p&gt;One of the core Kivy developers pointed out that by creating the BoxLayout in this manner, I am redefining the BoxLayout for all usages. This is &lt;strong&gt;not&lt;/strong&gt; a good thing, even if it does make the example simpler. Thus in the next example, we'll stop doing that and do it the right way instead!&lt;/p&gt;
+&lt;h2&gt;Nesting BoxLayouts with Kv&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png"&gt;&lt;img class="alignnone size-medium wp-image-397" alt="kv_nested_boxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png?w=300" width="300" height="236" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Nesting BoxLayouts in Kv is a little confusing at first, but once you get the hang of it, you'll find that it's really quite easy. We'll start out with the Python code, take a look at how it works and then look at the Kv code.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;App&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.boxlayout&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BoxLayout&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;kivy.uix.widget&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Widget&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HBoxWidget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Widget&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;VBoxWidget&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Widget&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="c"&gt;########################################################################&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;KVNestedBoxLayoutApp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;App&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+    &lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;build&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;VBoxWidget&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c"&gt;#----------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;KVNestedBoxLayoutApp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This time around, we need to create two generic Widget classes: HBoxWidget and VBoxWidget. These are actually dummy classes that become BoxLayouts in the Kv code. Speaking of which, let's take a look at that now. Note that you'll need to name the Kv file &lt;strong&gt;kvnestedboxlayout.kv&lt;/strong&gt;, which you'll note, is a lowercase version of &lt;strong&gt;KVNestedBoxLayoutApp&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;font_size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;
+
+&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;
+        &lt;span class="n"&gt;pos&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pos&lt;/span&gt;
+        &lt;span class="n"&gt;orientation&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;horizontal&amp;#39;&lt;/span&gt;
+        &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn1&amp;quot;&lt;/span&gt;
+            &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn2&amp;quot;&lt;/span&gt;
+            &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn3&amp;quot;&lt;/span&gt;
+            &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn4&amp;quot;&lt;/span&gt;
+            &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;MyButton&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Btn2&amp;quot;&lt;/span&gt;
+            &lt;span class="n"&gt;background_color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;BoxLayout&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;
+        &lt;span class="n"&gt;pos&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pos&lt;/span&gt;
+        &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;foo_bar&lt;/span&gt;
+        &lt;span class="n"&gt;orientation&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;vertical&amp;#39;&lt;/span&gt;
+        &lt;span class="n"&gt;HBoxWidget&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;HBoxWidget&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The button code is the same as before. Next we have the &lt;strong&gt;HBoxWidget&lt;/strong&gt; which we define as a horizontal BoxLayout with 5 buttons in it. Then we create an instance of &lt;strong&gt;VBoxWidget&lt;/strong&gt; that is a vertical BoxLayout, but this Layout contains two instances of the HBoxWidget. You'll note that in the Python code's build method, we are returning the VBoxWidget, so that's where the action is. If you remove those two HBoxWidget calls, the result will be an empty black window.&lt;/p&gt;
+&lt;p&gt;There is another way to use Kv files in Kivy. It is through the kivy.lang.Builder.load_file (or load_string) API, which gives you the ability to load Kv files without needing to remember to name the Kv file in some special way. You can read about the API on their &lt;a href="http://kivy.org/docs/api-kivy.lang.html#kivy.lang.Builder" target="_blank"&gt;website&lt;/a&gt; and see an example of it in action in the Kivy &lt;a href="https://github.com/kivy/kivy/blob/master/examples/widgets/screenmanager.py" target="_blank"&gt;examples on github&lt;/a&gt;. The only caveat to using this method is that you need to be careful not to load the same file twice or your UI may get messed up.&lt;/p&gt;
+&lt;h2&gt;Wrapping Up&lt;/h2&gt;
+&lt;p&gt;This just scratches the surface of Kivy's Layout system. There are 6 other Layout types available. However, I think you'll find that the examples in this article will get you started down the road of successfully creating cool Kivy applications of your very own. If you need help learning Kivy, there's a pretty good set of documentation on their website. They also have a &lt;a href="https://groups.google.com/forum/#!forum/kivy-users" target="_blank"&gt;Google Group&lt;/a&gt; and a &lt;a href="irc://freenode.net/kivy" target="_blank"&gt;#kivy channel&lt;/a&gt; on freenode.&lt;/p&gt;
+&lt;h2&gt;Related Readings&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Kivy's &lt;a href="http://kivy.org/docs/gettingstarted/layouts.html"&gt;Getting Started with Layouts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Kivy's &lt;a href="http://kivy.org/docs/guide/widgets.html#organize-with-layouts?"&gt;programming guide&lt;/a&gt; also has coverage on layouts&lt;/li&gt;
+&lt;li&gt;A simple nested Layout example on &lt;a href="https://gist.github.com/Kovak/6206701"&gt;github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Kivy's &lt;a href="http://kivy.org/docs/guide/lang.html"&gt;Kv language page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Other &lt;a href="https://github.com/Kovak/KivyExamples"&gt;Kivy examples on github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Download the Source&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.blog.pythonlibrary.org/wp-content/uploads/2013/11/kivy_box_layouts.tar"&gt;kivy_box_layouts.tar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.blog.pythonlibrary.org/wp-content/uploads/2013/11/kivy_box_layouts.zip"&gt;kivy_box_layouts.zip&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: This is an official cross-posting of an article from the &lt;a href="http://www.blog.pythonlibrary.org/"&gt;Mouse Vs Python blog&lt;/a&gt;. You can read the original &lt;a href="http://www.blog.pythonlibrary.org/2013/11/25/kivy-101-how-to-use-boxlayouts/"&gt;here&lt;/a&gt;.&lt;/p&gt;</summary><category term="Kivy"></category><category term="python"></category><category term="gui dev"></category><category term="python gui"></category><category term="mobile python"></category><category term="python mobile dev in kivy"></category></entry><entry><title>Introduction to unittest</title><link href="http://yasoob.github.io/blog/introduction-to-unittest" rel="alternate"></link><updated>2013-11-15T23:04:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-11-15:introduction-to-unittest</id><summary type="html">&lt;p&gt;Hi there folks. I recently thought that I have not written even a single
 post about testing in python. Testing is one of the most important part
 of any language. In this post I am going to share some information about
 unittest with you. So what exactly is unittest ? You might have heard
@@ -4100,9 +4369,9 @@ python 3 and the other choice is to modify your current code so that it
 can be used with both python 2 and 3. I am going to talk about the
 second choice. First tell me how you import packages in your script ?
 Most of us do this :&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;
-&lt;span class="c1"&gt;# or&lt;/span&gt;
-&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bar&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;foo&lt;/span&gt;
+&lt;span class="c"&gt;# or&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;foo&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bar&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4114,10 +4383,10 @@ Most of us do this :&lt;/p&gt;
 &lt;p&gt;I know it's function is the same as above listed code but it is vital
 for making your script compatible with python 2 and 3. Now examine the
 code below :&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;urllib.request&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;urllib_request&lt;/span&gt; &lt;span class="cp"&gt;#for python 3&lt;/span&gt;
-&lt;span class="err"&gt;except&lt;/span&gt; &lt;span class="err"&gt;ImportError:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;urllib2&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;urllib_request&lt;/span&gt; &lt;span class="cp"&gt;# for python 2&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;urllib_request&lt;/span&gt; &lt;span class="c"&gt;#for python 3&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib2&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;urllib_request&lt;/span&gt; &lt;span class="c"&gt;# for python 2&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4140,21 +4409,21 @@ modules have still not been ported to python 3. After that you have to
 wrap your module importing code in a try-except clause with a common
 variable following the &lt;code&gt;as&lt;/code&gt; keyword. After that use the imported module.
 Here is a complete example which should work both in python 2 and 3:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
-    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request as compat_urllib_request&lt;/span&gt;
-&lt;span class="nn"&gt;except ImportError: # Python 2&lt;/span&gt;
-&lt;span class="nn"&gt;    import urllib2 as compat_urllib_request&lt;/span&gt;
-&lt;span class="nn"&gt;html = compat_urllib_request.urlopen(&amp;quot;http://www.google.com/&amp;quot;)&lt;/span&gt;
-&lt;span class="nn"&gt;print html.headers[&amp;#39;content-type&amp;#39;]&lt;/span&gt;
-&lt;span class="nn"&gt;&amp;#39;text/html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="err"&gt;charset=ISO-8859-1&amp;#39;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;compat_urllib_request&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="c"&gt;# Python 2&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib2&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;compat_urllib_request&lt;/span&gt;
+&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;compat_urllib_request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.google.com/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;content-type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;text/html; charset=ISO-8859-1&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Another example which involves the json library:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;json&lt;/span&gt;
-&lt;span class="err"&gt;except&lt;/span&gt; &lt;span class="err"&gt;ImportError:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;simplejson&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;json&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;simplejson&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

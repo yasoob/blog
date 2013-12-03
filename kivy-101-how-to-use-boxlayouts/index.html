@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | Kivy 101: How to Use BoxLayouts</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="../feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Recently I've started learning about Kivy, a Python Natural User Interface (NUI) toolkit. As I understand it, Kivy is kind of a spiritual successor to pyMT, which you can read more about here. In this article, we will be learning how Kivy handles layout management. While you can position ..." />
+    <meta property="article:tag" content="Kivy" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="gui dev" />
+    <meta property="article:tag" content="python gui" />
+    <meta property="article:tag" content="mobile python" />
+    <meta property="article:tag" content="python mobile dev in kivy" />
+    <link rel="stylesheet" href="../theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    }   
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="../images/logo.png">
+            </div>
+            <h1><a href="../">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="../about">About</a>|</li> 
+                <li>|<a href="../pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="../python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">Kivy 101: How to Use BoxLayouts</h1>
+      <span class="date">December 02, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Recently I've started learning about Kivy, a Python Natural User Interface (NUI) toolkit. As I understand it, Kivy is kind of a spiritual successor to <a href="http://pymt.eu/">pyMT</a>, which you can read more about <a href="http://kivy.org/docs/faq.html#how-is-kivy-related-to-pymt">here</a>. In this article, we will be learning how Kivy handles layout management. While you can position widgets using x/y coordinates, in every GUI toolkit I've used, it's almost always better to use some kind of layout management that the toolkit provides. This allows the widgets to resize and move appropriately as the user changes the window's size. In Kivy, these things <strong>Layouts</strong>. If you've used wxPython, they are analogous to wxPython's sizers.</p>
+<p>I should also note that Kivy can do layouts in two different ways. The first way is to do Layouts with Python code only. The second way is to use a mixture of Python and Kv language. This is to promote the model-view-controller way of doing things. It looks kind of like CSS and reminds me a little of wxPython and XRC. We will look at how to use both methods in this article. While Kivy supports multiple types of Layouts, this article will be focusing only on the <strong>BoxLayout</strong>. We will show how to nest BoxLayouts.<!--more--></p>
+<h2>Kivy, Python and BoxLayout</h2>
+<p><a href="http://freepythontips.files.wordpress.com/2013/11/kivy_hboxlayout.png"><img class="alignnone size-medium wp-image-395" alt="kivy_hboxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kivy_hboxlayout.png?w=300" width="300" height="236" /></a></p>
+<p>Creating a BoxLayout in Kivy using Python is actually pretty easy and quite intuitive. We'll start out with a code example and then follow the code with an explanation. Let's get started!</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">kivy</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+
+<span class="n">red</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">green</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">purple</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">HBoxLayoutExample</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Horizontally oriented BoxLayout example class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Horizontal BoxLayout example</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">,</span> <span class="n">purple</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;Button #</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+                         <span class="n">background_color</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+                         <span class="p">)</span>
+
+            <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">layout</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">VBoxLayoutExample</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vertical oriented BoxLayout example class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">setOrientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orient</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orient</span> <span class="o">=</span> <span class="n">orient</span>
+
+    <span class="c">#----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">orient</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;Button #</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">layout</span>
+
+<span class="c">#----------------------------------------------------------------------</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">HBoxLayoutExample</span><span class="p">()</span>
+    <span class="c">#app = VBoxLayoutExample()</span>
+    <span class="c">#app.setOrientation(orient=&quot;vertical&quot;)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p>Here we have created a vertically oriented BoxLayout class and a horizontally oriented BoxLayout class. Each class contains 5 buttons with random background colors. The colors follow RGBA, but can have individual values that are between zero and one. Oddly enough, if you use numbers greater than one, the color becomes brighter. I happened to use 255 instead of 1 when I created the screenshot above, so if you happen to run this code and see a more muted set of colors, that's why.</p>
+<p>To make the examples extremely simple, we only import Kivy's App, Button and BoxLayout classes. The BoxLayout class accepts several arguments, but we'll focus on the following 3: orientation, padding and spacing. Because BoxLayout is a sub-class of Layout and Widget, it inherits many other methods and keyword arguments that are not covered here. But back to the arguments we currently care about. The <strong>padding</strong> argument tells Kivy how much space there should be between the Layout and its children, whereas the <strong>spacing</strong> arguments tells it how much spacing there should be between the children.</p>
+<p>To create the buttons, we use a simple loop that loops over a small range of numbers. Each iteration creates a button with a random background color and adds that button to the Layout instance. Then we return the layout at the end.</p>
+<p>The vertical BoxLayout example in the <strong>VBoxLayoutExample</strong> class is slightly different in that I thought it would be fun to be able to set the orientation programmatically. The code is pretty much the same except that I added a <strong>setOrientation</strong> method. Note that if you call setOrientation again, it will have no effect. As one of my commenters so kindly pointed out, you would need to bind the orientation to the App orient property or use the Kv language to achieve this.</p>
+<p>If you comment out the call to <strong>HBoxLayoutExample</strong> at the end of the script and un-comment out the other two lines, then you should end up seeing something like this:</p>
+<p><a href="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png"><img class="alignnone size-medium wp-image-396" alt="kivy_vbox" src="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png?w=300" width="300" height="236" /></a></p>
+<p>Notice that when you don't set a background color, Kivy defaults to a dark grey. Kivy does not try to look like a native application. This may or may not be a big deal to you depending on what sort of program you're trying to achieve, but it should be noted. Now we're ready to learn about nesting!</p>
+<h2>Nesting BoxLayouts</h2>
+<p><a href="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png"><img class="alignnone size-medium wp-image-397" alt="kv_nested_boxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png?w=300" width="300" height="236" /></a></p>
+<p>Nesting BoxLayouts inside of each other is pretty easy with Kivy too. Whenever you go to create an application with a complicated interface that will need nested sizers, you should take some time to sketch the layout out with pencil and paper. Then you can draw boxes around the widgets in different ways to help you visualize which Layouts you'll need and how to nest them in each other. I have found this quite helpful with wxPython and I think it applies to any other GUI toolkit that doesn't have a WYSIWYG editor. By the way, BoxLayouts are very powerful. If you know what you're doing, you can make just about any interface with them alone just be using clever nesting.</p>
+<p>Enough talk, let's look at some code!</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">kivy</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+
+<span class="n">red</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">green</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">purple</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">NestedLayoutExample</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An example of nesting three horizontally oriented BoxLayouts inside</span>
+<span class="sd">    of one vertically oriented BoxLayout</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Horizontal BoxLayout example</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">main_layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s">&quot;vertical&quot;</span><span class="p">)</span>
+
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">,</span> <span class="n">purple</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">h_layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;Button #</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">background_color</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+                             <span class="p">)</span>
+
+                <span class="n">h_layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+            <span class="n">main_layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">h_layout</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">main_layout</span>
+
+<span class="c">#----------------------------------------------------------------------</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">NestedLayoutExample</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p>This example is very similar to the last one. The devil is in the details though. Here we have a nested for loop that creates 3 BoxLayouts that contain 5 buttons a piece. Each Layout is then inserted into the top level Layout at the end of each iteration in the outside loop. In case you missed it, scroll back up to see how it turned out. The trick is to create one top-level or main Layout and add other Layouts to it. Now let's turn our attention to learning how to do these things with the Kv language.</p>
+<h2>Kv+Python and BoxLayout</h2>
+<p><a href="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png"><img class="alignnone size-medium wp-image-396" alt="kivy_vbox" src="http://freepythontips.files.wordpress.com/2013/11/kivy_vbox.png?w=300" width="300" height="236" /></a></p>
+<p>It's almost always a little painful to learn a new language. Fortunately, the Kv language actually follows Python pretty closely, including Python's requirement of using indentation levels to denote when a section of code begins and ends. You may want to spend a few minutes reading about the Kv language on the <a href="http://kivy.org/docs/guide/lang.html">Kivy website</a>. Whenever you're ready, we can continue. First we'll start off with the Python code:</p>
+<div class="codehilite"><pre><span class="c"># kvboxlayout.py</span>
+
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">KVMyHBoxLayout</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">KVBoxLayoutApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="c">#----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">KVMyHBoxLayout</span><span class="p">()</span>
+
+<span class="c">#----------------------------------------------------------------------</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">KVBoxLayoutApp</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p>This code is much simpler than our previous examples, but it's also rather mysterious. First of all, we create an empty sub-class of BoxLayout. Then we create our App class which has a <strong>build</strong> method that just returns an instance of the empty BoxLayout class. What's going on here? Well we have to look at the Kv file to find out!</p>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">MyButton</span><span class="nd">@Button</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="n">color</span><span class="p">:</span> <span class="o">.</span><span class="mi">8</span><span class="p">,</span><span class="o">.</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+    <span class="n">font_size</span><span class="p">:</span> <span class="mi">32</span>
+
+<span class="o">&lt;</span><span class="n">MyButton</span><span class="nd">@Button</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="n">orientation</span><span class="p">:</span> <span class="s">&#39;horizontal&#39;</span>
+    <span class="n">MyButton</span><span class="p">:</span>
+        <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn1&quot;</span>
+        <span class="n">background_color</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+    <span class="n">MyButton</span><span class="p">:</span>
+        <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn2&quot;</span>
+        <span class="n">background_color</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+    <span class="n">MyButton</span><span class="p">:</span>
+        <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn3&quot;</span>
+        <span class="n">background_color</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
+    <span class="n">MyButton</span><span class="p">:</span>
+        <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn4&quot;</span>
+        <span class="n">background_color</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
+    <span class="n">MyButton</span><span class="p">:</span>
+        <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn5&quot;</span>
+        <span class="n">background_color</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+</pre></div>
+
+
+<p>When you save the code above, you'll have to name it to be the same as the App class, but with a .kv instead of a .py and in lowercase. That means the name of this Kv file needs to be <strong>kvboxlayout.kv</strong>. You will note that you also need to strip off the App part of the class name such that KVBoxLayoutApp becomes kvboxlayout. Yes, it's a little confusing. If you don't follow the naming conventions correctly, the file will run but you will have an empty black window.</p>
+<p>Anyway, first off in the Kv file, we have a section that starts with <strong>:</strong>. This tells Kivy that we are sub-classing the Button class and calling our sub-class <strong>MyButton</strong>. Then we indent the required four spaces and set the button's label color and font size. Next we create a BoxLayout section. Notice that we didn't create a sub-class this time. Then we tell it what orientation it should be and add 5 MyButton instances, each one having its own individual label and color.</p>
+<p>One of the core Kivy developers pointed out that by creating the BoxLayout in this manner, I am redefining the BoxLayout for all usages. This is <strong>not</strong> a good thing, even if it does make the example simpler. Thus in the next example, we'll stop doing that and do it the right way instead!</p>
+<h2>Nesting BoxLayouts with Kv</h2>
+<p><a href="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png"><img class="alignnone size-medium wp-image-397" alt="kv_nested_boxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kv_nested_boxlayout.png?w=300" width="300" height="236" /></a></p>
+<p>Nesting BoxLayouts in Kv is a little confusing at first, but once you get the hang of it, you'll find that it's really quite easy. We'll start out with the Python code, take a look at how it works and then look at the Kv code.</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">HBoxWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">VBoxWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c">########################################################################</span>
+<span class="k">class</span> <span class="nc">KVNestedBoxLayoutApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="c">#----------------------------------------------------------------------</span>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">VBoxWidget</span><span class="p">()</span>
+
+<span class="c">#----------------------------------------------------------------------</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">KVNestedBoxLayoutApp</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p>This time around, we need to create two generic Widget classes: HBoxWidget and VBoxWidget. These are actually dummy classes that become BoxLayouts in the Kv code. Speaking of which, let's take a look at that now. Note that you'll need to name the Kv file <strong>kvnestedboxlayout.kv</strong>, which you'll note, is a lowercase version of <strong>KVNestedBoxLayoutApp</strong>.</p>
+<div class="codehilite"><pre><span class="p">:</span>
+    <span class="n">color</span><span class="p">:</span> <span class="o">.</span><span class="mi">8</span><span class="p">,</span><span class="o">.</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+    <span class="n">font_size</span><span class="p">:</span> <span class="mi">32</span>
+
+<span class="p">:</span>
+    <span class="n">BoxLayout</span><span class="p">:</span>
+        <span class="n">size</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">pos</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">pos</span>
+        <span class="n">orientation</span><span class="p">:</span> <span class="s">&#39;horizontal&#39;</span>
+        <span class="n">MyButton</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn1&quot;</span>
+            <span class="n">background_color</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
+        <span class="n">MyButton</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn2&quot;</span>
+            <span class="n">background_color</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+        <span class="n">MyButton</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn3&quot;</span>
+            <span class="n">background_color</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
+        <span class="n">MyButton</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn4&quot;</span>
+            <span class="n">background_color</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
+        <span class="n">MyButton</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">:</span> <span class="s">&quot;Btn2&quot;</span>
+            <span class="n">background_color</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span>
+
+<span class="p">:</span>
+    <span class="n">BoxLayout</span><span class="p">:</span>
+        <span class="n">size</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">pos</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">pos</span>
+        <span class="nb">id</span><span class="p">:</span> <span class="n">foo_bar</span>
+        <span class="n">orientation</span><span class="p">:</span> <span class="s">&#39;vertical&#39;</span>
+        <span class="n">HBoxWidget</span><span class="p">:</span>
+        <span class="n">HBoxWidget</span><span class="p">:</span>
+</pre></div>
+
+
+<p>The button code is the same as before. Next we have the <strong>HBoxWidget</strong> which we define as a horizontal BoxLayout with 5 buttons in it. Then we create an instance of <strong>VBoxWidget</strong> that is a vertical BoxLayout, but this Layout contains two instances of the HBoxWidget. You'll note that in the Python code's build method, we are returning the VBoxWidget, so that's where the action is. If you remove those two HBoxWidget calls, the result will be an empty black window.</p>
+<p>There is another way to use Kv files in Kivy. It is through the kivy.lang.Builder.load_file (or load_string) API, which gives you the ability to load Kv files without needing to remember to name the Kv file in some special way. You can read about the API on their <a href="http://kivy.org/docs/api-kivy.lang.html#kivy.lang.Builder" target="_blank">website</a> and see an example of it in action in the Kivy <a href="https://github.com/kivy/kivy/blob/master/examples/widgets/screenmanager.py" target="_blank">examples on github</a>. The only caveat to using this method is that you need to be careful not to load the same file twice or your UI may get messed up.</p>
+<h2>Wrapping Up</h2>
+<p>This just scratches the surface of Kivy's Layout system. There are 6 other Layout types available. However, I think you'll find that the examples in this article will get you started down the road of successfully creating cool Kivy applications of your very own. If you need help learning Kivy, there's a pretty good set of documentation on their website. They also have a <a href="https://groups.google.com/forum/#!forum/kivy-users" target="_blank">Google Group</a> and a <a href="irc://freenode.net/kivy" target="_blank">#kivy channel</a> on freenode.</p>
+<h2>Related Readings</h2>
+<ul>
+<li>Kivy's <a href="http://kivy.org/docs/gettingstarted/layouts.html">Getting Started with Layouts</a></li>
+<li>Kivy's <a href="http://kivy.org/docs/guide/widgets.html#organize-with-layouts?">programming guide</a> also has coverage on layouts</li>
+<li>A simple nested Layout example on <a href="https://gist.github.com/Kovak/6206701">github</a></li>
+<li>Kivy's <a href="http://kivy.org/docs/guide/lang.html">Kv language page</a></li>
+<li>Other <a href="https://github.com/Kovak/KivyExamples">Kivy examples on github</a></li>
+</ul>
+<h2>Download the Source</h2>
+<ul>
+<li><a href="http://www.blog.pythonlibrary.org/wp-content/uploads/2013/11/kivy_box_layouts.tar">kivy_box_layouts.tar</a></li>
+<li><a href="http://www.blog.pythonlibrary.org/wp-content/uploads/2013/11/kivy_box_layouts.zip">kivy_box_layouts.zip</a></li>
+</ul>
+<p>Note: This is an official cross-posting of an article from the <a href="http://www.blog.pythonlibrary.org/">Mouse Vs Python blog</a>. You can read the original <a href="http://www.blog.pythonlibrary.org/2013/11/25/kivy-101-how-to-use-boxlayouts/">here</a>.</p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="../tag/kivy.html">Kivy</a>
+    <a href="../tag/python.html">python</a>
+    <a href="../tag/gui-dev.html">gui dev</a>
+    <a href="../tag/python-gui.html">python gui</a>
+    <a href="../tag/mobile-python.html">mobile python</a>
+    <a href="../tag/python-mobile-dev-in-kivy.html">python mobile dev in kivy</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "../images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "kivy-101-how-to-use-boxlayouts";
+        var disqus_url = "../kivy-101-how-to-use-boxlayouts";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

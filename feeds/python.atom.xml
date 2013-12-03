@@ -81,9 +81,9 @@ python 3 and the other choice is to modify your current code so that it
 can be used with both python 2 and 3. I am going to talk about the
 second choice. First tell me how you import packages in your script ?
 Most of us do this :&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt;
-&lt;span class="c1"&gt;# or&lt;/span&gt;
-&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bar&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;foo&lt;/span&gt;
+&lt;span class="c"&gt;# or&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;foo&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;bar&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -95,10 +95,10 @@ Most of us do this :&lt;/p&gt;
 &lt;p&gt;I know it's function is the same as above listed code but it is vital
 for making your script compatible with python 2 and 3. Now examine the
 code below :&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;urllib.request&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;urllib_request&lt;/span&gt; &lt;span class="cp"&gt;#for python 3&lt;/span&gt;
-&lt;span class="err"&gt;except&lt;/span&gt; &lt;span class="err"&gt;ImportError:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;urllib2&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;urllib_request&lt;/span&gt; &lt;span class="cp"&gt;# for python 2&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;urllib_request&lt;/span&gt; &lt;span class="c"&gt;#for python 3&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib2&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;urllib_request&lt;/span&gt; &lt;span class="c"&gt;# for python 2&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -121,21 +121,21 @@ modules have still not been ported to python 3. After that you have to
 wrap your module importing code in a try-except clause with a common
 variable following the &lt;code&gt;as&lt;/code&gt; keyword. After that use the imported module.
 Here is a complete example which should work both in python 2 and 3:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
-    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request as compat_urllib_request&lt;/span&gt;
-&lt;span class="nn"&gt;except ImportError: # Python 2&lt;/span&gt;
-&lt;span class="nn"&gt;    import urllib2 as compat_urllib_request&lt;/span&gt;
-&lt;span class="nn"&gt;html = compat_urllib_request.urlopen(&amp;quot;http://www.google.com/&amp;quot;)&lt;/span&gt;
-&lt;span class="nn"&gt;print html.headers[&amp;#39;content-type&amp;#39;]&lt;/span&gt;
-&lt;span class="nn"&gt;&amp;#39;text/html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="err"&gt;charset=ISO-8859-1&amp;#39;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib.request&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;compat_urllib_request&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="c"&gt;# Python 2&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;urllib2&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;compat_urllib_request&lt;/span&gt;
+&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;compat_urllib_request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.google.com/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;content-type&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;text/html; charset=ISO-8859-1&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Another example which involves the json library:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;try:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;json&lt;/span&gt;
-&lt;span class="err"&gt;except&lt;/span&gt; &lt;span class="err"&gt;ImportError:&lt;/span&gt;
-    &lt;span class="err"&gt;import&lt;/span&gt; &lt;span class="err"&gt;simplejson&lt;/span&gt; &lt;span class="err"&gt;as&lt;/span&gt; &lt;span class="err"&gt;json&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;simplejson&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

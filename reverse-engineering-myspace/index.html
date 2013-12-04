@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | Reverse engineering myspace</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi guys! In todays post we will be looking into myspace.com and check whether it is possible to download songs with python or not. If it is possible then we will make a python script which will assist us in downloading the songs. Tools : python - I am using py2k ..." />
+    <meta property="article:tag" content="mp3 downloader" />
+    <meta property="article:tag" content="music downloader" />
+    <meta property="article:tag" content="myspace downloader" />
+    <meta property="article:tag" content="myspace.com" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="reverse engineer" />
+    <meta property="article:tag" content="tutorial" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    }   
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">Reverse engineering myspace</h1>
+      <span class="date">November 23, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi guys! In todays post we will be looking into myspace.com and check whether it is possible to download songs with python or not. If it is possible then we will make a python script which will assist us in downloading the songs.</p>
+<h2>Tools :</h2>
+<ul>
+<li>python - I am using py2k</li>
+<li>browser - I am using chrome</li>
+<li>rtmpdump &amp; rtmpsrv</li>
+<li>internet connection</li>
+</ul>
+<h2>Lets start :</h2>
+<p>So lets start. Lets go to myspace:</p>
+<p><img alt="myspace.com" src="http://freepythontips.files.wordpress.com/2013/11/screenshot-from-2013-11-22-190528.png" /></p>
+<p>We don't need this page. Lets go to a song page for instance I am going to open <a href="https://myspace.com/brunomars/music/song/somewhere-in-brooklyn-69059954-74825216">this page</a>. Now lets check out the source of the page to see whether we can find any mp3 link. What I usually do is that I right click on the name of the song and click on "Inspect this". Usually the name is in the song link on most websites. So just do this and see if you get anything. Here is what I got:</p>
+<p><img alt="inspecting the html" src="http://freepythontips.files.wordpress.com/2013/11/screenshot-from-2013-11-22-215408.png" /></p>
+<p>Can you see that data stream url ? Oh yes the one which I have highlighted. That is an rtmp url. RTMP is a streaming protocol. Now the problem is that we can not directly download the rtmp links so what should we do now ? We are very lucky because there is already a software which can help us in downloading this and it is called</p>
+<div class="codehilite"><pre><span class="n">rtmpdump</span>
+</pre></div>
+
+
+<p>However rtmpdump requires some additional parameters for downloading the song. They are the play path, stream url, file name and etc. So how do we get those ? So again we are very lucky because there is a software for this as well and it is developed by the same people who have developed rtmpdump. This one is called</p>
+<div class="codehilite"><pre><span class="n">rtmpsrv</span>
+</pre></div>
+
+
+<p>Just search for it on google and download it. This is like a proxy. It scans all of your data and searches for rtmp streams. When it has found a stream it just outputs a single command which can be used to download a file with rtmpdump. However first we have to route all the tcp traffic to port 1935. Thats the port where rtmpsrv runs. In order to do so just type this in the terminal:</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">A</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">1935</span> <span class="o">-</span><span class="n">j</span> <span class="n">REDIRECT</span>
+</pre></div>
+
+
+<p>This will add a firewall rule. Now go to myspace and play a song. After you hit play and wait for some seconds then you will see that a couple of lines are outputted by rtmpsrv. Check this out:</p>
+<p><img alt="rtmpsrv" src="http://freepythontips.files.wordpress.com/2013/11/screenshot-from-2013-11-22-223634.png" /></p>
+<p>Now if you copy this command and paste it in the terminal you will see that rtmpdump will start to download the file. Now close rtmpsrv and revert the firewall rule by using this command :</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">D</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">1935</span> <span class="o">-</span><span class="n">j</span> <span class="n">REDIRECT</span>
+</pre></div>
+
+
+<p>Now comes the main part. It is not convenient to go through all of these steps again and again just to download a single song. Now we need to automate this and for that we will use python. After doing a little bit of tinkering I saw that only the -y and -p parameters are changed for every song. Further down the lane we can see that the -p parameter is just the url of the song page and the -y parameter is taken from the rtmp link which we found on the song page.</p>
+<h2>Writing Python script :</h2>
+<p>So lets first make a script which will get the rtmp link from the page. Here is my solution:</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">requests</span> <span class="kn">as</span> <span class="nn">r</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">song_page_url</span><span class="p">)</span>
+<span class="n">rtmp_link</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;data-stream-url=&quot;(.+?)&quot;&#39;</span><span class="p">,</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+<span class="k">print</span> <span class="n">rtmp_link</span>
+</pre></div>
+
+
+<p>So now we have a script which gets the rtmp link. Now we need to modify this script so that it outputs the required rtmpdump command. Again here is my solution :</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">requests</span> <span class="kn">as</span> <span class="nn">r</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">song_page_url</span><span class="p">)</span>
+<span class="n">rtmp_link</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;data-stream-url=&quot;(.+?)&quot;&#39;</span><span class="p">,</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+<span class="n">y</span> <span class="o">=</span> <span class="n">rtmp_link</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">song_page_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">rtmp_command</span> <span class="o">=</span> <span class="s">&#39;rtmpdump -r &quot;rtmpte://fms.ec-music.myspacecdn.com/&quot; </span><span class="se">\</span>
+<span class="s">-a &quot;&quot; -f &quot;LNX 11,9,900,152&quot; -o &quot;{}.flv&quot; </span><span class="se">\</span>
+<span class="s">-W &quot;http://lads.myspacecdn.com/music/sdkwrapper/SDKWrapper.2.2.16.swf&quot; </span><span class="se">\</span>
+<span class="s">-p &quot;http://www.myspace.com&quot; -y &quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+
+<p>So now we just need to open rtmpdump with the parameters. For that I will be using the subprocess module. Here is the final code:</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">song_page_url</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">song_page_url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;data-stream-url=&quot;(rtmpe://[^;]+);([^&quot;]+)&quot;&#39;</span><span class="p">,</span> <span class="n">html</span><span class="p">)</span>
+<span class="n">rtmpurl</span><span class="p">,</span> <span class="n">playpath</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">song_page_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;.flv&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;downloading&#39;</span><span class="p">,</span> <span class="n">filename</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&#39;rtmpdump&#39;</span><span class="p">,</span> <span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s">&#39;-r&#39;</span><span class="p">,</span> <span class="n">rtmpurl</span><span class="p">,</span> <span class="s">&#39;-y&#39;</span><span class="p">,</span> <span class="n">playpath</span><span class="p">],</span>
+                    <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Just run this file like this :</p>
+<div class="codehilite"><pre><span class="nv">$</span> <span class="nv">python</span> <span class="n">myspace</span><span class="o">.</span><span class="n">py</span> <span class="n">https:</span><span class="sr">//m</span><span class="n">yspace</span><span class="o">.</span><span class="n">com</span><span class="sr">/brunomars/m</span><span class="n">usic</span><span class="sr">/song/som</span><span class="n">ewhere</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">brooklyn</span><span class="o">-</span><span class="mi">69059954</span><span class="o">-</span><span class="mi">74825216</span>
+</pre></div>
+
+
+<p>Thats it! We now have a simple script that will download myspace songs for us. I know you are thinking about more features in this script. Let me give you some ideas. This script downloads just songs and does not have any input validation in place. Maybe you can make a similar script for videos ? When you make something do let me know. That was todays tutorial. I will see you later and don't forget to follow this blog, <a href="https://www.facebook.com/freepythontips">like it on facebook</a>, <a href="http://www.twitter.com/yasoobkhalid">follow me on twitter</a> and reply below :) This is the best way to repay me. Lastly stay tuned for the next post.</p>
+<p>Disclaimer: Some of the above code can be written more compactly. I wrote it this way so that the beginners could understand what is going on.</p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/mp3-downloader.html">mp3 downloader</a>
+    <a href="http://yasoob.github.io/blog/tag/music-downloader.html">music downloader</a>
+    <a href="http://yasoob.github.io/blog/tag/myspace-downloader.html">myspace downloader</a>
+    <a href="http://yasoob.github.io/blog/tag/myspacecom.html">myspace.com</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/reverse-engineer.html">reverse engineer</a>
+    <a href="http://yasoob.github.io/blog/tag/tutorial.html">tutorial</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "reverse-engineering-myspace";
+        var disqus_url = "http://yasoob.github.io/blog/reverse-engineering-myspace";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

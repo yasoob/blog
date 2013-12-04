@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Bite Sized Python Tips | Python decorators finally demystified</title>
+  <meta property="og:type" content="article" />
+  <link rel="alternate" type="application/rss+xml" title="Bite Sized Python Tips » Feed" href="http://yasoob.github.io/blog/feeds/all.atom.xml">
+  <meta property="article:publisher" content="https://www.facebook.com/freepythontips">
+  <meta property="article:author" content="https://www.facebook.com/profile.php?id=1530901081">
+  <meta property="og:image" content="http://0.gravatar.com/blavatar/6c1d474724ac198295b95c49642a34b3?s=200">
+  <meta name="twitter:site" content="@yasoobkhalid">
+  <meta name="description" content="Hi there guys! I hope all of you are fine and doing good. Recently I was hanging out on a python related IRC where I got a request from someone to write an article on decorators in Python. It is perhaps one of the most difficult concept to grasp. So ..." />
+    <meta property="article:tag" content="decorator-pattern" />
+    <meta property="article:tag" content="decorators" />
+    <meta property="article:tag" content="design-patterns" />
+    <meta property="article:tag" content="patterns" />
+    <meta property="article:tag" content="programming" />
+    <meta property="article:tag" content="python" />
+    <meta property="article:tag" content="python decorators" />
+    <link rel="stylesheet" href="http://yasoob.github.io/blog/theme/css/main.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,200" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="http://yasoob.github.io/blog/images/favicon.ico">
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body id="index" class="home">
+<a href="http://www.github.com/yasoob/blog">
+<img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub" />
+</a>
+
+<!-- AddThis Smart Layers BEGIN -->
+<!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'transparent', 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'freepythontips'},
+        {'service': 'twitter', 'id': 'yasoobkhalid'},
+        {'service': 'rss', 'id': 'http://feedpress.me/pytips'}
+      ]
+    }   
+  });
+</script>
+<!-- AddThis Smart Layers END -->    <div id="wrapper">
+        <header id="banner" class="body">
+            <div>
+                <img src="http://yasoob.github.io/blog/images/logo.png">
+            </div>
+            <h1><a href="http://yasoob.github.io/blog/">Bite Sized Python Tips</a></h1>
+            <br/><nav><ul>
+                <li>|<a href="http://yasoob.github.io/blog/about">About</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/pycrumbs">Beginner's Delight</a>|</li> 
+                <li>|<a href="http://yasoob.github.io/blog/python-news">News</a>|</li> 
+            </ul></nav>
+        </header>
+        <hr>
+<section id="content" class="body">
+  <article class="container">
+    <header>
+      <h1 class="entry-title">Python decorators finally demystified</h1>
+      <span class="date">December 04, 2013</span>
+    </header>
+
+    <div class="entry-content">
+      <p>Hi there guys! I hope all of you are fine and doing good. Recently I was hanging out on a python related IRC where I got a request from someone to write an article on decorators in Python. It is perhaps one of the most difficult concept to grasp. So as usual without wasting anytime let get on with it.</p>
+<h2>- Everything in python is an object (Functions too!)</h2>
+<p>First of all lets understand functions in python:</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;yasoob&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;hi &quot;</span><span class="o">+</span><span class="n">name</span>
+
+<span class="k">print</span> <span class="n">hi</span><span class="p">()</span>
+<span class="c">#output: &#39;hi yasoob&#39;</span>
+
+<span class="c">#We can even assign a function to a variable like</span>
+<span class="n">greet</span> <span class="o">=</span> <span class="n">hi</span>
+<span class="c">#We are not using parenthesis here because we are not calling the function hi</span>
+<span class="c">#instead we are just putting it into the greet variable. Lets try to run this</span>
+
+<span class="k">print</span> <span class="n">greet</span><span class="p">()</span>
+<span class="c">#output: &#39;hi yasoob&#39;</span>
+
+<span class="c">#lets see what happens if we delete the old hi function!</span>
+<span class="k">del</span> <span class="n">hi</span>
+<span class="k">print</span> <span class="n">hi</span><span class="p">()</span>
+<span class="c">#outputs: NameError</span>
+
+<span class="k">print</span> <span class="n">greet</span><span class="p">()</span>
+<span class="c">#outputs: &#39;hi yasoob&#39;</span>
+</pre></div>
+
+
+<h2>- Defining functions within functions:</h2>
+<p>So that was the basic knowledge about functions. Lets take your knowledge one step further! In Python we can define functions inside other functions. You might be wondering what sorcery is this! Let me explain it with an example.</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;yasoob&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;now you are inside the hi() function&quot;</span>
+
+    <span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s">&quot;now you are in the greet() function&quot;</span>
+
+    <span class="k">def</span> <span class="nf">welcome</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s">&quot;now you are in the welcome() function&quot;</span>
+
+    <span class="k">print</span> <span class="n">greet</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">welcome</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;now you are back in the hi() function&quot;</span>
+
+<span class="n">hi</span><span class="p">()</span>
+<span class="c">#output:now you are inside the hi() function</span>
+<span class="c">#       now you are in the greet() function</span>
+<span class="c">#       now you are in the welcome() function</span>
+<span class="c">#       now you are back in the hi() function</span>
+
+<span class="c"># This shows that whenever you call hi(), greet() and welcome()</span>
+<span class="c"># are also called. However the greet() and welcome() functions</span>
+<span class="c"># are not available outsite the hi() function e.g:</span>
+
+<span class="n">greet</span><span class="p">()</span>
+<span class="c">#outputs: NameError: name &#39;greet&#39; is not defined</span>
+</pre></div>
+
+
+<p>So now we know that we can define functions in other functions. In simpler words we can make nested functions. Now you need to learn one more thing that functions can return functions too. </p>
+<h2>- Returning functions from within functions:</h2>
+<p>It is not necessary to execute a function within another function, we can return it as an output as well. Lets take a look at it with an example!</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;yasoob&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s">&quot;now you are in the greet() function&quot;</span>
+
+    <span class="k">def</span> <span class="nf">welcome</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s">&quot;now you are in the welcome() function&quot;</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&quot;yasoob&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">greet</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">welcome</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">hi</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">a</span>
+<span class="c">#outputs: &lt;function greet at 0x7f2143c01500&gt;</span>
+
+<span class="c">#This clearly shows that `a` now points to the greet() function in hi()</span>
+<span class="c">#Now try this</span>
+
+<span class="k">print</span> <span class="n">a</span><span class="p">()</span>
+<span class="c">#outputs: now you are in the greet() function</span>
+</pre></div>
+
+
+<p>Just take a look at the code again! In the if/else clause we are returning greet and welcome not greet() and welcome(). Why is that ? It is so because when you put parenthesis around it the function gets executed whereas if you don't put parenthesis around it then it can be passed around and can be assigned to other variables without executing it. Did you get it ? Let me explain it a little bit in more detail. When we write <code>a = hi()</code> hi() gets executed and because the name is <code>yasoob</code> by default, the function greet is returned. If we change the statement to <code>a = hi(name = "ali")</code> then the welcome function will be returned. We can also do <code>print hi()()</code> which outputs <code>now you are in the greet() function</code>. I hope you have not fainted by now. Was it difficult ? No? I guess you are in the mood to finally learn about decorators! Lets continue our talk and move forward.</p>
+<h2>- Giving a function as an argument to another function:</h2>
+<p>Lets take a look at an example:</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">hi</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;hi yasoob!&quot;</span>
+
+<span class="k">def</span> <span class="nf">doSomethingBeforeHi</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;I am doing some  boring work before executing hi()&quot;</span>
+    <span class="k">print</span> <span class="n">hi</span><span class="p">()</span>
+
+<span class="n">doSomethingBeforeHi</span><span class="p">(</span><span class="n">hi</span><span class="p">)</span>
+<span class="c">#outputs:I am doing some  boring work before executing hi()</span>
+<span class="c">#        hi yasoob!</span>
+</pre></div>
+
+
+<p>Congratulations! You have all of the knowledge to entitle you as a decorator wrangler! Oh wait! you don't know what decorators really are. Here is a short definition <code>decorators let you execute code before and after the function they decorate</code></p>
+<h2>- Writing your first decorator:</h2>
+<p>You have already written your first decorator! Do you know when ? In the last example we had made our very own decorator. Lets modify the previous decorator and make a little bit more usable program:</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">a_new_decorator</span><span class="p">(</span><span class="n">a_func</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">wrapTheFunction</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&quot;I am doing some  boring work before executing a_func()&quot;</span>
+
+        <span class="n">a_func</span><span class="p">()</span>
+
+        <span class="k">print</span> <span class="s">&quot;I am doing some boring work after executing a_func()&quot;</span>
+
+    <span class="k">return</span> <span class="n">wrapTheFunction</span>
+
+<span class="k">def</span> <span class="nf">a_function_requiring_decoration</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;I am the function which needs some decoration to remove my foul smell&quot;</span>
+
+<span class="n">a_function_requiring_decoration</span><span class="p">()</span>
+<span class="c">#outputs: &quot;I am the function which needs some decoration to remove my foul smell&quot;</span>
+
+<span class="n">a_function_requiring_decoration</span> <span class="o">=</span> <span class="n">a_new_decorator</span><span class="p">(</span><span class="n">a_function_requiring_decoration</span><span class="p">)</span>
+<span class="c">#now a_function_requiring_decoration is wrapped by wrapTheFunction()</span>
+
+<span class="n">a_function_requiring_decoration</span><span class="p">()</span>
+<span class="c">#outputs:I am doing some  boring work before executing a_function_requiring_decoration()</span>
+<span class="c">#        I am the function which needs some decoration to remove my foul smell</span>
+<span class="c">#        I am doing some boring work after executing a_function_requiring_decoration()</span>
+</pre></div>
+
+
+<p>Did you get it? We just applied the previously learned principles. This is exactly what the decorators do in python! They wrap a function and modify its behaviour in one way or the another. Now you might be wondering that we did not use the <code>@</code> anywhere in our code? That is just a short way of making up a decorated function. Here is how we could have run the previous code sample using <code>@</code>.</p>
+<div class="codehilite"><pre><span class="nd">@a_new_decorator</span>
+<span class="k">def</span> <span class="nf">a_function_requiring_decoration</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;I am the function which needs some decoration to remove my foul smell&quot;</span>
+
+<span class="n">a_function_requiring_decoration</span><span class="p">()</span>
+<span class="c">#outputs: I am doing some  boring work before executing a_function_requiring_decoration()</span>
+<span class="c">#         I am the function which needs some decoration to remove my foul smell</span>
+<span class="c">#         I am doing some boring work after executing a_function_requiring_decoration()</span>
+
+<span class="c">#the @a_new_decorator is just a short way of saying:</span>
+<span class="n">a_function_requiring_decoration</span> <span class="o">=</span> <span class="n">a_new_decorator</span><span class="p">(</span><span class="n">a_function_requiring_decoration</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>- Decorators Demystified:</h2>
+<p>I hope you now know what decorators are basically in Python. They are not something to be panicked of. We can chain two or more than two decorators as well! Take this example:</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">bread</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&quot;&lt;/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;&quot;</span>
+        <span class="n">func</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;&lt;\______/&gt;&quot;</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">def</span> <span class="nf">ingredients</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&quot;#tomatoes#&quot;</span>
+        <span class="n">func</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;~salad~&quot;</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">def</span> <span class="nf">sandwich</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">&quot;--ham--&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">food</span>
+
+<span class="n">sandwich</span><span class="p">()</span>
+<span class="c">#outputs: --ham--</span>
+<span class="n">sandwich</span> <span class="o">=</span> <span class="n">bread</span><span class="p">(</span><span class="n">ingredients</span><span class="p">(</span><span class="n">sandwich</span><span class="p">))</span>
+<span class="n">sandwich</span><span class="p">()</span>
+<span class="c">#outputs:</span>
+<span class="c">#&lt;/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;</span>
+<span class="c"># #tomatoes#</span>
+<span class="c"># --ham--</span>
+<span class="c"># ~salad~</span>
+<span class="c">#&lt;\______/&gt;</span>
+</pre></div>
+
+
+<p>In this example <a href="http://stackoverflow.com/users/9951/e-satis">e-satis</a> did a really great job in explaining the way in which decorators are executed. We can run the previous example using the python syntax like this:</p>
+<div class="codehilite"><pre><span class="nd">@bread</span>
+<span class="nd">@ingredients</span>
+<span class="k">def</span> <span class="nf">sandwich</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">&quot;--ham--&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">food</span>
+
+<span class="n">sandwich</span><span class="p">()</span>
+<span class="c">#outputs:</span>
+<span class="c">#&lt;/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;</span>
+<span class="c"># #tomatoes#</span>
+<span class="c"># --ham--</span>
+<span class="c"># ~salad~</span>
+<span class="c">#&lt;\______/&gt;</span>
+</pre></div>
+
+
+<p>The order in which you write the decorators matter a lot and can change the whole behaviour of your decorated function if they are not executed in the correct way. Suppose you write this:</p>
+<div class="codehilite"><pre><span class="nd">@ingredients</span>
+<span class="nd">@bread</span>
+<span class="k">def</span> <span class="nf">sandwich</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">&quot;--ham--&quot;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">food</span>
+
+<span class="n">sandwich</span><span class="p">()</span>
+<span class="c">#outputs:</span>
+<span class="c">##tomatoes#</span>
+<span class="c">#&lt;/&#39;&#39;&#39;&#39;&#39;&#39;\&gt;</span>
+<span class="c"># --ham--</span>
+<span class="c">#&lt;\______/&gt;</span>
+<span class="c"># ~salad~</span>
+</pre></div>
+
+
+<p>No one of us wants a sandwich which has tomato on top of it and salad on the bottom. This shows that you do should not mix up the arrangement of the decorators otherwise you will have to pay a huge price. In our case we paid the price by ruining our beautiful sandwich.</p>
+<p>I hope you learned something from this post! If I get a good response then I will cover some more technicalities of decorators in the future as well. Do share your views in the comments below. If you have any suggestions then do tell me about them. You can also follow me on facebook and twitter or can send me an email. The links to my social accounts are given at the end. Bye bye and don't forget to subscribe to my blog and tweet and share this post on facebook.</p>
+<footer class="post-info">
+  <p>Tags: 
+    <a href="http://yasoob.github.io/blog/tag/decorator-pattern.html">decorator-pattern</a>
+    <a href="http://yasoob.github.io/blog/tag/decorators.html">decorators</a>
+    <a href="http://yasoob.github.io/blog/tag/design-patterns.html">design-patterns</a>
+    <a href="http://yasoob.github.io/blog/tag/patterns.html">patterns</a>
+    <a href="http://yasoob.github.io/blog/tag/programming.html">programming</a>
+    <a href="http://yasoob.github.io/blog/tag/python.html">python</a>
+    <a href="http://yasoob.github.io/blog/tag/python-decorators.html">python decorators</a>
+  </p>
+
+</footer><!-- /.post-info -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-529a3f497b3e7850"></script>
+<!-- AddThis Button END -->    </div>
+    <hr>
+    <div>
+    <a href = "http://github.us3.list-manage1.com/subscribe?u=20b1036063aec6dbf068cc8c0&id=4d261653c5" target="_blank"><img src= "http://yasoob.github.io/blog/images/subscribe.png" /></a>
+    </div><hr><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "python-decorators-demystified";
+        var disqus_url = "http://yasoob.github.io/blog/python-decorators-demystified";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://freepytips.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <a href="https://plus.google.com/105844092190217759857?rel=author"></a>
+  </article>
+</section>
+        <div class="clear-footer"></div>
+    </div>
+    <footer id="contentinfo" class="body">
+        <div class="social">
+            <a href="mailto:yasoob.khld@gmail.com" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://github.com/yasoob" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://www.facebook.com/freepythontips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="https://twitter.com/yasoobkhalid" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <a href="http://feedpress.me/pytips" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x dat-icon"></i>
+                </span>
+            </a>
+            <!-- <a class="lastfm" href="http://www.last.fm/user/nortantivirus" target="_blank"></a> -->
+        </div>
+        <p>
+            ©2013 Bite Sized Python Tips
+            <br/>Built with <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>.
+        </p>
+    </footer>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-46059954-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

@@ -1,5 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-12-02T22:18:00-05:00</updated><entry><title>Kivy 101: How to Use BoxLayouts</title><link href="http://yasoob.github.io/blog/kivy-101-how-to-use-boxlayouts" rel="alternate"></link><updated>2013-12-02T22:18:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-12-02:kivy-101-how-to-use-boxlayouts</id><summary type="html">&lt;p&gt;Recently I've started learning about Kivy, a Python Natural User Interface (NUI) toolkit. As I understand it, Kivy is kind of a spiritual successor to &lt;a href="http://pymt.eu/"&gt;pyMT&lt;/a&gt;, which you can read more about &lt;a href="http://kivy.org/docs/faq.html#how-is-kivy-related-to-pymt"&gt;here&lt;/a&gt;. In this article, we will be learning how Kivy handles layout management. While you can position widgets using x/y coordinates, in every GUI toolkit I've used, it's almost always better to use some kind of layout management that the toolkit provides. This allows the widgets to resize and move appropriately as the user changes the window's size. In Kivy, these things &lt;strong&gt;Layouts&lt;/strong&gt;. If you've used wxPython, they are analogous to wxPython's sizers.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Bite Sized Python Tips</title><link href="http://yasoob.github.io/blog/" rel="alternate"></link><link href="http://yasoob.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://yasoob.github.io/blog/</id><updated>2013-12-04T01:44:00-05:00</updated><entry><title>Python decorators finally demystified</title><link href="http://yasoob.github.io/blog/python-decorators-demystified" rel="alternate"></link><updated>2013-12-04T01:44:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-12-04:python-decorators-demystified</id><summary type="html">&lt;p&gt;Hi there guys! I hope all of you are fine and doing good. Recently I was hanging out on a python related IRC where I got a request from someone to write an article on decorators in Python. It is perhaps one of the most difficult concept to grasp. So as usual without wasting anytime let get on with it.&lt;/p&gt;
+&lt;h2&gt;- Everything in python is an object (Functions too!)&lt;/h2&gt;
+&lt;p&gt;First of all lets understand functions in python:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yasoob&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#output: &amp;#39;hi yasoob&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;#We can even assign a function to a variable like&lt;/span&gt;
+&lt;span class="n"&gt;greet&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;
+&lt;span class="c"&gt;#We are not using parenthesis here because we are not calling the function hi&lt;/span&gt;
+&lt;span class="c"&gt;#instead we are just putting it into the greet variable. Lets try to run this&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#output: &amp;#39;hi yasoob&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;#lets see what happens if we delete the old hi function!&lt;/span&gt;
+&lt;span class="k"&gt;del&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: NameError&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: &amp;#39;hi yasoob&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;- Defining functions within functions:&lt;/h2&gt;
+&lt;p&gt;So that was the basic knowledge about functions. Lets take your knowledge one step further! In Python we can define functions inside other functions. You might be wondering what sorcery is this! Let me explain it with an example.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yasoob&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;now you are inside the hi() function&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;now you are in the greet() function&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;welcome&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;now you are in the welcome() function&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;welcome&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;now you are back in the hi() function&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#output:now you are inside the hi() function&lt;/span&gt;
+&lt;span class="c"&gt;#       now you are in the greet() function&lt;/span&gt;
+&lt;span class="c"&gt;#       now you are in the welcome() function&lt;/span&gt;
+&lt;span class="c"&gt;#       now you are back in the hi() function&lt;/span&gt;
+
+&lt;span class="c"&gt;# This shows that whenever you call hi(), greet() and welcome()&lt;/span&gt;
+&lt;span class="c"&gt;# are also called. However the greet() and welcome() functions&lt;/span&gt;
+&lt;span class="c"&gt;# are not available outsite the hi() function e.g:&lt;/span&gt;
+
+&lt;span class="n"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: NameError: name &amp;#39;greet&amp;#39; is not defined&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So now we know that we can define functions in other functions. In simpler words we can make nested functions. Now you need to learn one more thing that functions can return functions too. &lt;/p&gt;
+&lt;h2&gt;- Returning functions from within functions:&lt;/h2&gt;
+&lt;p&gt;It is not necessary to execute a function within another function, we can return it as an output as well. Lets take a look at it with an example!&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yasoob&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;now you are in the greet() function&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;welcome&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;now you are in the welcome() function&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;yasoob&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;greet&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;welcome&lt;/span&gt;
+
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: &amp;lt;function greet at 0x7f2143c01500&amp;gt;&lt;/span&gt;
+
+&lt;span class="c"&gt;#This clearly shows that `a` now points to the greet() function in hi()&lt;/span&gt;
+&lt;span class="c"&gt;#Now try this&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: now you are in the greet() function&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Just take a look at the code again! In the if/else clause we are returning greet and welcome not greet() and welcome(). Why is that ? It is so because when you put parenthesis around it the function gets executed whereas if you don't put parenthesis around it then it can be passed around and can be assigned to other variables without executing it. Did you get it ? Let me explain it a little bit in more detail. When we write &lt;code&gt;a = hi()&lt;/code&gt; hi() gets executed and because the name is &lt;code&gt;yasoob&lt;/code&gt; by default, the function greet is returned. If we change the statement to &lt;code&gt;a = hi(name = "ali")&lt;/code&gt; then the welcome function will be returned. We can also do &lt;code&gt;print hi()()&lt;/code&gt; which outputs &lt;code&gt;now you are in the greet() function&lt;/code&gt;. I hope you have not fainted by now. Was it difficult ? No? I guess you are in the mood to finally learn about decorators! Lets continue our talk and move forward.&lt;/p&gt;
+&lt;h2&gt;- Giving a function as an argument to another function:&lt;/h2&gt;
+&lt;p&gt;Lets take a look at an example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi yasoob!&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;doSomethingBeforeHi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I am doing some  boring work before executing hi()&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;doSomethingBeforeHi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;#outputs:I am doing some  boring work before executing hi()&lt;/span&gt;
+&lt;span class="c"&gt;#        hi yasoob!&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Congratulations! You have all of the knowledge to entitle you as a decorator wrangler! Oh wait! you don't know what decorators really are. Here is a short definition &lt;code&gt;decorators let you execute code before and after the function they decorate&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;- Writing your first decorator:&lt;/h2&gt;
+&lt;p&gt;You have already written your first decorator! Do you know when ? In the last example we had made our very own decorator. Lets modify the previous decorator and make a little bit more usable program:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;a_new_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;wrapTheFunction&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I am doing some  boring work before executing a_func()&amp;quot;&lt;/span&gt;
+
+        &lt;span class="n"&gt;a_func&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I am doing some boring work after executing a_func()&amp;quot;&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;wrapTheFunction&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I am the function which needs some decoration to remove my foul smell&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: &amp;quot;I am the function which needs some decoration to remove my foul smell&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a_new_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;#now a_function_requiring_decoration is wrapped by wrapTheFunction()&lt;/span&gt;
+
+&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs:I am doing some  boring work before executing a_function_requiring_decoration()&lt;/span&gt;
+&lt;span class="c"&gt;#        I am the function which needs some decoration to remove my foul smell&lt;/span&gt;
+&lt;span class="c"&gt;#        I am doing some boring work after executing a_function_requiring_decoration()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Did you get it? We just applied the previously learned principles. This is exactly what the decorators do in python! They wrap a function and modify its behaviour in one way or the another. Now you might be wondering that we did not use the &lt;code&gt;@&lt;/code&gt; anywhere in our code? That is just a short way of making up a decorated function. Here is how we could have run the previous code sample using &lt;code&gt;@&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@a_new_decorator&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I am the function which needs some decoration to remove my foul smell&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: I am doing some  boring work before executing a_function_requiring_decoration()&lt;/span&gt;
+&lt;span class="c"&gt;#         I am the function which needs some decoration to remove my foul smell&lt;/span&gt;
+&lt;span class="c"&gt;#         I am doing some boring work after executing a_function_requiring_decoration()&lt;/span&gt;
+
+&lt;span class="c"&gt;#the @a_new_decorator is just a short way of saying:&lt;/span&gt;
+&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a_new_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_function_requiring_decoration&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;- Decorators Demystified:&lt;/h2&gt;
+&lt;p&gt;I hope you now know what decorators are basically in Python. They are not something to be panicked of. We can chain two or more than two decorators as well! Take this example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bread&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;wrapper&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;lt;/&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;\&amp;gt;&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;lt;\______/&amp;gt;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ingredients&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;wrapper&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#tomatoes#&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;~salad~&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;food&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--ham--&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;food&lt;/span&gt;
+
+&lt;span class="n"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs: --ham--&lt;/span&gt;
+&lt;span class="n"&gt;sandwich&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bread&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ingredients&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs:&lt;/span&gt;
+&lt;span class="c"&gt;#&amp;lt;/&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;\&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;# #tomatoes#&lt;/span&gt;
+&lt;span class="c"&gt;# --ham--&lt;/span&gt;
+&lt;span class="c"&gt;# ~salad~&lt;/span&gt;
+&lt;span class="c"&gt;#&amp;lt;\______/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this example &lt;a href="http://stackoverflow.com/users/9951/e-satis"&gt;e-satis&lt;/a&gt; did a really great job in explaining the way in which decorators are executed. We can run the previous example using the python syntax like this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@bread&lt;/span&gt;
+&lt;span class="nd"&gt;@ingredients&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;food&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--ham--&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;food&lt;/span&gt;
+
+&lt;span class="n"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs:&lt;/span&gt;
+&lt;span class="c"&gt;#&amp;lt;/&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;\&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;# #tomatoes#&lt;/span&gt;
+&lt;span class="c"&gt;# --ham--&lt;/span&gt;
+&lt;span class="c"&gt;# ~salad~&lt;/span&gt;
+&lt;span class="c"&gt;#&amp;lt;\______/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The order in which you write the decorators matter a lot and can change the whole behaviour of your decorated function if they are not executed in the correct way. Suppose you write this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@ingredients&lt;/span&gt;
+&lt;span class="nd"&gt;@bread&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;food&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--ham--&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;food&lt;/span&gt;
+
+&lt;span class="n"&gt;sandwich&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="c"&gt;#outputs:&lt;/span&gt;
+&lt;span class="c"&gt;##tomatoes#&lt;/span&gt;
+&lt;span class="c"&gt;#&amp;lt;/&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;&amp;#39;\&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;# --ham--&lt;/span&gt;
+&lt;span class="c"&gt;#&amp;lt;\______/&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;# ~salad~&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;No one of us wants a sandwich which has tomato on top of it and salad on the bottom. This shows that you do should not mix up the arrangement of the decorators otherwise you will have to pay a huge price. In our case we paid the price by ruining our beautiful sandwich.&lt;/p&gt;
+&lt;p&gt;I hope you learned something from this post! If I get a good response then I will cover some more technicalities of decorators in the future as well. Do share your views in the comments below. If you have any suggestions then do tell me about them. You can also follow me on facebook and twitter or can send me an email. The links to my social accounts are given at the end. Bye bye and don't forget to subscribe to my blog and tweet and share this post on facebook.&lt;/p&gt;</summary><category term="decorator-pattern"></category><category term="decorators"></category><category term="design-patterns"></category><category term="patterns"></category><category term="programming"></category><category term="python"></category><category term="python decorators"></category></entry><entry><title>Kivy 101: How to Use BoxLayouts</title><link href="http://yasoob.github.io/blog/kivy-101-how-to-use-boxlayouts" rel="alternate"></link><updated>2013-12-02T22:18:00-05:00</updated><author><name>yasoob008</name></author><id>tag:yasoob.github.io/blog,2013-12-02:kivy-101-how-to-use-boxlayouts</id><summary type="html">&lt;p&gt;Recently I've started learning about Kivy, a Python Natural User Interface (NUI) toolkit. As I understand it, Kivy is kind of a spiritual successor to &lt;a href="http://pymt.eu/"&gt;pyMT&lt;/a&gt;, which you can read more about &lt;a href="http://kivy.org/docs/faq.html#how-is-kivy-related-to-pymt"&gt;here&lt;/a&gt;. In this article, we will be learning how Kivy handles layout management. While you can position widgets using x/y coordinates, in every GUI toolkit I've used, it's almost always better to use some kind of layout management that the toolkit provides. This allows the widgets to resize and move appropriately as the user changes the window's size. In Kivy, these things &lt;strong&gt;Layouts&lt;/strong&gt;. If you've used wxPython, they are analogous to wxPython's sizers.&lt;/p&gt;
 &lt;p&gt;I should also note that Kivy can do layouts in two different ways. The first way is to do Layouts with Python code only. The second way is to use a mixture of Python and Kv language. This is to promote the model-view-controller way of doing things. It looks kind of like CSS and reminds me a little of wxPython and XRC. We will look at how to use both methods in this article. While Kivy supports multiple types of Layouts, this article will be focusing only on the &lt;strong&gt;BoxLayout&lt;/strong&gt;. We will show how to nest BoxLayouts.&lt;!--more--&gt;&lt;/p&gt;
 &lt;h2&gt;Kivy, Python and BoxLayout&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://freepythontips.files.wordpress.com/2013/11/kivy_hboxlayout.png"&gt;&lt;img class="alignnone size-medium wp-image-395" alt="kivy_hboxlayout" src="http://freepythontips.files.wordpress.com/2013/11/kivy_hboxlayout.png?w=300" width="300" height="236" /&gt;&lt;/a&gt;&lt;/p&gt;

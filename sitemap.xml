@@ -5,21 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/index.html</loc>
-<lastmod>2013-12-05T00:30:38-00:00</lastmod>
+<lastmod>2013-12-05T02:22:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://yasoob.github.io/blog/archives.html</loc>
-<lastmod>2013-12-05T00:30:38-00:00</lastmod>
+<lastmod>2013-12-05T02:22:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://yasoob.github.io/blog/tags.html</loc>
-<lastmod>2013-12-05T00:30:38-00:00</lastmod>
+<lastmod>2013-12-05T02:22:17-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://yasoob.github.io/blog/python-decorators-demystified</loc>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -410,6 +417,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://yasoob.github.io/blog/tag/decorator-pattern.html</loc>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://yasoob.github.io/blog/tag/python-tutorial.html</loc>
 <lastmod>2013-09-26T19:24:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -607,7 +621,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/tag/python.html</loc>
-<lastmod>2013-12-02T22:18:00-00:00</lastmod>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -922,7 +936,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/tag/decorators.html</loc>
-<lastmod>2013-10-10T21:18:00-00:00</lastmod>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -957,7 +971,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/tag/python-decorators.html</loc>
-<lastmod>2013-10-10T21:18:00-00:00</lastmod>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -1180,6 +1194,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://yasoob.github.io/blog/tag/sudoku.html</loc>
+<lastmod>2013-09-01T01:43:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://yasoob.github.io/blog/tag/targeting.html</loc>
 <lastmod>2013-07-30T19:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1292,8 +1313,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://yasoob.github.io/blog/tag/sudoku.html</loc>
-<lastmod>2013-09-01T01:43:00-00:00</lastmod>
+<loc>http://yasoob.github.io/blog/tag/design-patterns.html</loc>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -1475,7 +1496,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://yasoob.github.io/blog/tag/programming.html</loc>
-<lastmod>2013-07-30T19:58:00-00:00</lastmod>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -1840,6 +1861,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://yasoob.github.io/blog/tag/django.html</loc>
 <lastmod>2013-11-13T23:35:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://yasoob.github.io/blog/tag/patterns.html</loc>
+<lastmod>2013-12-04T01:44:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>

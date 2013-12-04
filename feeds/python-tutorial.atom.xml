@@ -10,7 +10,7 @@
 
 &lt;span class="c"&gt;#We can even assign a function to a variable like&lt;/span&gt;
 &lt;span class="n"&gt;greet&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hi&lt;/span&gt;
-&lt;span class="c"&gt;#We are not using parenthesis here because we are not calling the function hi&lt;/span&gt;
+&lt;span class="c"&gt;#We are not using parentheses here because we are not calling the function hi&lt;/span&gt;
 &lt;span class="c"&gt;#instead we are just putting it into the greet variable. Lets try to run this&lt;/span&gt;
 
 &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -83,7 +83,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Just take a look at the code again! In the if/else clause we are returning greet and welcome, not greet() and welcome(). Why is that? It is so because when you put parenthesis around it the function gets executed whereas if you don't put parenthesis around it then it can be passed around and can be assigned to other variables without executing it. Did you get it ? Let me explain it a little bit in more detail. When we write &lt;code&gt;a = hi()&lt;/code&gt; hi() gets executed and because the name is &lt;code&gt;yasoob&lt;/code&gt; by default, the function greet is returned. If we change the statement to &lt;code&gt;a = hi(name = "ali")&lt;/code&gt; then the welcome function will be returned. We can also do &lt;code&gt;print hi()()&lt;/code&gt; which outputs &lt;code&gt;now you are in the greet() function&lt;/code&gt;. I hope you have not fainted by now. Was it difficult ? No? I guess you are in the mood to finally learn about decorators! Lets continue our talk and move forward.&lt;/p&gt;
+&lt;p&gt;Just take a look at the code again! In the if/else clause we are returning greet and welcome, not greet() and welcome(). Why is that? It is so because when you put parentheses around it the function gets executed whereas if you don't put parentheses around it then it can be passed around and can be assigned to other variables without executing it. Did you get it ? Let me explain it a little bit in more detail. When we write &lt;code&gt;a = hi()&lt;/code&gt; hi() gets executed and because the name is &lt;code&gt;yasoob&lt;/code&gt; by default, the function greet is returned. If we change the statement to &lt;code&gt;a = hi(name = "ali")&lt;/code&gt; then the welcome function will be returned. We can also do &lt;code&gt;print hi()()&lt;/code&gt; which outputs &lt;code&gt;now you are in the greet() function&lt;/code&gt;. I hope you have not fainted by now. Was it difficult ? No? I guess you are in the mood to finally learn about decorators! Lets continue our talk and move forward.&lt;/p&gt;
 &lt;h2&gt;- Giving a function as an argument to another function:&lt;/h2&gt;
 &lt;p&gt;Lets take a look at an example:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hi&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;

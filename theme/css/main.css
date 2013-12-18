@@ -9,7 +9,7 @@ html, body {
 }
 
 body {
-    background: #FFFBED;
+    background: #FFFFFF;
     color: #2B2C2E;/*#65686E;*/
     font-size: 16px;
     font-family: 'Open Sans', Arial, sans-serif;
@@ -123,12 +123,12 @@ dd {margin-left: 1.5em;}
 
 pre {
 	background-color: #FAF6E8;
-	padding: 10px 15px;
-	margin: 5px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	overflow: auto;
-	font-family: Consolas,Menlo,"Courier New",monospace;
+    padding: 10px 15px;
+    margin: 5px;
+    border: 1px solid #efefef;
+    border-left: .5em solid #F1EBEB;
+    overflow: auto;
+    font-family: Consolas,Menlo,"Courier New",monospace;
     line-height: 22px;
 }
 code {
